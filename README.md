@@ -1,1 +1,2 @@
-# BRC Play v0.3.1 UI改善版
+# BRC Play v0.3.2
+Safari修正版

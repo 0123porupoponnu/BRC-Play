@@ -1,1 +1,2 @@
-# BRC Play v0.2\nメンバー管理版
+# BRC Play v0.2.1
+Safariのメンバー追加バグ修正版

@@ -1,1 +1,1 @@
-{"name": "BRC Play", "short_name": "BRC Play", "display": "standalone", "start_url": "./", "theme_color": "#0B5CAD", "background_color": "#0B5CAD", "icons": [{"src": "assets/icon.png", "sizes": "512x512", "type": "image/png"}]}
+{"name":"BRC Play","short_name":"BRC Play","display":"standalone","start_url":"./","theme_color":"#0B5CAD","background_color":"#0B5CAD","icons":[{"src":"assets/icon.png","sizes":"512x512","type":"image/png"}]}

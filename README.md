@@ -1,2 +1,1 @@
-# BRC Play v0.3
-カルカソンヌElo対戦入力版
+# BRC Play v0.3.1 UI改善版

@@ -1,3 +1,1 @@
-# BRC Play Prototype
-
-GitHubへアップロードすると動くプロトタイプ。
+# BRC Play v0.2\nメンバー管理版

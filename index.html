@@ -1,46 +1,98 @@
-<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><link rel=manifest href=manifest.json><title>BRC Play v0.2.1</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0B5CAD">
+<link rel="manifest" href="manifest.json">
+<title>BRC Play v0.3</title>
+<style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
-.w{max-width:560px;margin:auto;padding:20px}.h{text-align:center}.h img{width:110px;border-radius:24px}
-.c{background:rgba(255,255,255,.14);backdrop-filter:blur(10px);border-radius:22px;padding:18px;margin:16px 0}
-button{width:100%;padding:14px;border:0;border-radius:14px;background:#fff;color:#0B5CAD;font-weight:700;margin-top:10px}
-input{width:100%;padding:12px;border:0;border-radius:12px;box-sizing:border-box;margin-top:8px}
-.m{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid rgba(255,255,255,.15)}
-.s{font-size:14px;opacity:.75}
-</style></head><body><div class=w><div class=h><img src='assets/icon.png'><h1>BRC Play</h1><div>Version 0.2.1</div></div>
-<div class=c><h2>👥 メンバー登録</h2><input id=memberName placeholder='表示名（例：ゆかりん）'><button id=addBtn>メンバーを追加</button></div>
-<div class=c><h2>📋 メンバー一覧</h2><input id=search placeholder='メンバー検索'><div id=list></div></div>
-<div class=c><h2>🏰 カルカソンヌ</h2><div class=s>v0.3で対戦入力を追加予定</div></div>
-<div class=c><h2>🎲 ラミィキューブ</h2><div class=s>v0.4で練習会入力を追加予定</div></div>
-<div class=s style='text-align:center'>BRC Play v0.2.1</div></div>
+.w{max-width:620px;margin:auto;padding:18px}.c{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:16px 0}
+.h{text-align:center}.h img{width:100px;border-radius:22px}.row{display:flex;gap:10px}.row>*{flex:1}
+input,select{width:100%;padding:12px;border:0;border-radius:12px;box-sizing:border-box}
+button{width:100%;padding:13px;border:0;border-radius:14px;background:#fff;color:#0B5CAD;font-weight:700;margin-top:10px}
+.small{font-size:13px;opacity:.8}.item{padding:10px;border-bottom:1px solid rgba(255,255,255,.15)}
+.red{background:#E53935;color:#fff}
+</style></head><body><div class="w">
+<div class="h"><img src="assets/icon.png"><h1>BRC Play</h1><div>Version 0.3</div></div>
+
+<div class="c">
+<h2>👥 メンバー登録</h2>
+<input id="memberName" placeholder="表示名">
+<button id="addMemberBtn">メンバー追加</button>
+<div id="memberList"></div>
+</div>
+
+<div class="c">
+<h2>🏰 カルカソンヌ（Elo）</h2>
+<div class="row"><select id="playerA"></select><select id="playerB"></select></div>
+<div class="row"><button id="winA">Aが勝ち</button><button id="winB">Bが勝ち</button></div>
+<div class="small">初期1000・K=32・最低0</div>
+</div>
+
+<div class="c">
+<h2>📜 対戦履歴</h2>
+<div id="history"></div>
+</div>
+
+<div class="c">
+<h2>🎲 ラミィキューブ</h2>
+<div class="small">v0.4で練習会機能を実装予定</div>
+</div>
+
+<div class="small" style="text-align:center">BRC Play v0.3</div></div>
+
 <script>
-const KEY='brc-play-v021';
-const nameInput=document.getElementById('memberName');
-const searchInput=document.getElementById('search');
-const list=document.getElementById('list');
-let db=JSON.parse(localStorage.getItem(KEY)||'{"members":[]}');
+const KEY='brc-play-v03';
+let db=JSON.parse(localStorage.getItem(KEY)||'{"members":[],"history":[]}');
 const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
-function render(){
- const q=searchInput.value.toLowerCase();
- list.innerHTML='';
- db.members.filter(m=>m.name.toLowerCase().includes(q)).forEach((m,i)=>{
-  const row=document.createElement('div'); row.className='m';
-  row.innerHTML=`<div><b>${m.name}</b><br><span class=s>カルカソンヌ ${m.carc} / ラミィ ${m.rami}</span></div>`;
-  const box=document.createElement('div');
-  const e=document.createElement('button'); e.textContent='✏️'; e.style.width='auto'; e.style.padding='8px 10px';
-  e.onclick=()=>{const v=prompt('表示名を変更',m.name); if(v&&v.trim()){m.name=v.trim(); save(); render();}};
-  const d=document.createElement('button'); d.textContent='🗑️'; d.style.width='auto'; d.style.padding='8px 10px'; d.style.background='#E53935'; d.style.color='white';
-  d.onclick=()=>{if(confirm(m.name+' を削除しますか？')){db.members.splice(i,1); save(); render();}};
-  box.append(e,d); row.append(box); list.append(row);
+
+function elo(r1,r2,s){const e=1/(1+Math.pow(10,(r2-r1)/400));return Math.max(0,Math.round(r1+32*(s-e)));}
+
+function refreshSelectors(){
+ const opts=db.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');
+ playerA.innerHTML=opts; playerB.innerHTML=opts;
+}
+
+function renderMembers(){
+ memberList.innerHTML='';
+ db.members.forEach((m,i)=>{
+   const d=document.createElement('div'); d.className='item';
+   d.innerHTML=`<b>${m.name}</b><br><span class=small>レート ${m.carc||1000}</span>`;
+   const b=document.createElement('button'); b.className='red'; b.textContent='削除'; b.onclick=()=>{db.members.splice(i,1); save(); render();};
+   d.appendChild(b); memberList.appendChild(d);
+ });
+ refreshSelectors();
+}
+
+function renderHistory(){
+ history.innerHTML='';
+ if(db.history.length===0){history.innerHTML='<div class=small>まだ対戦記録はありません</div>'; return;}
+ db.history.slice().reverse().forEach(h=>{
+   history.innerHTML+=`<div class=item><b>${h.winner}</b> が勝利<br><span class=small>${h.a} ${h.ra1}→${h.ra2} / ${h.b} ${h.rb1}→${h.rb2}</span></div>`;
  });
 }
-document.getElementById('addBtn').onclick=()=>{
- const n=nameInput.value.trim();
- if(!n) return;
+
+function render(){renderMembers(); renderHistory();}
+
+addMemberBtn.onclick=()=>{
+ const n=memberName.value.trim(); if(!n) return;
  if(db.members.some(m=>m.name===n)){alert('同じ名前があります'); return;}
- db.members.push({name:n,carc:1000,rami:1000});
- nameInput.value=''; save(); render();
+ db.members.push({name:n,carc:1000}); memberName.value=''; save(); render();
 };
-searchInput.oninput=render;
+
+function match(aWin){
+ const ai=+playerA.value, bi=+playerB.value;
+ if(ai===bi){alert('別のメンバーを選んでね'); return;}
+ const A=db.members[ai], B=db.members[bi];
+ const oldA=A.carc||1000, oldB=B.carc||1000;
+ const newA=elo(oldA,oldB,aWin?1:0), newB=elo(oldB,oldA,aWin?0:1);
+ A.carc=newA; B.carc=newB;
+ db.history.push({a:A.name,b:B.name,winner:aWin?A.name:B.name,ra1:oldA,ra2:newA,rb1:oldB,rb2:newB});
+ save(); render();
+ alert(`保存！\n${A.name}: ${oldA}→${newA}\n${B.name}: ${oldB}→${newB}`);
+}
+winA.onclick=()=>match(true);
+winB.onclick=()=>match(false);
+
 render();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');
 </script></body></html>

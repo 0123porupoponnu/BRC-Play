@@ -1,2 +1,2 @@
-# BRC Play v0.2.1
-Safariのメンバー追加バグ修正版
+# BRC Play v0.3
+カルカソンヌElo対戦入力版

@@ -1,4 +1,4 @@
-<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><title>BRC Play v0.4.2</title><link rel=manifest href=manifest.json><style>
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><title>BRC Play v0.4</title><link rel=manifest href=manifest.json><style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
 .w{max-width:700px;margin:auto;padding:18px}.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:16px 0}
 .h{text-align:center}.h img{width:100px;border-radius:22px}
@@ -17,7 +17,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}.primary{ba
 <button class=primary id=saveMatch>結果を登録</button>
 <div class=small>同点なら後手勝ち・得失点差も記録</div></div>
 
-<div class=card><h2>🎲 ラミィキューブ（v0.4.2）</h2>
+<div class=card><h2>🎲 ラミィキューブ（v0.4）</h2>
 <div class=row><select id=r1></select><select id=r2></select></div>
 <div class=row style='margin-top:10px'><select id=r3></select><select id=r4></select></div>
 <div class=row style='margin-top:10px'><input id=rs1 inputmode=numeric placeholder='1人目'><input id=rs2 inputmode=numeric placeholder='2人目'></div>
@@ -29,7 +29,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}.primary{ba
 <div class=card><h2>🏆 ラミィ順位</h2><div id=ranking></div></div>
 <div class=card><h2>📜 カルカソンヌ履歴</h2><div id=history></div></div>
 
-<div class=small style='text-align:center'>BRC Play v0.4.2</div></div>
+<div class=small style='text-align:center'>BRC Play v0.4</div></div>
 
 <script>
 const KEY='brc-play-v04';
@@ -54,28 +54,27 @@ if('serviceWorker' in navigator)navigator.serviceWorker.register('service-worker
 <div style="margin:20px;padding:16px;border-radius:20px;background:rgba(255,255,255,.12)">
 <h2>🎲 ラミィキューブ（BRCルール）</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<select id='p1'><option>ゆかり</option></select>
-<select id='p2'><option>ひがし</option></select>
-<select id='p3'><option>ゲスト1</option></select>
-<select id='p4'><option>ゲスト2</option></select>
+<select id=s0 onchange=drawR()><option>ゆかり</option><option>ひがし</option><option>ゲスト1</option><option>ゲスト2</option></select>
+<select id=s1 onchange=drawR()><option>ひがし</option><option>ゆかり</option><option>ゲスト1</option><option>ゲスト2</option></select>
+<select id=s2 onchange=drawR()><option>ゲスト1</option><option>ゆかり</option><option>ひがし</option><option>ゲスト2</option></select>
+<select id=s3 onchange=drawR()><option>ゲスト2</option><option>ゆかり</option><option>ひがし</option><option>ゲスト1</option></select>
 </div>
-<div id='rummyGrid' style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"></div>
+<div id=rGrid style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"></div>
 <button style="margin-top:14px;width:100%;padding:12px;border-radius:12px;border:0">卓結果保存</button>
 </div>
 <script>
-const sels=['p1','p2','p3','p4'];
-function drawRummy(){
- const g=document.getElementById('rummyGrid');g.innerHTML='';
- sels.forEach(id=>{
-  const n=document.getElementById(id).value;
-  g.innerHTML+=`<div style="background:rgba(255,255,255,.08);padding:12px;border-radius:14px">
-    <b>${n}</b>
-    <div style="margin:8px 0"><label><input type="radio" name="winner"> 勝者</label></div>
-    <input type="text" placeholder="点数（-25 / 200）" style="width:100%;padding:10px;border-radius:10px;border:0">
-  </div>`;
+function drawR(){
+ const ids=['s0','s1','s2','s3'];
+ const g=document.getElementById('rGrid'); g.innerHTML='';
+ ids.forEach(id=>{
+   const name=document.getElementById(id).value;
+   g.innerHTML+=`<div style="background:rgba(255,255,255,.08);padding:12px;border-radius:14px">
+      <b>${name}</b>
+      <div style="margin:8px 0"><label><input type="radio" name="winner"> 勝者</label></div>
+      <input type="text" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="例: -25 または 200" style="width:100%;padding:10px;border-radius:10px;border:0">
+   </div>`;
  });
 }
-sels.forEach(id=>document.addEventListener('change',e=>{if(e.target.id===id)drawRummy();}));
-drawRummy();
+drawR();
 </script>
 </body></html>

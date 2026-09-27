@@ -1,2 +1,2 @@
-# BRC Play v0.3.2
-Safari修正版
+# BRC Play v0.3.3
+得点入力・先手後手・同点後手勝ち対応

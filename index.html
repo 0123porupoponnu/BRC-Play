@@ -120,6 +120,10 @@ const $=id=>document.getElementById(id);
 
 let db=JSON.parse(localStorage.getItem(KEY)||'{"members":[],"history":[],"rummy":[]}');
 
+if(!db.members) db.members=[];
+if(!db.history) db.history=[];
+if(!db.rummy) db.rummy=[];
+
 const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
 
 const elo=(r1,r2,s)=>Math.max(0,Math.round(r1+32*(s-(1/(1+Math.pow(10,(r2-r1)/400))))));

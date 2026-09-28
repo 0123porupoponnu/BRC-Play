@@ -17,17 +17,33 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}.primary{ba
 <button class=primary id=saveMatch>結果を登録</button>
 <div class=small>同点なら後手勝ち・得失点差も記録</div></div>
 
-<div class=card><h2>🎲 ラミィキューブ（v0.4.4）</h2>
-<div class=row><select id=r1></select><select id=r2></select></div>
-<div class=row style='margin-top:10px'><select id=r3></select><select id=r4></select></div>
-<div class=row style='margin-top:10px'><input id=rs1 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='1人目'>
-<input id=rs2 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='2人目'>
-<input id=rs3 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='3人目'>
-<input id=rs4 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='4人目'>
+<div class=card><h2>🎲 ラミィキューブ（v0.4.5）</h2>
+
+<div class=row>
+  <select id=r1></select>
+  <select id=r2></select>
+</div>
+
 <div class=row style='margin-top:10px'>
+  <select id=r3></select>
+  <select id=r4></select>
+</div>
+
+<div class=row style='margin-top:10px'>
+  <input id=rs1 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='1人目'>
+  <input id=rs2 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='2人目'>
+</div>
+
+<div class=row style='margin-top:10px'>
+  <input id=rs3 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='3人目'>
+  <input id=rs4 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='4人目'>
+</div>
+
 <button class=primary id=saveRummy>卓結果を保存</button>
 <div class=small>公式スコア入力 → 合計点で順位作成（同点タイ）</div>
+
 </div>
+
 
 <div class=card><h2>🏆 ラミィ順位</h2><div id=ranking></div></div>
 <div class=card><h2>📜 カルカソンヌ履歴</h2><div id=history></div></div>

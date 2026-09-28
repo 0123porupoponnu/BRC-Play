@@ -1,25 +1,86 @@
-<!doctype html><html lang='ja'><head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>BRC Play Build106</title>
-<style>
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><title>BRC Play Build108</title><link rel=manifest href=manifest.json><style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
-.screen{display:none;max-width:700px;margin:auto;padding:20px}
-.screen.active{display:block}
-.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:20px;margin:16px 0}
-.top{display:flex;justify-content:space-between;align-items:center}
-.logo{width:48px;height:48px;border-radius:14px;object-fit:cover}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:28px 12px;text-align:center}
-.header{background:rgba(11,92,173,.92);backdrop-filter:blur(10px);padding:14px 20px;border-radius:0 0 22px 22px;margin-bottom:18px}
-.screen:not(#home) .header{position:sticky;top:0;z-index:10}
-.row{display:flex;gap:12px;margin-top:12px}.row>*{flex:1;min-width:0}
-input,select,button{width:100%;padding:14px;border:0;border-radius:14px;box-sizing:border-box;font-size:16px}
-button{background:#fff;color:#0B5CAD;font-weight:700;margin-top:16px}
-.small{font-size:13px;opacity:.8}a.back{color:#fff;text-decoration:none;font-weight:700}
-</style></head><body>
-<section id=home class="screen active"><div class="screen active"><div class="card top"><div><h1 style="margin:0">BRC Play</h1><div class=small>Rummikub & Carcassonne</div></div><img src="assets/icon.png" class=logo></div><div class=card><h2>📅 今日の練習会</h2><div>今日はまだ対戦なし</div></div><div class=grid><div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div><div class=tile onclick="show('rummy')">🎲<br>ラミィ</div><div class=tile onclick="show('member')">👥<br>メンバー</div><div class=tile onclick="show('history')">📜<br>履歴</div></div></div></section>
-<section id=carc class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>🏰 カルカソンヌ</h2><div class=row><input placeholder=A><input placeholder=B></div><button>結果を登録</button></div></div></section>
-<section id=rummy class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>🎲 ラミィ</h2><div class=row><input type=text inputmode=text placeholder='1人目'><input type=text inputmode=text placeholder='2人目'></div><div class=row><input type=text inputmode=text placeholder='3人目'><input type=text inputmode=text placeholder='4人目'></div><button>卓結果を保存</button></div></div></section>
-<section id=member class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>👥 メンバー</h2></div></div></section>
-<section id=history class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>📜 履歴</h2><div class=small>まだ対戦なし</div></div></div></section>
-<script>function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}</script></body></html>
+.w{max-width:640px;margin:auto;padding:18px}.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:16px 0}.h{text-align:center}.h img{width:100px;border-radius:22px}
+input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:border-box;font-size:16px}
+button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}.primary{background:#fff;color:#0B5CAD;width:100%;margin-top:10px}
+.row{display:flex;gap:10px}.row>*{flex:1}.member{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.iconbtn{width:38px;height:38px;border-radius:10px;padding:0}.edit{background:rgba(255,255,255,.18);color:#fff}.del{background:#E53935;color:#fff}.history{padding:12px;border-radius:14px;background:rgba(255,255,255,.08);margin-bottom:10px}.small{font-size:13px;opacity:.8}
+</style></head><body><div class=w><div class=h><img src='assets/icon.png'><h1>BRC Play</h1><div>Build108</div></div>
+
+<div class=card><h2>👥 メンバー登録</h2><input id=memberName placeholder='表示名'><button class=primary id=addBtn>メンバー追加</button><div id=members></div></div>
+
+<div class=card><h2>🏰 カルカソンヌ（Elo）</h2>
+<div class=row><select id=playerA></select><select id=playerB></select></div>
+<div class=row style='margin-top:10px'><select id=turnA><option>先手</option><option>後手</option></select><select id=turnB><option>先手</option><option selected>後手</option></select></div>
+<div class=row style='margin-top:10px'><input id=scoreA inputmode=numeric placeholder='A得点'><input id=scoreB inputmode=numeric placeholder='B得点'></div>
+<button class=primary id=saveMatch>結果を登録</button>
+<div class=small>同点なら後手勝ち・得失点差も記録</div></div>
+
+<div class=card><h2>📜 対戦履歴</h2><div id=history></div></div>
+
+<div class=card><h2>🎲 ラミィキューブ（v0.4.5）</h2>
+<div class=row><select id=r1></select><select id=r2></select></div>
+<div class=row style='margin-top:10px'><select id=r3></select><select id=r4></select></div>
+<div class=row style='margin-top:10px'><input id=rs1 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='1人目'><input id=rs2 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='2人目'></div>
+<div class=row style='margin-top:10px'><input id=rs3 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='3人目'><input id=rs4 type=text inputmode=text autocapitalize=off autocorrect=off spellcheck=false placeholder='4人目'></div>
+<button class=primary id=saveRummy>卓結果を保存</button>
+<div class=small>公式スコア入力 → 合計点で順位作成（同点タイ）</div></div>
+
+<div class=small style='text-align:center'>BRC Play Build108</div></div>
+
+<script>
+const KEY='brc-play-v033';
+const $=id=>document.getElementById(id);
+let db=JSON.parse(localStorage.getItem(KEY)||'{"members":[],"history":[]}');
+const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
+const elo=(r1,r2,s)=>Math.max(0,Math.round(r1+32*(s-(1/(1+Math.pow(10,(r2-r1)/400))))));
+
+function render(){
+ $('members').innerHTML='';
+ db.members.forEach((m,i)=>{
+  const row=document.createElement('div');row.className='member';
+  row.innerHTML=`<div><b>${m.name}</b><div class=small>レート ${m.carc||1000}</div></div>`;
+  const box=document.createElement('div');box.style.display='flex';box.style.gap='8px';
+  const e=document.createElement('button');e.className='iconbtn edit';e.textContent='✏️';
+  e.onclick=()=>{const v=prompt('表示名を変更',m.name);if(v&&v.trim()){m.name=v.trim();save();
+const rummyIds=['r1','r2','r3','r4'];
+const oldRender=render;
+render=function(){
+ oldRender();
+ const opts=db.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');
+ rummyIds.forEach(id=>{const el=$(id); if(el) el.innerHTML=opts;});
+}
+
+render();}};
+  const d=document.createElement('button');d.className='iconbtn del';d.textContent='🗑️';
+  d.onclick=()=>{if(confirm(m.name+' を削除しますか？')){db.members.splice(i,1);save();render();}};
+  box.append(e,d);row.append(box);$('members').append(row);
+ });
+ const opts=db.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');
+ $('playerA').innerHTML=opts;$('playerB').innerHTML=opts;
+ $('history').innerHTML=db.history.length?db.history.slice().reverse().map(h=>`<div class=history>👑 <b>${h.winner}</b>（${h.wTurn}）<br><b>${h.scoreA}-${h.scoreB}</b>　得失点差 ${h.diffText}<br><span class=small>${h.a} ${h.ra1}→${h.ra2} / ${h.b} ${h.rb1}→${h.rb2}</span></div>`).join(''):'<div class=small>まだ対戦記録はありません</div>';
+}
+$('addBtn').addEventListener('click',()=>{
+ const n=$('memberName').value.trim(); if(!n)return;
+ if(db.members.some(m=>m.name===n)){alert('同じ名前があります');return;}
+ db.members.push({name:n,carc:1000}); $('memberName').value=''; save(); render();
+});
+$('saveMatch').addEventListener('click',()=>{
+ const ai=+$('playerA').value, bi=+$('playerB').value;
+ if(ai===bi){alert('別のメンバーを選んでね');return;}
+ const sa=Number($('scoreA').value), sb=Number($('scoreB').value);
+ if(Number.isNaN(sa)||Number.isNaN(sb)){alert('得点を入力してね');return;}
+ const ta=$('turnA').value, tb=$('turnB').value;
+ if(ta===tb){alert('先手と後手を分けてね');return;}
+ let aWin;
+ if(sa>sb)aWin=true; else if(sb>sa)aWin=false; else aWin=(ta==='後手');
+ const A=db.members[ai],B=db.members[bi];
+ const oa=A.carc||1000, ob=B.carc||1000;
+ A.carc=elo(oa,ob,aWin?1:0); B.carc=elo(ob,oa,aWin?0:1);
+ const diff=sa-sb;
+ db.history.push({a:A.name,b:B.name,winner:aWin?A.name:B.name,wTurn:aWin?ta:tb,scoreA:sa,scoreB:sb,diffText:(diff>0?`A +${diff} / B -${diff}`:diff<0?`A ${diff} / B +${-diff}`:'±0'),ra1:oa,ra2:A.carc,rb1:ob,rb2:B.carc});
+ save(); render(); $('scoreA').value=''; $('scoreB').value=''; alert('結果を登録したよ！');
+});
+render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('service-worker.js');
+</script></body></html>

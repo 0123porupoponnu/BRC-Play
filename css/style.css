@@ -1,13 +1,113 @@
+body{
+  margin:0;
+  font-family:-apple-system,sans-serif;
+  background:linear-gradient(160deg,#0B5CAD,#3AA0FF);
+  color:#fff;
+}
 
-body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
-.screen{display:none;max-width:700px;margin:auto;padding:20px}
-.screen.active{display:block}
-.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:20px;margin:16px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:28px 12px;text-align:center;cursor:pointer}
-.top{display:flex;justify-content:space-between;align-items:center}
-.logo{width:64px;border-radius:16px}
-.drawer{position:fixed;left:-260px;top:0;width:240px;height:100%;background:#0B5CAD;padding:20px;transition:.25s}
-.drawer.open{left:0}
-.item{padding:12px 0;cursor:pointer}
-button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}
+.screen{
+  display:none;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+.screen.active{
+  display:block;
+}
+
+.card{
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(12px);
+  border-radius:22px;
+  padding:20px;
+  margin:16px 0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.tile{
+  background:rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:28px 12px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  object-fit:cover;
+}
+
+.header{
+  background:rgba(11,92,173,.92);
+  backdrop-filter:blur(10px);
+  padding:14px 0;
+  border-radius:0 0 22px 22px;
+  margin-bottom:18px;
+}
+
+/* ホーム以外だけ固定 */
+.screen:not(#home) .header{
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.row{
+  display:flex;
+  gap:12px;
+  margin-top:12px;
+}
+
+.row>*{
+  flex:1;
+  min-width:0;
+}
+
+input,select,button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:14px;
+  box-sizing:border-box;
+  font-size:16px;
+}
+
+button{
+  background:#fff;
+  color:#0B5CAD;
+  font-weight:700;
+  margin-top:16px;
+}
+
+.member{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.small{
+  font-size:13px;
+  opacity:.8;
+}
+
+a.back{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}

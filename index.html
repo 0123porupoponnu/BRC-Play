@@ -1,21 +1,32 @@
-
-<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>BRC Play Build100</title><link rel=manifest href=manifest.json><link rel=stylesheet href=css/style.css></head><body>
-<div id=drawer class=drawer><h2>BRC Play</h2><div class=item onclick="show('home')">🏠 ホーム</div><div class=item onclick="show('carc')">🏰 カルカソンヌ</div><div class=item onclick="show('rummy')">🎲 ラミィキューブ</div><div class=item onclick="show('member')">👥 メンバー</div><div class=item onclick="show('settings')">⚙️ 設定</div></div>
-
-<section id=home class="screen active">
-<div class=top><div onclick=toggleMenu()>☰</div><img src=assets/icon.png class=logo><div>⚙️</div></div>
-<div class=card><h1>BRC Play</h1><p>Build100 ホーム</p></div>
-<div class=card><h2>📅 今日の練習会</h2><p>続きから始める</p></div>
-<div class=grid>
-<div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div>
-<div class=tile onclick="show('rummy')">🎲<br>ラミィキューブ</div>
-<div class=tile onclick="show('member')">👥<br>メンバー</div>
-<div class=tile onclick="show('settings')">⚙️<br>設定</div>
-</div></section>
-
-<section id=carc class=screen><div class=top><div onclick="show('home')">←</div><h2>カルカソンヌ</h2><div></div></div><div class=card>ここにv0.4.5のカルカソンヌ機能を移植予定。</div></section>
-<section id=rummy class=screen><div class=top><div onclick="show('home')">←</div><h2>ラミィキューブ</h2><div></div></div><div class=card>ここにv0.4.5のラミィ機能を移植予定。</div></section>
-<section id=member class=screen><div class=top><div onclick="show('home')">←</div><h2>メンバー</h2><div></div></div><div class=card>メンバー画面。</div></section>
-<section id=settings class=screen><div class=top><div onclick="show('home')">←</div><h2>設定</h2><div></div></div><div class=card>バックアップ等は次のBuildで追加。</div></section>
-
-<script src=js/app.js></script></body></html>
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>BRC Play Build101</title>
+<style>
+body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
+.screen{display:none;max-width:700px;margin:auto;padding:18px}.active{display:block}
+.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:24px;padding:20px;margin:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:28px 12px;text-align:center;font-weight:700}
+.top{display:flex;justify-content:space-between;align-items:center}.logo{width:68px;border-radius:18px}
+.drawer{position:fixed;left:-260px;top:0;width:240px;height:100%;background:#0B5CAD;padding:20px;transition:.25s}
+.drawer.open{left:0}.item{padding:12px 0}
+button{width:100%;padding:12px;border:0;border-radius:14px;font-weight:700;background:#fff;color:#0B5CAD}
+input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:border-box}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.small{font-size:13px;opacity:.8}
+</style></head><body>
+<div id=drawer class=drawer><h2>BRC Play</h2>
+<div class=item onclick="show('home')">🏠 ホーム</div>
+<div class=item onclick="show('carc')">🏰 カルカソンヌ</div>
+<div class=item onclick="show('rummy')">🎲 ラミィキューブ</div>
+<div class=item onclick="show('member')">👥 メンバー</div></div>
+<section id=home class="screen active"><div class=top><div onclick=toggleMenu()>☰</div><img class=logo src=assets/icon.png><div>⚙️</div></div>
+<div class=card><h1>BRC Play</h1><div>Build101</div></div>
+<div class=card><h2>📅 今日の練習会</h2><div class=small>続きから始める</div></div>
+<div class=grid><div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div><div class=tile onclick="show('rummy')">🎲<br>ラミィ</div><div class=tile onclick="show('member')">👥<br>メンバー</div><div class=tile>⚙️<br>設定</div></div></section>
+<section id=rummy class=screen><div class=top><div onclick="show('home')">←</div><h2>ラミィ</h2><div></div></div><div class=card><div class=row><select><option>ゆかり</option></select><select><option>ひがし</option></select></div><div class=row style="margin-top:10px"><select><option>みどり</option></select><select><option>ゲスト</option></select></div><div class=row style="margin-top:10px"><input type=text inputmode=text placeholder="1人目"><input type=text inputmode=text placeholder="2人目"></div><div class=row style="margin-top:10px"><input type=text inputmode=text placeholder="3人目"><input type=text inputmode=text placeholder="4人目"></div><button style="margin-top:12px">卓結果を保存</button></div></section>
+<section id=carc class=screen><div class=top><div onclick="show('home')">←</div><h2>カルカソンヌ</h2><div></div></div><div class=card>Build101ではv0.4.5のカルカソンヌ画面を移植予定。</div></section>
+<section id=member class=screen><div class=top><div onclick="show('home')">←</div><h2>メンバー</h2><div></div></div><div class=card>既存メンバー画面を移植予定。</div></section>
+<script>
+const drawer=document.getElementById('drawer');
+function toggleMenu(){drawer.classList.toggle('open')}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');drawer.classList.remove('open')}
+</script></body></html>

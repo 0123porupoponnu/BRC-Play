@@ -1,16 +1,64 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BRC Play Build102</title><style>
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BRC Play Build104</title>
+<style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
-.page{max-width:720px;margin:auto;padding:20px}.screen{display:none}.active{display:block}.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:24px;padding:20px;margin:16px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:28px 14px;text-align:center;font-weight:700}
-.top{display:flex;justify-content:space-between;align-items:center}.logo{width:62px;border-radius:18px}
+.wrap{max-width:700px;margin:auto;padding:18px}.screen{display:none}.screen.active{display:block}
+.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:24px;text-align:center;font-weight:700;cursor:pointer}
+.row{display:flex;gap:10px}.row>*{flex:1}
 input,select,button{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:border-box;font-size:16px}
-button{background:#fff;color:#0B5CAD;font-weight:700}.row{display:flex;gap:10px}.row>*{flex:1}.back{cursor:pointer;font-weight:700}
-</style></head><body><div class="page">
-<section id=home class="screen active"><div class=top><div><h1 style="margin:0">BRC Play</h1><div>Rummikub & Carcassonne</div></div><img src="assets/icon.png" class=logo></div>
+button{background:#fff;color:#0B5CAD;font-weight:700}.member{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.small{font-size:13px;opacity:.8}.back{font-weight:700;cursor:pointer;margin-bottom:10px}
+.top{display:flex;justify-content:space-between;align-items:center}.logo{width:64px;border-radius:16px}
+</style></head><body><div class=wrap>
+
+<section id=home class="screen active">
+<div class=top><div><h1 style="margin:0">BRC Play</h1><div>Rummikub & Carcassonne</div></div><img src="assets/icon.png" class=logo></div>
 <div class=card><h2>📅 今日の練習会</h2><div id=today>今日はまだ対戦なし</div></div>
-<div class=grid><div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div><div class=tile onclick="show('rummy')">🎲<br>ラミィキューブ</div><div class=tile onclick="show('member')">👥<br>メンバー</div><div class=tile onclick="show('settings')">⚙️<br>設定</div></div></section>
-<section id=rummy class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>🎲 ラミィキューブ</h2><div class=row><select><option>ゆかり</option></select><select><option>ひがし</option></select></div><div class=row style="margin-top:10px"><select><option>みどり</option></select><select><option>ゲスト</option></select></div><div class=row style="margin-top:10px"><input type=text inputmode=text placeholder="1人目"><input type=text inputmode=text placeholder="2人目"></div><div class=row style="margin-top:10px"><input type=text inputmode=text placeholder="3人目"><input type=text inputmode=text placeholder="4人目"></div><button style="margin-top:12px">卓結果を保存</button></div></section>
-<section id=carc class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>🏰 カルカソンヌ</h2><p>Build102ではv0.4.5のElo機能をここへ移植予定。</p></div></section>
-<section id=member class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>👥 メンバー</h2><p>既存メンバー機能をここへ移植予定。</p></div></section>
-<section id=settings class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>⚙️ 設定</h2><p>バックアップ・データ管理（予定）</p></div></section>
-</div><script>function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}</script></body></html>
+<div class=grid>
+<div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div>
+<div class=tile onclick="show('rummy')">🎲<br>ラミィ</div>
+<div class=tile onclick="show('member')">👥<br>メンバー</div>
+<div class=tile onclick="show('history')">📜<br>履歴</div>
+</div></section>
+
+<section id=member class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>👥 メンバー</h2><input id=memberName placeholder="表示名"><button onclick=addMember()>メンバー追加</button><div id=members></div></div></section>
+
+<section id=carc class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>🏰 カルカソンヌ（Elo）</h2>
+<div class=row><select id=playerA></select><select id=playerB></select></div>
+<div class=row style="margin-top:10px"><select id=turnA><option>先手</option><option>後手</option></select><select id=turnB><option>先手</option><option selected>後手</option></select></div>
+<div class=row style="margin-top:10px"><input id=scoreA inputmode=numeric placeholder="A得点"><input id=scoreB inputmode=numeric placeholder="B得点"></div>
+<button onclick=saveMatch()>結果を登録</button><div class=small>同点なら後手勝ち・Elo更新</div></div></section>
+
+<section id=rummy class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>🎲 ラミィキューブ</h2>
+<div class=row><select id=r1></select><select id=r2></select></div>
+<div class=row style="margin-top:10px"><select id=r3></select><select id=r4></select></div>
+<div class=row style="margin-top:10px"><input id=rs1 type=text inputmode=text placeholder="1人目"><input id=rs2 type=text inputmode=text placeholder="2人目"></div>
+<div class=row style="margin-top:10px"><input id=rs3 type=text inputmode=text placeholder="3人目"><input id=rs4 type=text inputmode=text placeholder="4人目"></div>
+<button onclick=saveRummy()>卓結果を保存</button></div></section>
+
+<section id=history class=screen><div class=back onclick="show('home')">← ホーム</div><div class=card><h2>📜 カルカソンヌ履歴</h2><div id=history></div></div></section>
+
+<script>
+const KEY='brc-play-build104';
+const $=id=>document.getElementById(id);
+let db=JSON.parse(localStorage.getItem(KEY)||'{"members":[],"history":[],"rummy":[]}');
+const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');render();}
+function elo(r1,r2,s){return Math.max(0,Math.round(r1+32*(s-(1/(1+Math.pow(10,(r2-r1)/400))))));}
+function options(){return db.members.map((m,i)=>`<option value="${i}">${m.name}</option>`).join('');}
+function render(){
+ $('members').innerHTML='';
+ db.members.forEach((m,i)=>{$('members').innerHTML+=`<div class=member><div><b>${m.name}</b><div class=small>Elo ${m.carc||1000}</div></div><div><button style="width:auto;padding:8px 10px" onclick="editMember(${i})">✏️</button> <button style="width:auto;padding:8px 10px;background:#E53935;color:#fff" onclick="delMember(${i})">🗑️</button></div></div>`;});
+ const o=options();['playerA','playerB','r1','r2','r3','r4'].forEach(id=>$(id).innerHTML=o);
+ $('history').innerHTML=db.history.length?db.history.slice().reverse().map(h=>`<div class=member><div><b>${h.winner}</b><div class=small>${h.a} ${h.scoreA}-${h.scoreB} ${h.b}</div></div></div>`).join(''):'<div class=small>まだ対戦なし</div>';
+ $('today').textContent=(db.history.length||db.rummy.length)?`カルカソンヌ ${db.history.length}戦・ラミィ ${db.rummy.length}卓`:'今日はまだ対戦なし';
+}
+function addMember(){const n=$('memberName').value.trim();if(!n)return;if(db.members.some(m=>m.name===n))return alert('同じ名前があります');db.members.push({name:n,carc:1000});$('memberName').value='';save();render();}
+function editMember(i){const n=prompt('表示名を変更',db.members[i].name);if(n&&n.trim()){db.members[i].name=n.trim();save();render();}}
+function delMember(i){if(confirm(db.members[i].name+' を削除しますか？')){db.members.splice(i,1);save();render();}}
+function saveMatch(){const ai=+$('playerA').value,bi=+$('playerB').value;if(ai===bi)return alert('別のメンバーを選んでね');const sa=+$('scoreA').value,sb=+$('scoreB').value;if(isNaN(sa)||isNaN(sb))return alert('得点を入力');const ta=$('turnA').value;const aw=sa>sb||(sa===sb&&ta==='後手');const A=db.members[ai],B=db.members[bi];const oa=A.carc||1000,ob=B.carc||1000;A.carc=elo(oa,ob,aw?1:0);B.carc=elo(ob,oa,aw?0:1);db.history.push({a:A.name,b:B.name,winner:aw?A.name:B.name,scoreA:sa,scoreB:sb});$('scoreA').value='';$('scoreB').value='';save();render();alert('登録したよ！');}
+function saveRummy(){const ids=[$('r1').value,$('r2').value,$('r3').value,$('r4').value];if(new Set(ids).size!==4)return alert('4人とも別のメンバーを選んでね');const scores=[$('rs1').value,$('rs2').value,$('rs3').value,$('rs4').value];db.rummy.push(ids.map((id,i)=>({name:db.members[id].name,score:scores[i]})));['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');save();render();alert('卓結果を保存したよ！');}
+render();
+</script></div></body></html>

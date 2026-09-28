@@ -1,4 +1,5 @@
-<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><title>BRC Play Build108</title><link rel=manifest href=manifest.json><style>
+
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=theme-color content=#0B5CAD><title>BRC Play Build109</title><link rel=manifest href=manifest.json><style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
 .w{max-width:640px;margin:auto;padding:18px}
 .card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:18px;margin:16px 0}
@@ -20,7 +21,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}
 <div class=h>
 <img src='assets/icon.png'>
 <h1>BRC Play</h1>
-<div>Build108</div>
+<div>Build109</div>
 </div>
 
 <div class=card>
@@ -84,7 +85,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700}
 <div class=small>公式スコア入力 → 合計点で順位作成（同点タイ）</div>
 </div>
 
-<div class=small style='text-align:center'>BRC Play Build108</div>
+<div class=small style='text-align:center'>BRC Play Build109</div>
 
 </div>
 
@@ -154,14 +155,29 @@ function render(){
    $(id).innerHTML=opts;
  });
 
- $('history').innerHTML=db.history.length
- ?db.history.slice().reverse().map(h=>`
-   <div class=history>
-   👑 <b>${h.winner}</b>（${h.wTurn}）<br>
-   <b>${h.scoreA}-${h.scoreB}</b> 得失点差 ${h.diffText}<br>
-   <span class=small>${h.a} ${h.ra1}→${h.ra2} / ${h.b} ${h.rb1}→${h.rb2}</span>
-   </div>`).join('')
- :'<div class=small>まだ対戦記録はありません</div>';
+ if(db.history.length){
+   $('history').innerHTML=db.history.slice().reverse().map((h,i)=>`
+     <div class=history>
+       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+         <div style="flex:1;">
+           👑 <b>${h.winner}</b>（${h.wTurn}）<br>
+           <b>${h.scoreA}-${h.scoreB}</b> 得失点差 ${h.diffText}<br>
+           <span class=small>${h.a} ${h.ra1}→${h.ra2} / ${h.b} ${h.rb1}→${h.rb2}</span>
+         </div>
+         <button class="iconbtn del" onclick="deleteHistory(${db.history.length-1-i})">🗑️</button>
+       </div>
+     </div>
+   `).join('');
+ }else{
+   $('history').innerHTML='<div class=small>まだ対戦記録はありません</div>';
+ }
+}
+
+function deleteHistory(index){
+ if(!confirm('この対戦履歴を削除しますか？')) return;
+ db.history.splice(index,1);
+ save();
+ render();
 }
 
 $('addBtn').onclick=()=>{

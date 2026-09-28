@@ -1,41 +1,25 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BRC Play Build105</title>
+<!doctype html><html lang='ja'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>BRC Play Build106</title>
 <style>
 body{margin:0;font-family:-apple-system,sans-serif;background:linear-gradient(160deg,#0B5CAD,#3AA0FF);color:#fff}
-.wrap{max-width:700px;margin:auto;padding:18px}
-.screen{display:none}.screen.active{display:block}
-.header{position:sticky;top:0;background:rgba(11,92,173,.92);backdrop-filter:blur(10px);padding:14px 0;z-index:10}
-.header .row{display:flex;justify-content:space-between;align-items:center}
-.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:24px;margin:16px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:26px;text-align:center;font-weight:700}
-.row{display:flex;gap:12px}.row>*{flex:1;min-width:0}
+.screen{display:none;max-width:700px;margin:auto;padding:20px}
+.screen.active{display:block}
+.card{background:rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:22px;padding:20px;margin:16px 0}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{width:48px;height:48px;border-radius:14px;object-fit:cover}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tile{background:rgba(255,255,255,.12);border-radius:18px;padding:28px 12px;text-align:center}
+.header{background:rgba(11,92,173,.92);backdrop-filter:blur(10px);padding:14px 20px;border-radius:0 0 22px 22px;margin-bottom:18px}
+.screen:not(#home) .header{position:sticky;top:0;z-index:10}
+.row{display:flex;gap:12px;margin-top:12px}.row>*{flex:1;min-width:0}
 input,select,button{width:100%;padding:14px;border:0;border-radius:14px;box-sizing:border-box;font-size:16px}
 button{background:#fff;color:#0B5CAD;font-weight:700;margin-top:16px}
-.member{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.small{font-size:13px;opacity:.8}
-a.back{color:#fff;text-decoration:none;font-weight:700}
-</style></head><body><div class="wrap">
-<section id=home class="screen active"><div class=header><div class=row><div><h1 style="margin:0">BRC Play</h1><div class=small>Rummikub & Carcassonne</div>
-
-      </div>
-
-      <img src="assets/icon.png" class="logo" alt="BRC Logo">
-
-    </div>
-
-</div>
-<div class=card><h2>📅 今日の練習会</h2><div id=today>今日はまだ対戦なし</div></div>
-<div class=grid>
-<div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div>
-<div class=tile onclick="show('rummy')">🎲<br>ラミィ</div>
-<div class=tile onclick="show('member')">👥<br>メンバー</div>
-<div class=tile onclick="show('history')">📜<br>履歴</div>
-</div></section>
-<section id=member class=screen><div class=header><div class=row><a class=back onclick="show('home')">← ホーム</a><div>👥 メンバー</div><div></div></div></div><div class=card><input placeholder="表示名"><button>メンバー追加</button></div></section>
-<section id=carc class=screen><div class=header><div class=row><a class=back onclick="show('home')">← ホーム</a><div>🏰 カルカソンヌ</div><div></div></div></div><div class=card><div class=row><select><option>プレイヤーA</option></select><select><option>プレイヤーB</option></select></div><div class=row><select><option>先手</option><option>後手</option></select><select><option>後手</option><option>先手</option></select></div><div class=row><input placeholder="A得点"><input placeholder="B得点"></div><button>結果を登録</button><div class=small>同点なら後手勝ち</div></div></section>
-<section id=rummy class=screen><div class=header><div class=row><a class=back onclick="show('home')">← ホーム</a><div>🎲 ラミィ</div><div></div></div></div><div class=card><div class=row><select><option>1人目</option></select><select><option>2人目</option></select></div><div class=row><select><option>3人目</option></select><select><option>4人目</option></select></div><div class=row><input type=text inputmode=text placeholder="1人目"><input type=text inputmode=text placeholder="2人目"></div><div class=row><input type=text inputmode=text placeholder="3人目"><input type=text inputmode=text placeholder="4人目"></div><button>卓結果を保存</button></div></section>
-<section id=history class=screen><div class=header><div class=row><a class=back onclick="show('home')">← ホーム</a><div>📜 履歴</div><div></div></div></div><div class=card><div class=small>まだ対戦なし</div></div></section>
-<script>function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}</script>
-</div></body></html>
+.small{font-size:13px;opacity:.8}a.back{color:#fff;text-decoration:none;font-weight:700}
+</style></head><body>
+<section id=home class="screen active"><div class="screen active"><div class="card top"><div><h1 style="margin:0">BRC Play</h1><div class=small>Rummikub & Carcassonne</div></div><img src="assets/icon.png" class=logo></div><div class=card><h2>📅 今日の練習会</h2><div>今日はまだ対戦なし</div></div><div class=grid><div class=tile onclick="show('carc')">🏰<br>カルカソンヌ</div><div class=tile onclick="show('rummy')">🎲<br>ラミィ</div><div class=tile onclick="show('member')">👥<br>メンバー</div><div class=tile onclick="show('history')">📜<br>履歴</div></div></div></section>
+<section id=carc class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>🏰 カルカソンヌ</h2><div class=row><input placeholder=A><input placeholder=B></div><button>結果を登録</button></div></div></section>
+<section id=rummy class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>🎲 ラミィ</h2><div class=row><input type=text inputmode=text placeholder='1人目'><input type=text inputmode=text placeholder='2人目'></div><div class=row><input type=text inputmode=text placeholder='3人目'><input type=text inputmode=text placeholder='4人目'></div><button>卓結果を保存</button></div></div></section>
+<section id=member class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>👥 メンバー</h2></div></div></section>
+<section id=history class=screen><div class=header><a class=back onclick="show('home')">← ホーム</a></div><div class="screen active"><div class=card><h2>📜 履歴</h2><div class=small>まだ対戦なし</div></div></div></section>
+<script>function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}</script></body></html>

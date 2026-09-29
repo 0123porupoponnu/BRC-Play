@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build110</title>
+<title>BRC Play Build111</title>
 <link rel="manifest" href="manifest.json">
 
 <style>
@@ -291,6 +291,7 @@ button{
 }
 
 /* ホームへ戻る */
+
 .back-home{
   margin-top:18px;
 }
@@ -323,49 +324,112 @@ button{
 <section id="home" class="screen active">
 
   <div class="home-title">
+
     <img src="assets/icon.png">
+
     <h1>BRC Play</h1>
-    <div class="build">Build110</div>
+
+    <div class="build">
+      Build111
+    </div>
+
   </div>
 
+
   <button class="menu-card" onclick="show('carc')">
-    <div class="menu-icon">🏰</div>
-    <div class="menu-text">
-      <b>カルカソンヌ</b>
-      <span>Elo・対戦結果・履歴</span>
+
+    <div class="menu-icon">
+      🏰
     </div>
-    <div class="menu-arrow">›</div>
+
+    <div class="menu-text">
+
+      <b>カルカソンヌ</b>
+
+      <span>
+        対戦結果・ランキング・履歴
+      </span>
+
+    </div>
+
+    <div class="menu-arrow">
+      ›
+    </div>
+
   </button>
+
 
   <button class="menu-card" onclick="show('rummy')">
-    <div class="menu-icon">🎲</div>
-    <div class="menu-text">
-      <b>ラミィキューブ</b>
-      <span>卓結果・累計ランキング</span>
+
+    <div class="menu-icon">
+      🎲
     </div>
-    <div class="menu-arrow">›</div>
+
+    <div class="menu-text">
+
+      <b>ラミィキューブ</b>
+
+      <span>
+        卓結果・ランキング
+      </span>
+
+    </div>
+
+    <div class="menu-arrow">
+      ›
+    </div>
+
   </button>
+
 
   <button class="menu-card" onclick="show('member')">
-    <div class="menu-icon">👥</div>
-    <div class="menu-text">
-      <b>メンバー</b>
-      <span>登録・編集・レート確認</span>
+
+    <div class="menu-icon">
+      👥
     </div>
-    <div class="menu-arrow">›</div>
+
+    <div class="menu-text">
+
+      <b>メンバー</b>
+
+      <span>
+        登録・編集・レート確認
+      </span>
+
+    </div>
+
+    <div class="menu-arrow">
+      ›
+    </div>
+
   </button>
+
 
   <button class="menu-card" onclick="show('historyPage')">
-    <div class="menu-icon">📜</div>
-    <div class="menu-text">
-      <b>履歴・統計</b>
-      <span>対戦記録・ラミィ記録</span>
+
+    <div class="menu-icon">
+      📜
     </div>
-    <div class="menu-arrow">›</div>
+
+    <div class="menu-text">
+
+      <b>履歴・統計</b>
+
+      <span>
+        対戦記録・ラミィ記録
+      </span>
+
+    </div>
+
+    <div class="menu-arrow">
+      ›
+    </div>
+
   </button>
 
+
   <div class="footer">
-    BRC Play Build110
+    BRC Play Build111
   </div>
 
 </section>
@@ -378,55 +442,117 @@ button{
 <section id="carc" class="screen">
 
   <div class="pagehead">
-    <button class="back" onclick="show('home')">← ホーム</button>
-    <h1>🏰 カルカソンヌ</h1>
-  </div>
 
-  <div class="card">
-
-    <h2>🏰 カルカソンヌ（Elo）</h2>
-
-    <div class="row">
-      <select id="playerA"></select>
-      <select id="playerB"></select>
-    </div>
-
-    <div class="row" style="margin-top:10px">
-      <select id="turnA">
-        <option>先手</option>
-        <option>後手</option>
-      </select>
-
-      <select id="turnB">
-        <option>先手</option>
-        <option selected>後手</option>
-      </select>
-    </div>
-
-    <div class="row" style="margin-top:10px">
-      <input id="scoreA"
-             inputmode="numeric"
-             placeholder="A得点">
-
-      <input id="scoreB"
-             inputmode="numeric"
-             placeholder="B得点">
-    </div>
-
-    <button class="primary" id="saveMatch">
-      結果を登録
+    <button
+      class="back"
+      onclick="show('home')">
+      ← ホーム
     </button>
 
-    <div class="small">
-      同点なら後手勝ち・得失点差も記録
-    </div>
+    <h1>
+      🏰 カルカソンヌ
+    </h1>
 
   </div>
 
 
   <div class="card">
 
-    <h2>📜 カルカソンヌ対戦履歴</h2>
+    <h2>
+      🏰 カルカソンヌ
+    </h2>
+
+
+    <div class="row">
+
+      <select id="playerA"></select>
+
+      <select id="playerB"></select>
+
+    </div>
+
+
+    <div class="row" style="margin-top:10px">
+
+      <select id="turnA">
+
+        <option>
+          先手
+        </option>
+
+        <option>
+          後手
+        </option>
+
+      </select>
+
+
+      <select id="turnB">
+
+        <option>
+          先手
+        </option>
+
+        <option selected>
+          後手
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <div class="row" style="margin-top:10px">
+
+      <input
+        id="scoreA"
+        inputmode="numeric"
+        placeholder="A得点">
+
+      <input
+        id="scoreB"
+        inputmode="numeric"
+        placeholder="B得点">
+
+    </div>
+
+
+    <button
+      class="primary"
+      id="saveMatch">
+
+      結果を登録
+
+    </button>
+
+
+    <div class="small">
+
+      同点なら後手勝ち・得失点差も記録
+
+    </div>
+
+  </div>
+
+
+  <!-- カルカソンヌランキング -->
+
+  <div class="card">
+
+    <h2>
+      🏆 ランキング
+    </h2>
+
+    <div id="carcRanking"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>
+      📜 カルカソンヌ対戦履歴
+    </h2>
 
     <div id="history"></div>
 
@@ -434,9 +560,11 @@ button{
 
 
   <div class="back-home">
+
     <button onclick="show('home')">
       ← ホームへ戻る
     </button>
+
   </div>
 
 </section>
@@ -449,26 +577,51 @@ button{
 <section id="rummy" class="screen">
 
   <div class="pagehead">
-    <button class="back" onclick="show('home')">← ホーム</button>
-    <h1>🎲 ラミィキューブ</h1>
+
+    <button
+      class="back"
+      onclick="show('home')">
+      ← ホーム
+    </button>
+
+    <h1>
+      🎲 ラミィキューブ
+    </h1>
+
   </div>
 
 
   <div class="card">
 
-    <h2>🎲 ラミィキューブ（v0.4.5）</h2>
+    <h2>
+      🎲 ラミィキューブ
+    </h2>
+
 
     <div class="row">
+
       <select id="r1"></select>
+
       <select id="r2"></select>
+
     </div>
 
-    <div class="row" style="margin-top:10px">
+
+    <div
+      class="row"
+      style="margin-top:10px">
+
       <select id="r3"></select>
+
       <select id="r4"></select>
+
     </div>
 
-    <div class="row" style="margin-top:10px">
+
+    <div
+      class="row"
+      style="margin-top:10px">
+
       <input
         id="rs1"
         type="text"
@@ -486,9 +639,14 @@ button{
         autocorrect="off"
         spellcheck="false"
         placeholder="2人目">
+
     </div>
 
-    <div class="row" style="margin-top:10px">
+
+    <div
+      class="row"
+      style="margin-top:10px">
+
       <input
         id="rs3"
         type="text"
@@ -506,14 +664,23 @@ button{
         autocorrect="off"
         spellcheck="false"
         placeholder="4人目">
+
     </div>
 
-    <button class="primary" id="saveRummy">
+
+    <button
+      class="primary"
+      id="saveRummy">
+
       卓結果を保存
+
     </button>
 
+
     <div class="small">
+
       公式スコア入力 → 合計点で順位作成（同点タイ）
+
     </div>
 
   </div>
@@ -521,7 +688,9 @@ button{
 
   <div class="card">
 
-    <h2>🏆 ラミィ順位</h2>
+    <h2>
+      🏆 ランキング
+    </h2>
 
     <div id="ranking"></div>
 
@@ -530,7 +699,9 @@ button{
 
   <div class="card">
 
-    <h2>📜 ラミィ対戦履歴</h2>
+    <h2>
+      📜 ラミィ対戦履歴
+    </h2>
 
     <div id="rummyHistory"></div>
 
@@ -538,9 +709,11 @@ button{
 
 
   <div class="back-home">
+
     <button onclick="show('home')">
       ← ホームへ戻る
     </button>
+
   </div>
 
 </section>
@@ -553,21 +726,38 @@ button{
 <section id="member" class="screen">
 
   <div class="pagehead">
-    <button class="back" onclick="show('home')">← ホーム</button>
-    <h1>👥 メンバー</h1>
+
+    <button
+      class="back"
+      onclick="show('home')">
+      ← ホーム
+    </button>
+
+    <h1>
+      👥 メンバー
+    </h1>
+
   </div>
 
 
   <div class="card">
 
-    <h2>👥 メンバー登録</h2>
+    <h2>
+      👥 メンバー登録
+    </h2>
+
 
     <input
       id="memberName"
       placeholder="表示名">
 
-    <button class="primary" id="addBtn">
+
+    <button
+      class="primary"
+      id="addBtn">
+
       メンバー追加
+
     </button>
 
   </div>
@@ -575,7 +765,9 @@ button{
 
   <div class="card">
 
-    <h2>メンバー一覧</h2>
+    <h2>
+      メンバー一覧
+    </h2>
 
     <div id="members"></div>
 
@@ -583,9 +775,11 @@ button{
 
 
   <div class="back-home">
+
     <button onclick="show('home')">
       ← ホームへ戻る
     </button>
+
   </div>
 
 </section>
@@ -598,14 +792,25 @@ button{
 <section id="historyPage" class="screen">
 
   <div class="pagehead">
-    <button class="back" onclick="show('home')">← ホーム</button>
-    <h1>📜 履歴・統計</h1>
+
+    <button
+      class="back"
+      onclick="show('home')">
+      ← ホーム
+    </button>
+
+    <h1>
+      📜 履歴・統計
+    </h1>
+
   </div>
 
 
   <div class="card">
 
-    <h2>🏰 カルカソンヌ</h2>
+    <h2>
+      🏰 カルカソンヌ
+    </h2>
 
     <div id="historyAllCarc"></div>
 
@@ -614,7 +819,9 @@ button{
 
   <div class="card">
 
-    <h2>🎲 ラミィキューブ</h2>
+    <h2>
+      🎲 ラミィキューブ
+    </h2>
 
     <div id="historyAllRummy"></div>
 
@@ -622,9 +829,11 @@ button{
 
 
   <div class="back-home">
+
     <button onclick="show('home')">
       ← ホームへ戻る
     </button>
+
   </div>
 
 </section>
@@ -634,6 +843,11 @@ button{
 
 
 <script>
+
+
+/* =========================
+   基本設定
+========================= */
 
 const KEY='brc-play-v033';
 
@@ -646,12 +860,22 @@ const $=id=>document.getElementById(id);
 
 let db=JSON.parse(
   localStorage.getItem(KEY)
-  || '{"members":[],"history":[],"rummy":[]}'
+  ||
+  '{"members":[],"history":[],"rummy":[]}'
 );
 
-if(!db.members) db.members=[];
-if(!db.history) db.history=[];
-if(!db.rummy) db.rummy=[];
+
+if(!db.members){
+  db.members=[];
+}
+
+if(!db.history){
+  db.history=[];
+}
+
+if(!db.rummy){
+  db.rummy=[];
+}
 
 
 /* =========================
@@ -659,7 +883,10 @@ if(!db.rummy) db.rummy=[];
 ========================= */
 
 const save=()=>{
-  localStorage.setItem(KEY,JSON.stringify(db));
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(db)
+  );
 };
 
 
@@ -698,17 +925,39 @@ function show(id){
 
   document
     .querySelectorAll('.screen')
-    .forEach(s=>s.classList.remove('active'));
+    .forEach(
+      s=>s.classList.remove('active')
+    );
+
 
   const target=$(id);
+
 
   if(target){
     target.classList.add('active');
   }
 
+
   window.scrollTo(0,0);
 
+
   render();
+
+}
+
+
+/* =========================
+   HTMLエスケープ
+========================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
 
 }
 
@@ -721,54 +970,97 @@ function renderMembers(){
 
   $('members').innerHTML='';
 
+
   db.members.forEach((m,i)=>{
 
-    const row=document.createElement('div');
+    const row=
+      document.createElement('div');
 
     row.className='member';
 
-    const info=document.createElement('div');
+
+    const info=
+      document.createElement('div');
 
     info.className='member-info';
 
-    const rummyTotal=db.rummy.reduce(
-      (sum,g)=>{
-        const p=g.find(x=>x.name===m.name);
-        return sum+(p?p.score:0);
-      },
-      0
-    );
+
+    const rummyTotal=
+      db.rummy.reduce(
+        (sum,g)=>{
+
+          const players=
+            Array.isArray(g)
+            ?g
+            :(g.players||[]);
+
+
+          const p=
+            players.find(
+              x=>x.name===m.name
+            );
+
+
+          return sum+
+            (
+              p
+              ?Number(p.score||0)
+              :0
+            );
+
+        },
+        0
+      );
+
 
     info.innerHTML=`
-      <b>${escapeHTML(m.name)}</b>
+
+      <b>
+        ${escapeHTML(m.name)}
+      </b>
+
       <div class="small">
-        カルカソンヌ レート ${m.carc||1000}
+        カルカソンヌ レート
+        ${m.carc||1000}
       </div>
+
       <div class="small">
-        ラミィ累計 ${rummyTotal}点
+        ラミィ累計
+        ${rummyTotal}点
       </div>
+
     `;
 
 
-    const box=document.createElement('div');
+    const box=
+      document.createElement('div');
 
-    box.className='member-buttons';
+    box.className=
+      'member-buttons';
 
 
-    const e=document.createElement('button');
+    const e=
+      document.createElement('button');
 
-    e.className='iconbtn edit';
+    e.className=
+      'iconbtn edit';
 
     e.textContent='✏️';
 
+
     e.onclick=()=>{
 
-      const v=prompt(
-        '表示名を変更',
-        m.name
-      );
+      const v=
+        prompt(
+          '表示名を変更',
+          m.name
+        );
 
-      if(v&&v.trim()){
+
+      if(
+        v&&
+        v.trim()
+      ){
 
         if(
           db.members.some(
@@ -777,11 +1069,19 @@ function renderMembers(){
               x.name===v.trim()
           )
         ){
-          alert('同じ名前があります');
+
+          alert(
+            '同じ名前があります'
+          );
+
           return;
+
         }
 
-        m.name=v.trim();
+
+        m.name=
+          v.trim();
+
 
         save();
 
@@ -792,11 +1092,14 @@ function renderMembers(){
     };
 
 
-    const d=document.createElement('button');
+    const d=
+      document.createElement('button');
 
-    d.className='iconbtn del';
+    d.className=
+      'iconbtn del';
 
     d.textContent='🗑️';
+
 
     d.onclick=()=>{
 
@@ -807,7 +1110,10 @@ function renderMembers(){
         )
       ){
 
-        db.members.splice(i,1);
+        db.members.splice(
+          i,
+          1
+        );
 
         save();
 
@@ -826,7 +1132,6 @@ function renderMembers(){
 
   });
 
-
 }
 
 
@@ -836,23 +1141,193 @@ function renderMembers(){
 
 function renderSelects(){
 
-  const opts=db.members.map(
-    (m,i)=>
-      `<option value="${i}">
-        ${escapeHTML(m.name)}
-      </option>`
-  ).join('');
+  const opts=
+    db.members
+      .map(
+        (m,i)=>
+        `<option value="${i}">
+          ${escapeHTML(m.name)}
+        </option>`
+      )
+      .join('');
 
 
-  $('playerA').innerHTML=opts;
+  $('playerA').innerHTML=
+    opts;
 
-  $('playerB').innerHTML=opts;
+  $('playerB').innerHTML=
+    opts;
 
 
-  ['r1','r2','r3','r4']
-    .forEach(id=>{
-      $(id).innerHTML=opts;
-    });
+  [
+    'r1',
+    'r2',
+    'r3',
+    'r4'
+  ].forEach(id=>{
+
+    $(id).innerHTML=
+      opts;
+
+  });
+
+}
+
+
+/* =========================
+   カルカソンヌ手番自動連動
+========================= */
+
+let syncingTurns=false;
+
+
+function syncTurnFromA(){
+
+  if(syncingTurns){
+    return;
+  }
+
+
+  syncingTurns=true;
+
+
+  if(
+    $('turnA').value==='先手'
+  ){
+
+    $('turnB').value='後手';
+
+  }else{
+
+    $('turnB').value='先手';
+
+  }
+
+
+  syncingTurns=false;
+
+}
+
+
+function syncTurnFromB(){
+
+  if(syncingTurns){
+    return;
+  }
+
+
+  syncingTurns=true;
+
+
+  if(
+    $('turnB').value==='先手'
+  ){
+
+    $('turnA').value='後手';
+
+  }else{
+
+    $('turnA').value='先手';
+
+  }
+
+
+  syncingTurns=false;
+
+}
+
+
+$('turnA').addEventListener(
+  'change',
+  syncTurnFromA
+);
+
+
+$('turnB').addEventListener(
+  'change',
+  syncTurnFromB
+);
+
+
+/* =========================
+   カルカソンヌランキング
+========================= */
+
+function renderCarcRanking(){
+
+  const sorted=
+    db.members
+      .map(m=>({
+
+        name:m.name,
+
+        rate:m.carc||1000
+
+      }))
+      .sort(
+        (a,b)=>b.rate-a.rate
+      );
+
+
+  if(!sorted.length){
+
+    $('carcRanking').innerHTML=`
+      <div class="small">
+        まだメンバーがいません
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  let lastRate=null;
+
+  let rank=0;
+
+
+  $('carcRanking').innerHTML=
+    sorted
+      .map((m,i)=>{
+
+        if(
+          lastRate!==m.rate
+        ){
+
+          rank=i+1;
+
+          lastRate=m.rate;
+
+        }
+
+
+        return `
+
+        <div class="rank">
+
+          <div class="rank-left">
+
+            <div class="rank-number">
+              ${rank}位
+            </div>
+
+            <b>
+              ${escapeHTML(m.name)}
+            </b>
+
+          </div>
+
+          <div class="rank-score">
+            ${m.rate}
+          </div>
+
+        </div>
+
+        `;
+
+      })
+      .join('');
 
 }
 
@@ -882,6 +1357,7 @@ function historyHTML(){
       const index=
         db.history.length-1-i;
 
+
       return `
 
       <div class="history">
@@ -894,6 +1370,7 @@ function historyHTML(){
             <b>
               ${escapeHTML(h.winner)}
             </b>
+
             （${escapeHTML(h.wTurn)}）
 
             <br>
@@ -908,19 +1385,26 @@ function historyHTML(){
             <br>
 
             <span class="small">
+
               ${escapeHTML(h.a)}
               ${h.ra1}→${h.ra2}
+
               /
+
               ${escapeHTML(h.b)}
               ${h.rb1}→${h.rb2}
+
             </span>
 
           </div>
 
+
           <button
             class="iconbtn del"
             onclick="deleteHistory(${index})">
+
             🗑️
+
           </button>
 
         </div>
@@ -929,7 +1413,8 @@ function historyHTML(){
 
       `;
 
-    }).join('');
+    })
+    .join('');
 
 }
 
@@ -959,23 +1444,29 @@ function rummyHistoryHTML(){
       const index=
         db.rummy.length-1-i;
 
+
       const players=
         Array.isArray(game)
         ?game
         :(game.players||[]);
 
 
-      const rows=players
-        .map((p,j)=>`
+      const rows=
+        players
+          .map(
+            (p,j)=>`
 
-          <div>
-            ${j+1}位
-            <b>${escapeHTML(p.name)}</b>
-            ${p.score}点
-          </div>
+            <div>
+              ${j+1}位
+              <b>
+                ${escapeHTML(p.name)}
+              </b>
+              ${p.score}点
+            </div>
 
-        `)
-        .join('');
+            `
+          )
+          .join('');
 
 
       return `
@@ -990,10 +1481,13 @@ function rummyHistoryHTML(){
 
           </div>
 
+
           <button
             class="iconbtn del"
             onclick="deleteRummy(${index})">
+
             🗑️
+
           </button>
 
         </div>
@@ -1002,13 +1496,14 @@ function rummyHistoryHTML(){
 
       `;
 
-    }).join('');
+    })
+    .join('');
 
 }
 
 
 /* =========================
-   ラミィ順位
+   ラミィランキング
 ========================= */
 
 function renderRanking(){
@@ -1017,7 +1512,9 @@ function renderRanking(){
 
 
   db.members.forEach(
-    m=>totals[m.name]=0
+    m=>{
+      totals[m.name]=0;
+    }
   );
 
 
@@ -1028,10 +1525,12 @@ function renderRanking(){
       ?game
       :(game.players||[]);
 
+
     players.forEach(p=>{
 
       totals[p.name]=
-        (totals[p.name]||0)+
+        (totals[p.name]||0)
+        +
         Number(p.score||0);
 
     });
@@ -1041,7 +1540,9 @@ function renderRanking(){
 
   const sorted=
     Object.entries(totals)
-    .sort((a,b)=>b[1]-a[1]);
+      .sort(
+        (a,b)=>b[1]-a[1]
+      );
 
 
   if(!sorted.length){
@@ -1058,43 +1559,51 @@ function renderRanking(){
 
 
   let lastScore=null;
+
   let rank=0;
 
 
   $('ranking').innerHTML=
-    sorted.map((e,i)=>{
+    sorted
+      .map((e,i)=>{
 
-      if(lastScore!==e[1]){
-        rank=i+1;
-        lastScore=e[1];
-      }
+        if(
+          lastScore!==e[1]
+        ){
+
+          rank=i+1;
+
+          lastScore=e[1];
+
+        }
 
 
-      return `
+        return `
 
-      <div class="rank">
+        <div class="rank">
 
-        <div class="rank-left">
+          <div class="rank-left">
 
-          <div class="rank-number">
-            ${rank}位
+            <div class="rank-number">
+              ${rank}位
+            </div>
+
+            <b>
+              ${escapeHTML(e[0])}
+            </b>
+
           </div>
 
-          <b>
-            ${escapeHTML(e[0])}
-          </b>
+          <div class="rank-score">
+            ${e[1]}点
+          </div>
 
         </div>
 
-        <div class="rank-score">
-          ${e[1]}点
-        </div>
+        `;
 
-      </div>
-
-      `;
-
-    }).join('');
+      })
+      .join('');
 
 }
 
@@ -1128,6 +1637,8 @@ function render(){
   $('history').innerHTML=
     historyHTML();
 
+  renderCarcRanking();
+
   renderRanking();
 
   $('rummyHistory').innerHTML=
@@ -1149,11 +1660,17 @@ function deleteHistory(index){
       'この対戦履歴を削除しますか？'
     )
   ){
+
     return;
+
   }
 
 
-  db.history.splice(index,1);
+  db.history.splice(
+    index,
+    1
+  );
+
 
   save();
 
@@ -1173,11 +1690,17 @@ function deleteRummy(index){
       'このラミィの卓結果を削除しますか？'
     )
   ){
+
     return;
+
   }
 
 
-  db.rummy.splice(index,1);
+  db.rummy.splice(
+    index,
+    1
+  );
+
 
   save();
 
@@ -1200,7 +1723,9 @@ $('addBtn').onclick=()=>{
 
   if(!n){
 
-    alert('表示名を入力してね');
+    alert(
+      '表示名を入力してね'
+    );
 
     return;
 
@@ -1213,7 +1738,9 @@ $('addBtn').onclick=()=>{
     )
   ){
 
-    alert('同じ名前があります');
+    alert(
+      '同じ名前があります'
+    );
 
     return;
 
@@ -1221,8 +1748,11 @@ $('addBtn').onclick=()=>{
 
 
   db.members.push({
+
     name:n,
+
     carc:1000
+
   });
 
 
@@ -1242,7 +1772,9 @@ $('addBtn').onclick=()=>{
 
 $('saveMatch').onclick=()=>{
 
-  if(db.members.length<2){
+  if(
+    db.members.length<2
+  ){
 
     alert(
       '先にメンバーを2人以上登録してね'
@@ -1255,6 +1787,7 @@ $('saveMatch').onclick=()=>{
 
   const ai=
     +$('playerA').value;
+
 
   const bi=
     +$('playerB').value;
@@ -1275,6 +1808,7 @@ $('saveMatch').onclick=()=>{
     Number(
       $('scoreA').value
     );
+
 
   const sb=
     Number(
@@ -1298,6 +1832,7 @@ $('saveMatch').onclick=()=>{
 
   const ta=
     $('turnA').value;
+
 
   const tb=
     $('turnB').value;
@@ -1325,12 +1860,14 @@ $('saveMatch').onclick=()=>{
   const A=
     db.members[ai];
 
+
   const B=
     db.members[bi];
 
 
   const oa=
     A.carc||1000;
+
 
   const ob=
     B.carc||1000;
@@ -1417,7 +1954,9 @@ $('saveMatch').onclick=()=>{
 
 $('saveRummy').onclick=()=>{
 
-  if(db.members.length<4){
+  if(
+    db.members.length<4
+  ){
 
     alert(
       '先にメンバーを4人以上登録してね'
@@ -1456,13 +1995,21 @@ $('saveRummy').onclick=()=>{
 
   const scores=[
 
-    Number($('rs1').value),
+    Number(
+      $('rs1').value
+    ),
 
-    Number($('rs2').value),
+    Number(
+      $('rs2').value
+    ),
 
-    Number($('rs3').value),
+    Number(
+      $('rs3').value
+    ),
 
-    Number($('rs4').value)
+    Number(
+      $('rs4').value
+    )
 
   ];
 
@@ -1484,22 +2031,26 @@ $('saveRummy').onclick=()=>{
 
   const game=
     ids
-      .map((id,i)=>({
+      .map(
+        (id,i)=>({
 
-        name:
-          db.members[id].name,
+          name:
+            db.members[id].name,
 
-        score:
-          scores[i]
+          score:
+            scores[i]
 
-      }))
+        })
+      )
       .sort(
         (a,b)=>
           b.score-a.score
       );
 
 
-  db.rummy.push(game);
+  db.rummy.push(
+    game
+  );
 
 
   save();
@@ -1524,22 +2075,6 @@ $('saveRummy').onclick=()=>{
   );
 
 };
-
-
-/* =========================
-   HTMLエスケープ
-========================= */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-
-}
 
 
 /* =========================

@@ -53,7 +53,16 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 
 <section id="practice" class="screen">
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏃 今日の練習会</h1></div>
-<div class="card"><h2>🏃 今日の練習会</h2><div class="small">Build113a：練習会ページを追加しました。</div></div>
+<div class="card">
+<h2>🏃 今日の練習会</h2>
+<div class="small">Build113b：練習会の参加者登録を追加しました。</div>
+<div class="field" style="margin-top:14px">
+<label>参加者（4〜40人）</label>
+<div id="practiceMembers"></div>
+</div>
+<button class="primary" id="practiceRegisterBtn" style="margin-top:12px">参加者を登録</button>
+<div id="practiceMemberStatus" class="small" style="margin-top:10px"></div>
+</div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
 
@@ -122,6 +131,54 @@ $('saveRummy').onclick=()=>{if(db.members.length<4){alert('先にメンバーを
 function escapeHTML(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 $('turnA').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnB').value=$('turnA').value==='先手'?'後手':'先手';syncingTurns=false});
 $('turnB').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnA').value=$('turnB').value==='先手'?'後手':'先手';syncingTurns=false});
+function renderPracticeMembers(){
+  const box=$('practiceMembers');
+  if(!box)return;
+  box.innerHTML=db.members.map((m,i)=>`
+    <label style="display:flex;align-items:center;gap:8px;padding:7px 0">
+      <input type="checkbox" class="practice-member-check" value="${i}">
+      <span>${escapeHTML(m.name)}</span>
+    </label>
+  `).join('');
+}
+
+function registerPracticeMembers(){
+  const checks=[...document.querySelectorAll('.practice-member-check:checked')];
+  const status=$('practiceMemberStatus');
+  if(checks.length<4||checks.length>40){
+    status.textContent='参加者は4〜40人で登録してね。';
+    return;
+  }
+  const names=checks.map(c=>db.members[Number(c.value)].name);
+  localStorage.setItem('brc-practice-today',JSON.stringify({
+    date:new Date().toISOString().slice(0,10),
+    names
+  }));
+  status.textContent=`${names.length}人を今日の練習会の参加者として登録しました。`;
+}
+
+document.addEventListener('click',function(e){
+  if(e.target && e.target.id==='practiceRegisterBtn'){
+    registerPracticeMembers();
+  }
+});
+
+const originalShow=show;
+show=function(id){
+  originalShow(id);
+  if(id==='practice'){
+    renderPracticeMembers();
+    const saved=JSON.parse(localStorage.getItem('brc-practice-today')||'null');
+    if(saved && saved.date===new Date().toISOString().slice(0,10)){
+      document.querySelectorAll('.practice-member-check').forEach(c=>{
+        c.checked=saved.names.includes(db.members[Number(c.value)].name);
+      });
+      const status=$('practiceMemberStatus');
+      if(status)status.textContent=`${saved.names.length}人が登録されています。`;
+    }
+  }
+};
+
 render();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js')}
 </script>

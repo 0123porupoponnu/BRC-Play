@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build112</title>
+<title>BRC Play Build113a</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -26,12 +26,13 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build112</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113a</div></div>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
+<button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>履歴・統計</b><span>対戦記録・ラミィ記録</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build112</div>
+<div class="footer">BRC Play Build113a</div>
 </section>
 
 <section id="carc" class="screen">
@@ -47,6 +48,12 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <div class="card"><h2>🎲 ラミィキューブ</h2><div class="row"><select id="r1"></select><select id="r2"></select></div><div class="row" style="margin-top:10px"><select id="r3"></select><select id="r4"></select></div><div class="row" style="margin-top:10px"><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="1人目"><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="2人目"></div><div class="row" style="margin-top:10px"><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="3人目"><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="4人目"></div><button class="primary" id="saveRummy">卓結果を保存</button><div class="small">公式スコア入力 → 合計点で順位作成（同点タイ）</div></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="ranking"></div></div>
 <div class="card"><h2>📜 ラミィ対戦履歴</h2><div id="rummyHistory"></div></div>
+<div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
+</section>
+
+<section id="practice" class="screen">
+<div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏃 今日の練習会</h1></div>
+<div class="card"><h2>🏃 今日の練習会</h2><div class="small">Build113a：練習会ページを追加しました。</div></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
 

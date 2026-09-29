@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build113a</title>
+<title>BRC Play Build113b</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -27,7 +27,7 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113a</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113b</div></div>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
@@ -62,6 +62,7 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <div id="practiceMembers"></div>
 </div>
 <button class="primary" id="practiceRegisterBtn" style="margin-top:12px">参加者を登録</button>
+<button id="practiceResetBtn" style="width:100%;margin-top:10px;background:rgba(255,255,255,.18);color:#fff">登録をリセット</button>
 <div id="practiceMemberStatus" class="small" style="margin-top:10px"></div>
 </div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
@@ -158,9 +159,20 @@ function registerPracticeMembers(){
   status.textContent=`${names.length}人を今日の練習会の参加者として登録しました。`;
 }
 
+function resetPracticeMembers(){
+  if(!confirm('今日の練習会の参加者登録をリセットしますか？'))return;
+  localStorage.removeItem('brc-practice-today');
+  renderPracticeMembers();
+  const status=$('practiceMemberStatus');
+  if(status)status.textContent='参加者登録をリセットしました。';
+}
+
 document.addEventListener('click',function(e){
   if(e.target && e.target.id==='practiceRegisterBtn'){
     registerPracticeMembers();
+  }
+  if(e.target && e.target.id==='practiceResetBtn'){
+    resetPracticeMembers();
   }
 });
 

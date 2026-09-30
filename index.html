@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build113e</title>
+<title>BRC Play Build113f</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -27,13 +27,13 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113e</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113f</div></div>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>履歴・統計</b><span>対戦記録・ラミィ記録</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build113e</div>
+<div class="footer">BRC Play Build113f</div>
 </section>
 
 <section id="carc" class="screen">
@@ -61,6 +61,10 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <div class="card">
 <h2>🎲 今日のラミィキューブ結果</h2>
 <div id="practiceRummyResults"></div>
+</div>
+<div class="card">
+<h2>🏆 ランキング</h2>
+<div id="practiceRummyRanking"></div>
 </div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
@@ -116,7 +120,7 @@ function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">ま�
 function renderRanking(){const totals={};db.members.forEach(m=>totals[m.name]=0);db.rummy.forEach(game=>{const players=Array.isArray(game)?game:(game.players||[]);players.forEach(p=>totals[p.name]=(totals[p.name]||0)+Number(p.score||0))});const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);if(!sorted.length){$('ranking').innerHTML='<div class="small">まだラミィの記録はありません</div>';return}let lastScore=null,rank=0;$('ranking').innerHTML=sorted.map((e,i)=>{if(lastScore!==e[1]){rank=i+1;lastScore=e[1]}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`}).join('')}
 function renderCarcRanking(){const sorted=db.members.slice().sort((a,b)=>(b.carc||1000)-(a.carc||1000));if(!sorted.length){$('carcRanking').innerHTML='<div class="small">まだメンバーがいません</div>';return}let last=null,rank=0;$('carcRanking').innerHTML=sorted.map((m,i)=>{const r=m.carc||1000;if(last!==r){rank=i+1;last=r}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(m.name)}</b></div><div class="rank-score">${r}</div></div>`}).join('')}
 function renderHistoryPage(){$('historyAllCarc').innerHTML=historyHTML();$('historyAllRummy').innerHTML=rummyHistoryHTML()}
-function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeCarcResults();renderPracticeRummyResults();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
+function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeCarcResults();renderPracticeRummyResults();renderPracticeRummyRanking();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
 function deleteHistory(index){if(!confirm('この対戦履歴を削除しますか？'))return;db.history.splice(index,1);save();render()}
 function deleteRummy(index){if(!confirm('このラミィの卓結果を削除しますか？'))return;db.rummy.splice(index,1);save();render()}
 function openMember(index){detailMemberIndex=index;detailGame='carc';show('memberDetail')}
@@ -177,12 +181,39 @@ function renderPracticeRummyResults(){
   }).join('');
 }
 
+function renderPracticeRummyRanking(){
+  const box=$('practiceRummyRanking');
+  if(!box)return;
+  const today=todayKey();
+  const totals={};
+  db.rummy.forEach(game=>{
+    if(!game || Array.isArray(game) || game.date!==today)return;
+    (game.players||[]).forEach(p=>{
+      totals[p.name]=(totals[p.name]||0)+Number(p.score||0);
+    });
+  });
+  const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+  if(!sorted.length){
+    box.innerHTML='<div class="small">今日のラミィキューブ対戦はまだありません</div>';
+    return;
+  }
+  let lastScore=null,rank=0;
+  box.innerHTML=sorted.map((e,i)=>{
+    if(lastScore!==e[1]){
+      rank=i+1;
+      lastScore=e[1];
+    }
+    return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`;
+  }).join('');
+}
+
 const originalShow=show;
 show=function(id){
   originalShow(id);
   if(id==='practice'){
     renderPracticeCarcResults();
     renderPracticeRummyResults();
+    renderPracticeRummyRanking();
   }
 };
 

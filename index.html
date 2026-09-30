@@ -150,15 +150,20 @@ function renderPracticeCarcResults(){
     box.innerHTML='<div class="small">今日のカルカソンヌ対戦はまだありません</div>';
     return;
   }
-  box.innerHTML=results.slice().reverse().map(h=>`
+  box.innerHTML=results.slice().reverse().map(h=>{
+    const index=db.history.indexOf(h);
+    return `
     <div class="history">
-      <div class="history-body">
-        👑 <b>${escapeHTML(h.winner)}</b>（${escapeHTML(h.wTurn)}）<br>
-        <b>${h.scoreA}-${h.scoreB}</b>　得失点差 ${escapeHTML(h.diffText)}<br>
-        <span class="small">${escapeHTML(h.a)} ${h.ra1}→${h.ra2} / ${escapeHTML(h.b)} ${h.rb1}→${h.rb2}</span>
+      <div class="history-head">
+        <div class="history-body">
+          👑 <b>${escapeHTML(h.winner)}</b>（${escapeHTML(h.wTurn)}）<br>
+          <b>${h.scoreA}-${h.scoreB}</b>　得失点差 ${escapeHTML(h.diffText)}<br>
+          <span class="small">${escapeHTML(h.a)} ${h.ra1}→${h.ra2} / ${escapeHTML(h.b)} ${h.rb1}→${h.rb2}</span>
+        </div>
+        <button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 }
 
 function renderPracticeMembers(){

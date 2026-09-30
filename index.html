@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build113c</title>
+<title>BRC Play Build113d</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -14,7 +14,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans
 .h{text-align:center;padding:12px 0 8px}.h img{width:100px;border-radius:22px}.h h1{margin:12px 0 4px}
 .pagehead{display:flex;align-items:center;gap:10px;margin:4px 0 16px}.back{background:rgba(255,255,255,.18);color:#fff;padding:10px 14px;border-radius:14px;font-weight:700}.pagehead h1{font-size:22px;margin:0}
 input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:border-box;font-size:16px;background:#fff;color:#222}
-.practice-member-check{width:auto!important;flex:0 0 auto;margin:0}button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:15px}.primary{background:#fff;color:#0B5CAD;width:100%;margin-top:10px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}.small{font-size:13px;opacity:.8}.center{text-align:center}
+button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:15px}.primary{background:#fff;color:#0B5CAD;width:100%;margin-top:10px}.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}.small{font-size:13px;opacity:.8}.center{text-align:center}
 .home-title{text-align:center;padding:12px 0 18px}.home-title img{width:100px;border-radius:22px}.home-title h1{margin:12px 0 4px;font-size:30px}.home-title .build{font-size:13px;opacity:.75}
 .menu-card{display:flex;align-items:center;gap:16px;width:100%;padding:20px;margin:14px 0;border:0;border-radius:22px;background:rgba(255,255,255,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;text-align:left;cursor:pointer}.menu-card:active{transform:scale(.98)}.menu-icon{font-size:34px;width:48px;text-align:center}.menu-text{flex:1}.menu-text b{display:block;font-size:19px;margin-bottom:3px}.menu-text span{font-size:13px;opacity:.75}.menu-arrow{font-size:24px;opacity:.7}
 .member{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12);cursor:pointer}.member:last-child{border-bottom:0}.member-info{min-width:0}.member-info b{font-size:17px}.member-buttons{display:flex;gap:8px;margin-left:10px}.iconbtn{width:38px;height:38px;border-radius:10px;padding:0}.edit{background:rgba(255,255,255,.18);color:#fff}.del{background:#E53935;color:#fff}
@@ -27,13 +27,13 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113c</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113d</div></div>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>履歴・統計</b><span>対戦記録・ラミィ記録</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build113c</div>
+<div class="footer">BRC Play Build113d</div>
 </section>
 
 <section id="carc" class="screen">
@@ -56,18 +56,15 @@ input,select{width:100%;padding:12px;border:0;border-radius:14px;box-sizing:bord
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏃 今日の練習会</h1></div>
 <div class="card">
 <h2>🏃 今日の練習会</h2>
-<div class="small">Build113c：練習会の参加者登録を追加しました。</div>
-<div class="field" style="margin-top:14px">
-<label>参加者（4〜40人）</label>
-<div id="practiceMembers"></div>
-</div>
-<button class="primary" id="practiceRegisterBtn" style="margin-top:12px">参加者を登録</button>
-<button id="practiceResetBtn" style="width:100%;margin-top:10px;background:rgba(255,255,255,.18);color:#fff">登録をリセット</button>
-<div id="practiceMemberStatus" class="small" style="margin-top:10px"></div>
+<div class="small">Build113d：今日登録した結果をまとめて表示します。</div>
 </div>
 <div class="card">
 <h2>🏰 今日のカルカソンヌ結果</h2>
 <div id="practiceCarcResults"></div>
+</div>
+<div class="card">
+<h2>🎲 今日のラミィキューブ結果</h2>
+<div id="practiceRummyResults"></div>
 </div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
@@ -123,7 +120,7 @@ function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">ま�
 function renderRanking(){const totals={};db.members.forEach(m=>totals[m.name]=0);db.rummy.forEach(game=>{const players=Array.isArray(game)?game:(game.players||[]);players.forEach(p=>totals[p.name]=(totals[p.name]||0)+Number(p.score||0))});const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);if(!sorted.length){$('ranking').innerHTML='<div class="small">まだラミィの記録はありません</div>';return}let lastScore=null,rank=0;$('ranking').innerHTML=sorted.map((e,i)=>{if(lastScore!==e[1]){rank=i+1;lastScore=e[1]}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`}).join('')}
 function renderCarcRanking(){const sorted=db.members.slice().sort((a,b)=>(b.carc||1000)-(a.carc||1000));if(!sorted.length){$('carcRanking').innerHTML='<div class="small">まだメンバーがいません</div>';return}let last=null,rank=0;$('carcRanking').innerHTML=sorted.map((m,i)=>{const r=m.carc||1000;if(last!==r){rank=i+1;last=r}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(m.name)}</b></div><div class="rank-score">${r}</div></div>`}).join('')}
 function renderHistoryPage(){$('historyAllCarc').innerHTML=historyHTML();$('historyAllRummy').innerHTML=rummyHistoryHTML()}
-function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeCarcResults();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
+function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeCarcResults();renderPracticeRummyResults();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
 function deleteHistory(index){if(!confirm('この対戦履歴を削除しますか？'))return;db.history.splice(index,1);save();render()}
 function deleteRummy(index){if(!confirm('このラミィの卓結果を削除しますか？'))return;db.rummy.splice(index,1);save();render()}
 function openMember(index){detailMemberIndex=index;detailGame='carc';show('memberDetail')}
@@ -133,7 +130,7 @@ function renderMemberCarcDetail(m){const matches=db.history.filter(h=>h.a===m.na
 function renderMemberRummyDetail(m){const games=db.rummy.filter(g=>{const players=Array.isArray(g)?g:(g.players||[]);return players.some(p=>p.name===m.name)});let total=0,wins=0;games.forEach(g=>{const players=Array.isArray(g)?g:(g.players||[]);const p=players.find(x=>x.name===m.name);if(p)total+=Number(p.score||0);if(players.length&&players[0].name===m.name)wins++});const rate=games.length?((wins/games.length)*100).toFixed(1):'0.0';const hist=games.slice().reverse().map((g,i)=>{const players=Array.isArray(g)?g:(g.players||[]);const me=players.find(p=>p.name===m.name);const rank=players.findIndex(p=>p.name===m.name)+1;const others=players.filter(p=>p.name!==m.name).map(p=>`${escapeHTML(p.name)} ${p.score}点`).join(' / ');return `<div class="history"><div class="history-head"><div class="history-body"><span class="${rank===1?'win':'loss'}">${rank===1?'○ 1位':'・ '+rank+'位'}</span>　<b>${me?me.score:0}点</b><br><span class="small">${others}</span></div></div></div>`}).join('')||'<div class="small">まだ対戦履歴はありません</div>';$('memberDetailContent').innerHTML=`<div class="card"><h2>🎲 ラミィキューブ</h2><div class="stat-grid"><div class="stat">累計得点<b>${total}点</b></div><div class="stat">試合数<b>${games.length}</b></div><div class="stat">勝率（1位率）<b>${rate}%</b></div></div></div><div class="card"><h2>📜 対戦履歴</h2>${hist}</div>`}
 $('addBtn').onclick=()=>{const n=$('memberName').value.trim();if(!n){alert('表示名を入力してね');return}if(db.members.some(m=>m.name===n)){alert('同じ名前があります');return}db.members.push({name:n,carc:1000});$('memberName').value='';save();render()};
 $('saveMatch').onclick=()=>{if(db.members.length<2){alert('先にメンバーを2人以上登録してね');return}const ai=+$('playerA').value,bi=+$('playerB').value;if(ai===bi){alert('別のメンバーを選んでね');return}const sa=Number($('scoreA').value),sb=Number($('scoreB').value);if(Number.isNaN(sa)||Number.isNaN(sb)){alert('得点を入力してね');return}const ta=$('turnA').value,tb=$('turnB').value;if(ta===tb){alert('先手と後手を分けてね');return}const aWin=sa>sb||(sa===sb&&ta==='後手');const A=db.members[ai],B=db.members[bi];const oa=A.carc||1000,ob=B.carc||1000;A.carc=elo(oa,ob,aWin?1:0);B.carc=elo(ob,oa,aWin?0:1);const diff=sa-sb;db.history.push({date:todayKey(),a:A.name,b:B.name,winner:aWin?A.name:B.name,wTurn:aWin?ta:tb,scoreA:sa,scoreB:sb,diffText:diff>0?`A +${diff} / B -${diff}`:diff<0?`A ${diff} / B +${-diff}`:'±0',ra1:oa,ra2:A.carc,rb1:ob,rb2:B.carc});save();render();$('scoreA').value='';$('scoreB').value='';alert('結果を登録したよ！')};
-$('saveRummy').onclick=()=>{if(db.members.length<4){alert('先にメンバーを4人以上登録してね');return}const ids=[$('r1').value,$('r2').value,$('r3').value,$('r4').value];if(new Set(ids).size!==4){alert('4人とも別のメンバーを選んでね');return}const scores=[Number($('rs1').value),Number($('rs2').value),Number($('rs3').value),Number($('rs4').value)];if(scores.some(Number.isNaN)){alert('4人分の得点を入力してね');return}const game=ids.map((id,i)=>({name:db.members[id].name,score:scores[i]})).sort((a,b)=>b.score-a.score);db.rummy.push(game);save();render();['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');alert('ラミィの卓結果を保存したよ！')};
+$('saveRummy').onclick=()=>{if(db.members.length<4){alert('先にメンバーを4人以上登録してね');return}const ids=[$('r1').value,$('r2').value,$('r3').value,$('r4').value];if(new Set(ids).size!==4){alert('4人とも別のメンバーを選んでね');return}const scores=[Number($('rs1').value),Number($('rs2').value),Number($('rs3').value),Number($('rs4').value)];if(scores.some(Number.isNaN)){alert('4人分の得点を入力してね');return}const players=ids.map((id,i)=>({name:db.members[id].name,score:scores[i]})).sort((a,b)=>b.score-a.score);const game={date:todayKey(),players};db.rummy.push(game);save();render();['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');alert('ラミィの卓結果を保存したよ！')};
 function escapeHTML(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 $('turnA').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnB').value=$('turnA').value==='先手'?'後手':'先手';syncingTurns=false});
 $('turnB').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnA').value=$('turnB').value==='先手'?'後手':'先手';syncingTurns=false});
@@ -167,63 +164,29 @@ function renderPracticeCarcResults(){
   `}).join('');
 }
 
-function renderPracticeMembers(){
-  const box=$('practiceMembers');
+function renderPracticeRummyResults(){
+  const box=$('practiceRummyResults');
   if(!box)return;
-  box.innerHTML=db.members.map((m,i)=>`
-    <label style="display:flex;align-items:center;gap:8px;padding:7px 0">
-      <input type="checkbox" class="practice-member-check" value="${i}">
-      <span>${escapeHTML(m.name)}</span>
-    </label>
-  `).join('');
-}
-
-function registerPracticeMembers(){
-  const checks=[...document.querySelectorAll('.practice-member-check:checked')];
-  const status=$('practiceMemberStatus');
-  if(checks.length<4||checks.length>40){
-    status.textContent='参加者は4〜40人で登録してね。';
+  const today=todayKey();
+  const results=db.rummy.filter(g=>g && !Array.isArray(g) && g.date===today);
+  if(!results.length){
+    box.innerHTML='<div class="small">今日のラミィキューブ対戦はまだありません</div>';
     return;
   }
-  const names=checks.map(c=>db.members[Number(c.value)].name);
-  localStorage.setItem('brc-practice-today',JSON.stringify({
-    date:todayKey(),
-    names
-  }));
-  status.textContent=`${names.length}人を今日の練習会の参加者として登録しました。`;
+  box.innerHTML=results.slice().reverse().map(g=>{
+    const index=db.rummy.indexOf(g);
+    const players=g.players||[];
+    const rows=players.map((p,j)=>`<div>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</div>`).join('');
+    return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`;
+  }).join('');
 }
-
-function resetPracticeMembers(){
-  if(!confirm('今日の練習会の参加者登録をリセットしますか？'))return;
-  localStorage.removeItem('brc-practice-today');
-  renderPracticeMembers();
-  const status=$('practiceMemberStatus');
-  if(status)status.textContent='参加者登録をリセットしました。';
-}
-
-document.addEventListener('click',function(e){
-  if(e.target && e.target.id==='practiceRegisterBtn'){
-    registerPracticeMembers();
-  }
-  if(e.target && e.target.id==='practiceResetBtn'){
-    resetPracticeMembers();
-  }
-});
 
 const originalShow=show;
 show=function(id){
   originalShow(id);
   if(id==='practice'){
-    renderPracticeMembers();
     renderPracticeCarcResults();
-    const saved=JSON.parse(localStorage.getItem('brc-practice-today')||'null');
-    if(saved && saved.date===todayKey()){
-      document.querySelectorAll('.practice-member-check').forEach(c=>{
-        c.checked=saved.names.includes(db.members[Number(c.value)].name);
-      });
-      const status=$('practiceMemberStatus');
-      if(status)status.textContent=`${saved.names.length}人が登録されています。`;
-    }
+    renderPracticeRummyResults();
   }
 };
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build113j</title>
+<title>BRC Play Build113k</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -27,13 +27,13 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113j</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build113k</div></div>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>履歴・統計</b><span>対戦記録・ラミィ記録</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build113j</div>
+<div class="footer">BRC Play Build113k</div>
 </section>
 
 <section id="carc" class="screen">
@@ -56,7 +56,12 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏃 今日の練習会</h1></div>
 
 <div class="card">
-<h2>🏰 カルカソンヌ</h2>
+<div class="toggle">
+<button id="practiceCarcTab" class="active" onclick="switchPracticeGame('carc')">🏰 カルカソンヌ</button>
+<button id="practiceRummyTab" onclick="switchPracticeGame('rummy')">🎲 ラミィキューブ</button>
+</div>
+
+<div id="practiceCarcPanel">
 <div class="history">
 <h3>今日の結果</h3>
 <div id="practiceCarcResults"></div>
@@ -67,8 +72,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 </div>
 </div>
 
-<div class="card">
-<h2>🎲 ラミィキューブ</h2>
+<div id="practiceRummyPanel" style="display:none">
 <div class="history">
 <h3>今日の結果</h3>
 <div id="practiceRummyResults"></div>
@@ -76,6 +80,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <div class="history">
 <h3>🏆 ランキング</h3>
 <div id="practiceRummyRanking"></div>
+</div>
 </div>
 </div>
 
@@ -299,6 +304,20 @@ function finishPractice(){
   renderPracticeFinishStatus();
   render();
   alert('練習会を終了して、ラミィキューブのレーティングを更新しました！');
+}
+
+function switchPracticeGame(game){
+  const carc=$('practiceCarcPanel');
+  const rummy=$('practiceRummyPanel');
+  const carcTab=$('practiceCarcTab');
+  const rummyTab=$('practiceRummyTab');
+  if(!carc||!rummy||!carcTab||!rummyTab)return;
+
+  const isCarc=game==='carc';
+  carc.style.display=isCarc?'block':'none';
+  rummy.style.display=isCarc?'none':'block';
+  carcTab.classList.toggle('active',isCarc);
+  rummyTab.classList.toggle('active',!isCarc);
 }
 
 function renderPracticeCarcRanking(){

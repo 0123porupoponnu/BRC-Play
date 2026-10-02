@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build121</title>
+<title>BRC Play Build122</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -35,14 +35,14 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build121</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build122</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build121</div>
+<div class="footer">BRC Play Build122</div>
 </section>
 
 <section id="carc" class="screen">
@@ -328,15 +328,21 @@ function syncRummyScoresFromInputs(){
   for(let i=0;i<4;i++){
     if(i===rummyWinnerIndex)continue;
     const input=$('rs'+(i+1));
-    const n=String(input.value).trim().replace(/^[+-]/,'');
-    if(n!=='')rummyBaseScores[i]=n;
+    if(!input)continue;
+    const raw=String(input.value).trim();
+    const n=raw.replace(/^[+-]/,'');
+    rummyBaseScores[i]=n;
   }
-  for(let i=0;i<4;i++){
-    if(i===rummyWinnerIndex)continue;
-    const input=$('rs'+(i+1));
-    const n=String(rummyBaseScores[i]||'').trim().replace(/^[+-]/,'');
-    input.value=n?'-'+n:'';
-  }
+  updateRummyWinnerScore();
+}
+function normalizeRummyScoreInput(index){
+  if(rummyWinnerIndex===null||index===rummyWinnerIndex)return;
+  const input=$('rs'+(index+1));
+  if(!input)return;
+  const raw=String(input.value).trim();
+  const n=raw.replace(/^[+-]/,'');
+  rummyBaseScores[index]=n;
+  input.value=n?'-'+n:'';
   updateRummyWinnerScore();
 }
 
@@ -732,7 +738,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build121';
+  backup.build='Build122';
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -788,7 +794,15 @@ function resetData(){
   location.reload();
 }
 
-['rs1','rs2','rs3','rs4'].forEach((id,i)=>$(id).addEventListener('input',()=>{if(rummyWinnerIndex===null||rummyWinnerIndex===i)return;captureRummyBaseScores();syncRummyScoresFromInputs();}));
+['rs1','rs2','rs3','rs4'].forEach((id,i)=>{
+  $(id).addEventListener('input',()=>{
+    if(rummyWinnerIndex===null||rummyWinnerIndex===i)return;
+    const raw=String($(id).value).trim();
+    rummyBaseScores[i]=raw.replace(/^[+-]/,'');
+    updateRummyWinnerScore();
+  });
+  $(id).addEventListener('blur',()=>normalizeRummyScoreInput(i));
+});
 updateRummyInputStates();
 render();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js')}

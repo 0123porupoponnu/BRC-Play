@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build127</title>
+<title>BRC Play Build129</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -29,20 +29,20 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .summary-item{background:rgba(255,255,255,.08);border-radius:14px;padding:12px;text-align:center}
 .summary-item b{display:block;font-size:22px;margin-top:4px}
 .rate-up{font-weight:800}
-.rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) 40px minmax(95px,.9fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}
+.rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) 40px minmax(95px,.9fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}.rummy-penalty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}.rummy-penalty-undo{width:40px;min-width:40px;height:24px;padding:0!important;font-size:14px;line-height:24px;display:none}.rummy-penalty-undo.show{display:block}
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build127</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build129</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build127</div>
+<div class="footer">BRC Play Build129</div>
 </section>
 
 <section id="carc" class="screen">
@@ -55,7 +55,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 <section id="rummy" class="screen">
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🎲 ラミィキューブ</h1></div>
-<div class="card"><h2>🎲 ラミィキューブ</h2><div class="small" style="margin-bottom:10px">① まず名前の横の 🏆(勝者) を押してね。② そのあと3人の点数を入力します。</div><div class="rummy-player-row"><select id="r1"></select><button type="button" class="winner-btn" id="winner1" onclick="setRummyWinner(0)" title="勝者">🏆</button><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty1" onclick="applyRummyInputPenalty(0)" title="⚠️ ペナルティ">⚠️</button></div><div class="rummy-player-row"><select id="r2"></select><button type="button" class="winner-btn" id="winner2" onclick="setRummyWinner(1)" title="勝者">🏆</button><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty2" onclick="applyRummyInputPenalty(1)" title="⚠️ ペナルティ">⚠️</button></div><div class="rummy-player-row"><select id="r3"></select><button type="button" class="winner-btn" id="winner3" onclick="setRummyWinner(2)" title="勝者">🏆</button><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty3" onclick="applyRummyInputPenalty(2)" title="⚠️ ペナルティ">⚠️</button></div><div class="rummy-player-row"><select id="r4"></select><button type="button" class="winner-btn" id="winner4" onclick="setRummyWinner(3)" title="勝者">🏆</button><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty4" onclick="applyRummyInputPenalty(3)" title="⚠️ ペナルティ">⚠️</button></div><div class="small" style="margin-top:12px">⚠️ ペナルティを押すと、その人の得点から1回につき50点減点されます。保存前に何回でも追加できます。</div><button class="primary" id="saveRummy">卓結果を保存</button></div>
+<div class="card"><h2>🎲 ラミィキューブ</h2><div class="small" style="margin-bottom:10px">① まず名前の横の 🏆(勝者) を押してね。<br>② そのあと3人の点数を入力します。</div><div class="rummy-player-row"><select id="r1"></select><button type="button" class="winner-btn" id="winner1" onclick="setRummyWinner(0)" title="勝者">🏆</button><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty1" onclick="applyRummyInputPenalty(0)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo1" onclick="undoRummyInputPenalty(0)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r2"></select><button type="button" class="winner-btn" id="winner2" onclick="setRummyWinner(1)" title="勝者">🏆</button><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty2" onclick="applyRummyInputPenalty(1)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo2" onclick="undoRummyInputPenalty(1)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r3"></select><button type="button" class="winner-btn" id="winner3" onclick="setRummyWinner(2)" title="勝者">🏆</button><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty3" onclick="applyRummyInputPenalty(2)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo3" onclick="undoRummyInputPenalty(2)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r4"></select><button type="button" class="winner-btn" id="winner4" onclick="setRummyWinner(3)" title="勝者">🏆</button><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty4" onclick="applyRummyInputPenalty(3)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo4" onclick="undoRummyInputPenalty(3)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="small" style="margin-top:12px">⚠️ ペナルティを押すと、その人の得点から1回につき50点減点されます。保存前に何回でも追加できます。</div><button class="primary" id="saveRummy">卓結果を保存</button></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="ranking"></div></div>
 <div class="card"><h2>📜 ラミィ対戦履歴</h2><div id="rummyHistory"></div></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
@@ -330,10 +330,12 @@ function normalRummyScore(index){
 function updateRummyPenaltyButtons(){
   for(let i=0;i<4;i++){
     const btn=$('penalty'+(i+1));
+    const undo=$('penaltyUndo'+(i+1));
     if(!btn)continue;
     const count=rummyPenaltyCounts[i]||0;
     btn.classList.toggle('active',count>0);
     btn.title=count>0?'⚠️ ペナルティ '+count+'回':'⚠️ ペナルティ';
+    if(undo)undo.classList.toggle('show',count>0);
   }
 }
 function updateRummyDisplayedScores(){
@@ -359,6 +361,11 @@ function applyRummyInputPenalty(index){
   if(rummyWinnerIndex===null){alert('先に勝者を選んでね');return}
   syncRummyScoresFromInputs();
   rummyPenaltyCounts[index]=(rummyPenaltyCounts[index]||0)+1;
+  updateRummyDisplayedScores();
+}
+function undoRummyInputPenalty(index){
+  if(rummyPenaltyCounts[index]<=0)return;
+  rummyPenaltyCounts[index]--;
   updateRummyDisplayedScores();
 }
 function syncRummyScoresFromInputs(){
@@ -761,7 +768,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build127';
+  backup.build='Build129';
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');

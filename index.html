@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build114</title>
+<title>BRC Play Build117</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -29,20 +29,20 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .summary-item{background:rgba(255,255,255,.08);border-radius:14px;padding:12px;text-align:center}
 .summary-item b{display:block;font-size:22px;margin-top:4px}
 .rate-up{font-weight:800}
-.rate-down{font-weight:800}
+.rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build114</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build117</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build114</div>
+<div class="footer">BRC Play Build117</div>
 </section>
 
 <section id="carc" class="screen">
@@ -55,7 +55,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 <section id="rummy" class="screen">
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🎲 ラミィキューブ</h1></div>
-<div class="card"><h2>🎲 ラミィキューブ</h2><div class="row"><select id="r1"></select><select id="r2"></select></div><div class="row" style="margin-top:10px"><select id="r3"></select><select id="r4"></select></div><div class="row" style="margin-top:10px"><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="1人目"><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="2人目"></div><div class="row" style="margin-top:10px"><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="3人目"><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="4人目"></div><button class="primary" id="saveRummy">卓結果を保存</button><div class="small">公式スコア入力 → 合計点で順位作成（同点タイ）</div></div>
+<div class="card"><h2>🎲 ラミィキューブ</h2><div class="row"><select id="r1"></select><select id="r2"></select></div><div class="row" style="margin-top:10px"><select id="r3"></select><select id="r4"></select></div><div class="row" style="margin-top:10px"><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="1人目"><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="2人目"></div><div class="row" style="margin-top:10px"><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="3人目"><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="4人目"></div><div class="small" style="margin-top:12px">🏆 勝者を選ぶと、他3人は自動的にマイナスになり、勝者の得点は3人のマイナス得点の合計＋100点になります。得点登録後、必要な人だけ⚠️を押すと、その人の得点から1回につき50点減点されます。</div><div class="row" style="margin-top:8px"><button type="button" class="winner-btn" id="winner1" onclick="setRummyWinner(0)">🏆 勝者</button><button type="button" class="winner-btn" id="winner2" onclick="setRummyWinner(1)">🏆 勝者</button></div><div class="row" style="margin-top:8px"><button type="button" class="winner-btn" id="winner3" onclick="setRummyWinner(2)">🏆 勝者</button><button type="button" class="winner-btn" id="winner4" onclick="setRummyWinner(3)">🏆 勝者</button></div><button class="primary" id="saveRummy">卓結果を保存</button><div class="small">得点登録後、⚠️を押した人だけ1回につき−50点。累計もペナルティ反映後の得点で計算。</div></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="ranking"></div></div>
 <div class="card"><h2>📜 ラミィ対戦履歴</h2><div id="rummyHistory"></div></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
@@ -164,7 +164,7 @@ if(!db.members)db.members=[];if(!db.history)db.history=[];if(!db.rummy)db.rummy=
 db.members.forEach(m=>{if(!Array.isArray(m.rummyRateHistory))m.rummyRateHistory=[]});
 const save=()=>localStorage.setItem(KEY,JSON.stringify(db));
 const elo=(r1,r2,s)=>Math.max(0,Math.round(r1+32*(s-(1/(1+Math.pow(10,(r2-r1)/400))))));
-let detailMemberIndex=null,detailGame='carc',practiceDetailDate=null,syncingTurns=false;
+let detailMemberIndex=null,detailGame='carc',practiceDetailDate=null,syncingTurns=false,rummyWinnerIndex=null;
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const target=$(id);if(target)target.classList.add('active');window.scrollTo(0,0);render();}
 function renderMembers(){
 $('members').innerHTML='';
@@ -182,7 +182,7 @@ box.append(e,d);row.append(box);$('members').append(row);
 }
 function renderSelects(){const opts=db.members.map((m,i)=>`<option value="${i}">${escapeHTML(m.name)}</option>`).join('');$('playerA').innerHTML=opts;$('playerB').innerHTML=opts;['r1','r2','r3','r4'].forEach(id=>$(id).innerHTML=opts)}
 function historyHTML(){if(!db.history.length)return '<div class="small">まだ対戦記録はありません</div>';return db.history.slice().reverse().map((h,i)=>{const index=db.history.length-1-i;return `<div class="history"><div class="history-head"><div class="history-body">👑 <b>${escapeHTML(h.winner)}</b>（${escapeHTML(h.wTurn)}）<br><b>${h.scoreA}-${h.scoreB}</b> 得失点差 ${escapeHTML(h.diffText)}<br><span class="small">${escapeHTML(h.a)} ${h.ra1}→${h.ra2} / ${escapeHTML(h.b)} ${h.rb1}→${h.rb2}</span></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`}).join('')}
-function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">まだラミィの記録はありません</div>';return db.rummy.slice().reverse().map((game,i)=>{const index=db.rummy.length-1-i;const players=Array.isArray(game)?game:(game.players||[]);const rows=players.map((p,j)=>`<div>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</div>`).join('');return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`}).join('')}
+function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">まだラミィの記録はありません</div>';return db.rummy.slice().reverse().map((game,i)=>{const index=db.rummy.length-1-i;const players=Array.isArray(game)?game:(game.players||[]);const rows=players.map((p,j)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px"><span>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</span>${rummyPenaltyButton(index,p)}</div>`).join('');return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`}).join('')}
 function renderRanking(){const totals={};db.members.forEach(m=>totals[m.name]=0);db.rummy.forEach(game=>{const players=Array.isArray(game)?game:(game.players||[]);players.forEach(p=>totals[p.name]=(totals[p.name]||0)+Number(p.score||0))});const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);if(!sorted.length){$('ranking').innerHTML='<div class="small">まだラミィの記録はありません</div>';return}let lastScore=null,rank=0;$('ranking').innerHTML=sorted.map((e,i)=>{if(lastScore!==e[1]){rank=i+1;lastScore=e[1]}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`}).join('')}
 function renderCarcRanking(){const sorted=db.members.slice().sort((a,b)=>(b.carc||1000)-(a.carc||1000));if(!sorted.length){$('carcRanking').innerHTML='<div class="small">まだメンバーがいません</div>';return}let last=null,rank=0;$('carcRanking').innerHTML=sorted.map((m,i)=>{const r=m.carc||1000;if(last!==r){rank=i+1;last=r}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(m.name)}</b></div><div class="rank-score">${r}</div></div>`}).join('')}
 function renderPracticeHistory(){
@@ -279,8 +279,30 @@ function renderRummyRateHistory(m){
 function renderMemberRummyDetail(m){const games=db.rummy.filter(g=>{const players=Array.isArray(g)?g:(g.players||[]);return players.some(p=>p.name===m.name)});let total=0,wins=0;games.forEach(g=>{const players=Array.isArray(g)?g:(g.players||[]);const p=players.find(x=>x.name===m.name);if(p)total+=Number(p.score||0);if(players.length&&players[0].name===m.name)wins++});const rate=games.length?((wins/games.length)*100).toFixed(1):'0.0';const hist=games.slice().reverse().map((g,i)=>{const players=Array.isArray(g)?g:(g.players||[]);const me=players.find(p=>p.name===m.name);const rank=players.findIndex(p=>p.name===m.name)+1;const others=players.filter(p=>p.name!==m.name).map(p=>`${escapeHTML(p.name)} ${p.score}点`).join(' / ');return `<div class="history"><div class="history-head"><div class="history-body"><span class="${rank===1?'win':'loss'}">${rank===1?'○ 1位':'・ '+rank+'位'}</span>　<b>${me?me.score:0}点</b><br><span class="small">${others}</span></div></div></div>`}).join('')||'<div class="small">まだ対戦履歴はありません</div>';$('memberDetailContent').innerHTML=`<div class="card"><h2>🎲 ラミィキューブ</h2><div class="stat-grid"><div class="stat">現在レート<b>${rummyRate(m)}</b></div><div class="stat">累計得点<b>${total}点</b></div><div class="stat">試合数<b>${games.length}</b></div><div class="stat">勝率（1位率）<b>${rate}%</b></div></div></div><div class="card"><h2>📈 レート履歴</h2><div class="timeline">${renderRummyRateHistory(m)}</div></div><div class="card"><h2>📜 対戦履歴</h2>${hist}</div>`}
 $('addBtn').onclick=()=>{const n=$('memberName').value.trim();if(!n){alert('表示名を入力してね');return}if(db.members.some(m=>m.name===n)){alert('同じ名前があります');return}db.members.push({name:n,carc:1000});$('memberName').value='';save();render()};
 $('saveMatch').onclick=()=>{if(db.members.length<2){alert('先にメンバーを2人以上登録してね');return}const ai=+$('playerA').value,bi=+$('playerB').value;if(ai===bi){alert('別のメンバーを選んでね');return}const sa=Number($('scoreA').value),sb=Number($('scoreB').value);if(Number.isNaN(sa)||Number.isNaN(sb)){alert('得点を入力してね');return}const ta=$('turnA').value,tb=$('turnB').value;if(ta===tb){alert('先手と後手を分けてね');return}const aWin=sa>sb||(sa===sb&&ta==='後手');const A=db.members[ai],B=db.members[bi];const oa=A.carc||1000,ob=B.carc||1000;A.carc=elo(oa,ob,aWin?1:0);B.carc=elo(ob,oa,aWin?0:1);const diff=sa-sb;db.history.push({date:todayKey(),a:A.name,b:B.name,winner:aWin?A.name:B.name,wTurn:aWin?ta:tb,scoreA:sa,scoreB:sb,diffText:diff>0?`A +${diff} / B -${diff}`:diff<0?`A ${diff} / B +${-diff}`:'±0',ra1:oa,ra2:A.carc,rb1:ob,rb2:B.carc});save();render();$('scoreA').value='';$('scoreB').value='';alert('結果を登録したよ！')};
-$('finishPracticeBtn').onclick=finishPractice;
-$('saveRummy').onclick=()=>{if(db.members.length<4){alert('先にメンバーを4人以上登録してね');return}const ids=[$('r1').value,$('r2').value,$('r3').value,$('r4').value];if(new Set(ids).size!==4){alert('4人とも別のメンバーを選んでね');return}const scores=[Number($('rs1').value),Number($('rs2').value),Number($('rs3').value),Number($('rs4').value)];if(scores.some(Number.isNaN)){alert('4人分の得点を入力してね');return}const players=ids.map((id,i)=>({name:db.members[id].name,score:scores[i]})).sort((a,b)=>b.score-a.score);const game={date:todayKey(),players};db.rummy.push(game);save();render();['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');alert('ラミィの卓結果を保存したよ！')};
+$('finishPracticeBtn').onclick=finishPractice;function setRummyWinner(index){rummyWinnerIndex=index;for(let i=0;i<4;i++){const input=$('rs'+(i+1));if(!input)continue;const n=String(input.value).trim().replace(/^[+-]/,'');input.value=i===index?n:(n?'-'+n:'')}updateRummyWinnerScore();for(let i=0;i<4;i++){const btn=$('winner'+(i+1));if(btn)btn.classList.toggle('active',i===index)}}
+function updateRummyWinnerScore(){if(rummyWinnerIndex===null)return;let total=0;for(let i=0;i<4;i++){if(i===rummyWinnerIndex)continue;const n=Math.abs(Number(String($('rs'+(i+1)).value).trim().replace(/,/g,'')));if(!Number.isNaN(n))total+=n}$('rs'+(rummyWinnerIndex+1)).value=String(total+100)}
+function syncRummyScoresFromInputs(){if(rummyWinnerIndex===null)return;for(let i=0;i<4;i++){if(i===rummyWinnerIndex)continue;const input=$('rs'+(i+1));const n=String(input.value).trim().replace(/^[+-]/,'');input.value=n?'-'+n:''}updateRummyWinnerScore()}
+
+
+function applyRummyPenalty(gameIndex,playerName){
+  const game=db.rummy[gameIndex];
+  if(!game||Array.isArray(game)||!Array.isArray(game.players))return;
+  const player=game.players.find(p=>p.name===playerName);
+  if(!player)return;
+  if(typeof player.penalty!=='number')player.penalty=0;
+  player.penalty++;
+  player.score=Number(player.score||0)-50;
+  game.players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+  save();
+  render();
+  alert(`${playerName}さんのペナルティを1回（−50点）反映しました。`);
+}
+
+function rummyPenaltyButton(gameIndex,player){
+  return `<button type="button" class="iconbtn edit" onclick="applyRummyPenalty(${gameIndex},'${escapeHTML(player.name)}')" title="⚠️ ペナルティ">⚠️</button>`;
+}
+
+$('saveRummy').onclick=()=>{if(db.members.length<4){alert('先にメンバーを4人以上登録してね');return}if(rummyWinnerIndex===null){alert('先に勝者を選んでね');return}syncRummyScoresFromInputs();const ids=[$('r1').value,$('r2').value,$('r3').value,$('r4').value];if(new Set(ids).size!==4){alert('4人とも別のメンバーを選んでね');return}const scores=[Number($('rs1').value),Number($('rs2').value),Number($('rs3').value),Number($('rs4').value)];if(scores.some(Number.isNaN)){alert('4人分の得点を入力してね');return}const players=ids.map((id,i)=>({name:db.members[id].name,score:scores[i],penalty:0})).sort((a,b)=>b.score-a.score);const game={date:todayKey(),players};db.rummy.push(game);save();render();['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');rummyWinnerIndex=null;for(let i=0;i<4;i++){const btn=$('winner'+(i+1));if(btn)btn.classList.remove('active')}alert('ラミィの卓結果を保存したよ！')};
 function escapeHTML(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 $('turnA').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnB').value=$('turnA').value==='先手'?'後手':'先手';syncingTurns=false});
 $('turnB').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnA').value=$('turnB').value==='先手'?'後手':'先手';syncingTurns=false});
@@ -607,7 +629,7 @@ function renderPracticeRummyResults(){
   box.innerHTML=results.slice().reverse().map(g=>{
     const index=db.rummy.indexOf(g);
     const players=g.players||[];
-    const rows=players.map((p,j)=>`<div>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</div>`).join('');
+    const rows=players.map((p,j)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px"><span>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</span>${rummyPenaltyButton(index,p)}</div>`).join('');
     return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`;
   }).join('');
 }
@@ -654,7 +676,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build114';
+  backup.build='Build117';
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -710,6 +732,7 @@ function resetData(){
   location.reload();
 }
 
+['rs1','rs2','rs3','rs4'].forEach(id=>$(id).addEventListener('input',syncRummyScoresFromInputs));
 render();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js')}
 </script>

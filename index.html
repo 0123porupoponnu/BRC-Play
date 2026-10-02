@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build126</title>
+<title>BRC Play Build127</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -29,20 +29,20 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .summary-item{background:rgba(255,255,255,.08);border-radius:14px;padding:12px;text-align:center}
 .summary-item b{display:block;font-size:22px;margin-top:4px}
 .rate-up{font-weight:800}
-.rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(72px,.48fr) 40px minmax(105px,1.05fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}
+.rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) 40px minmax(95px,.9fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build126</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build127</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build126</div>
+<div class="footer">BRC Play Build127</div>
 </section>
 
 <section id="carc" class="screen">
@@ -761,7 +761,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build126';
+  backup.build='Build127';
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');

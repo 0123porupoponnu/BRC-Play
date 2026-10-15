@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build142</title>
+<title>BRC Play Build143</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -37,7 +37,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build142</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build143</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -45,7 +45,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build142</div>
+<div class="footer">BRC Play Build143</div>
 </section>
 
 <section id="carc" class="screen">
@@ -512,7 +512,23 @@ function saveTournamentMatch(g,final,i){
  const a=Number(aText),b=Number(bText);
  if(!Number.isFinite(a)||!Number.isFinite(b)){alert('得点は数字で入力してね');return}
  m.scoreA=aText;m.scoreB=bText;
- try{recordTournamentMatch(m)}catch(err){console.error('Tournament match save failed:',err);m.done=false;m.winner=null;saveTournament();alert('登録中にエラーが発生したよ。得点は残してあるので、もう一度登録してね。')}
+ // 結果確定と画面再描画を分離する。描画側で例外が出ても、確定済みの試合を未登録に戻さない。
+ try{
+  recordTournamentMatch(m);
+ }catch(err){
+  console.error('Tournament match save failed:',err);
+  // 途中まで結果が反映された場合に二重登録を避けるため、履歴に記録済みか確認する。
+  const alreadyRecorded=Array.isArray(db.history)&&db.history.some(h=>h.tournament&&h.date===todayKey()&&h.a===m.a&&h.b===m.b&&Number(h.scoreA)===Number(m.scoreA)&&Number(h.scoreB)===Number(m.scoreB));
+  if(alreadyRecorded||m.done){
+   try{saveTournament();save();}catch(saveErr){console.error('Persist after match:',saveErr)}
+   try{renderTournamentBoard()}catch(renderErr){console.error('Tournament redraw:',renderErr)}
+   alert('対戦結果は登録された可能性があるよ。二重登録を避けるため、画面を更新して登録済みか確認してね。');
+  }else{
+   m.done=false;m.winner=null;
+   try{saveTournament()}catch(saveErr){console.error('Save score:',saveErr)}
+   alert('登録処理でエラーが発生したよ。得点は残してあるので、画面を更新せずにもう一度試してね。');
+  }
+ }
 }
 function renderTournamentBoard(){
  const status=$('tournamentStatus'),box=$('tournamentBoard');if(!status||!box)return;renderTournamentMembers();if(!tournamentState){status.textContent='方式と参加者を選んで大会を開始してね。';box.innerHTML='';return}
@@ -908,7 +924,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build142';
+  backup.build='Build143';
   backup.tournamentState=tournamentState;
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);

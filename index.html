@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build130</title>
+<title>BRC Play Build135</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -30,19 +30,22 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .summary-item b{display:block;font-size:22px;margin-top:4px}
 .rate-up{font-weight:800}
 .rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) 40px minmax(95px,.9fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}.rummy-penalty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}.rummy-penalty-undo{width:40px;min-width:40px;height:24px;padding:0!important;font-size:14px;line-height:24px;display:none}.rummy-penalty-undo.show{display:block}.rummy-mode{display:flex;gap:6px;padding:5px;border-radius:16px;background:rgba(255,255,255,.10);margin:0 0 12px}.rummy-mode button{flex:1;background:transparent;color:#fff;padding:10px 8px}.rummy-mode button.active{background:#fff;color:#0B5CAD}
+
+.tournament-format{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tournament-format button{background:rgba(255,255,255,.12);color:#fff;text-align:left}.tournament-format button.active{background:#fff;color:#0B5CAD}.tournament-member-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tournament-member{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.08);border-radius:12px}.tournament-member input{width:20px;height:20px;padding:0;flex:0 0 auto}.tournament-match{background:rgba(255,255,255,.08);padding:12px;border-radius:14px;margin:10px 0}.tournament-match-head{font-weight:800;margin-bottom:8px}.tournament-match-row{display:grid;grid-template-columns:minmax(0,1fr) 78px;gap:8px;align-items:center;margin:6px 0}.tournament-match-row input{padding:10px}.tournament-match button{margin-top:8px}.tournament-group{border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px;margin:12px 0}.tournament-status{padding:10px;border-radius:12px;background:rgba(255,255,255,.08);margin:8px 0}.tournament-actions{display:flex;gap:8px}.tournament-actions button{flex:1;background:rgba(255,255,255,.12);color:#fff}
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build130</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build135</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('practice')"><div class="menu-icon">🏃</div><div class="menu-text"><b>今日の練習会</b><span>今日の練習会を開く</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build130</div>
+<button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
+<div class="footer">BRC Play Build135</div>
 </section>
 
 <section id="carc" class="screen">
@@ -58,6 +61,18 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <div class="card"><h2>🎲 ラミィキューブ</h2><div class="rummy-mode"><button type="button" id="rummyMode4" class="active" onclick="setRummyPlayerCount(4)">4人戦</button><button type="button" id="rummyMode3" onclick="setRummyPlayerCount(3)">3人戦</button></div><div class="small" id="rummyInstruction" style="margin-bottom:10px">① まず名前の横の 🏆(勝者) を押してね。<br>② そのあと3人の点数を入力します。</div><div class="rummy-player-row"><select id="r1"></select><button type="button" class="winner-btn" id="winner1" onclick="setRummyWinner(0)" title="勝者">🏆</button><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty1" onclick="applyRummyInputPenalty(0)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo1" onclick="undoRummyInputPenalty(0)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r2"></select><button type="button" class="winner-btn" id="winner2" onclick="setRummyWinner(1)" title="勝者">🏆</button><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty2" onclick="applyRummyInputPenalty(1)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo2" onclick="undoRummyInputPenalty(1)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r3"></select><button type="button" class="winner-btn" id="winner3" onclick="setRummyWinner(2)" title="勝者">🏆</button><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty3" onclick="applyRummyInputPenalty(2)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo3" onclick="undoRummyInputPenalty(2)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row" id="rummyRow4"><select id="r4"></select><button type="button" class="winner-btn" id="winner4" onclick="setRummyWinner(3)" title="勝者">🏆</button><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty4" onclick="applyRummyInputPenalty(3)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo4" onclick="undoRummyInputPenalty(3)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="small" style="margin-top:12px">⚠️ ペナルティを押すと、その人の得点から1回につき50点減点されます。保存前に何回でも追加できます。</div><button class="primary" id="saveRummy">卓結果を保存</button></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="ranking"></div></div>
 <div class="card"><h2>📜 ラミィ対戦履歴</h2><div id="rummyHistory"></div></div>
+<div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
+</section>
+
+<section id="tournament" class="screen">
+<div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏆 大会</h1></div>
+<div class="card"><h2>🏰 カルカソンヌ大会</h2><div class="small">大会方式を選び、参加メンバーを選択して組み合わせを作成します。得点はこのページで入力できます。</div>
+<div class="tournament-format"><button id="tourModeSwiss" onclick="selectTournamentMode('swiss')">🔁 スイスドロー</button><button id="tourModeGroups" onclick="selectTournamentMode('groups')">👥 グループ総当たり<br>＋決勝T</button><button id="tourModeDouble" onclick="selectTournamentMode('double')">🔀 ダブルノックアウト</button><button id="tourModeSingle" onclick="selectTournamentMode('single')">🏆 シングルイリミネーション</button></div>
+<div id="tourPlacementWrap" style="margin-top:16px;display:none"><b>メンバー配置</b><div class="tournament-format"><button id="tourPlaceAuto" class="active" onclick="selectTournamentPlacement('auto')">🎲 自動振り分け</button><button id="tourPlaceManual" onclick="selectTournamentPlacement('manual')">✋ 手動振り分け</button></div><div id="tourPlacementHelp" class="small">自動振り分けでは参加者をランダムに配置します。</div></div><div style="margin-top:16px"><b>参加メンバー</b><div class="small">参加する人にチェックを入れてね。</div><div id="tournamentMembers" class="tournament-member-list"></div></div>
+<div class="tournament-actions" style="margin-top:12px"><button onclick="selectAllTournamentMembers(true)">全員選択</button><button onclick="selectAllTournamentMembers(false)">全解除</button></div>
+<button class="primary" onclick="generateTournament()">大会を開始</button>
+<div class="small" style="margin-top:8px">※ 新しい大会を作ると、進行中の大会データは置き換わります。保存済みの対戦結果は削除されません。</div></div>
+<div class="card"><h2>📋 大会進行・得点入力</h2><div id="tournamentStatus" class="tournament-status">方式と参加者を選んで大会を開始してね。</div><div id="tournamentBoard"></div></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
 
@@ -258,7 +273,7 @@ function renderPracticeDetail(){
 
 
 function renderHistoryPage(){renderPracticeHistory();renderPracticeDetail()}
-function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeDate();renderPracticeSummary();renderPracticeCarcResults();renderPracticeCarcRanking();renderPracticeRummyResults();renderPracticeRummyRanking();renderPracticeFinishStatus();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
+function render(){renderMembers();renderSelects();$('history').innerHTML=historyHTML();renderRanking();renderCarcRanking();$('rummyHistory').innerHTML=rummyHistoryHTML();renderHistoryPage();renderPracticeDate();renderPracticeSummary();renderPracticeCarcResults();renderPracticeCarcRanking();renderPracticeRummyResults();renderPracticeRummyRanking();renderPracticeFinishStatus();renderTournamentBoard();if(detailMemberIndex!==null&&db.members[detailMemberIndex])renderMemberDetail()}
 function deleteHistory(index){if(!confirm('この対戦履歴を削除しますか？'))return;db.history.splice(index,1);save();render()}
 function deleteRummy(index){if(!confirm('このラミィの卓結果を削除しますか？'))return;db.rummy.splice(index,1);save();render()}
 function openMember(index){detailMemberIndex=index;detailGame='carc';show('memberDetail')}
@@ -405,6 +420,85 @@ function normalizeRummyScoreInput(index){
 
 
 $('saveRummy').onclick=()=>{const count=rummyPlayerCount;if(db.members.length<count){alert('先にメンバーを'+count+'人以上登録してね');return}if(rummyWinnerIndex===null){alert('先に勝者を選んでね');return}syncRummyScoresFromInputs();const ids=Array.from({length:count},(_,i)=>$('r'+(i+1)).value);if(new Set(ids).size!==count){alert(count+'人とも別のメンバーを選んでね');return}const scores=Array.from({length:count},(_,i)=>Number($('rs'+(i+1)).value));if(scores.some(Number.isNaN)){alert(count+'人分の得点を入力してね');return}const players=ids.map((id,i)=>({name:db.members[id].name,score:scores[i],penalty:rummyPenaltyCounts[i]||0})).sort((a,b)=>b.score-a.score);const game={date:todayKey(),playerCount:count,players};db.rummy.push(game);save();render();['rs1','rs2','rs3','rs4'].forEach(id=>$(id).value='');rummyBaseScores=['','','',''];rummyPenaltyCounts=[0,0,0,0];rummyWinnerIndex=null;updateRummyInputStates();updateRummyPenaltyButtons();alert('ラミィの卓結果を保存したよ！')};
+let tournamentMode='swiss';
+let tournamentPlacement='auto';
+let tournamentState=null;
+function selectTournamentMode(mode){tournamentMode=mode;['swiss','groups','double','single'].forEach(m=>{const b=$('tourMode'+({swiss:'Swiss',groups:'Groups',double:'Double',single:'Single'}[m]));if(b)b.classList.toggle('active',m===mode)});const wrap=$('tourPlacementWrap');if(wrap)wrap.style.display=['groups','double','single'].includes(mode)?'block':'none';}
+function selectTournamentPlacement(mode){tournamentPlacement=mode;['Auto','Manual'].forEach(x=>{const b=$('tourPlace'+x);if(b)b.classList.toggle('active',mode===x.toLowerCase())});const h=$('tourPlacementHelp');if(h)h.textContent=mode==='auto'?'参加者をランダムに振り分けます。':'チェックしたメンバーの一覧順（メンバー登録順）を配置順として使います。大会開始前にメンバー一覧の順番を確認してね。'}
+function renderTournamentMembers(){const box=$('tournamentMembers');if(!box)return;box.innerHTML=db.members.map((m,i)=>`<label class="tournament-member"><input type="checkbox" class="tour-member-check" value="${i}" checked><span>${escapeHTML(m.name)}</span></label>`).join('')||'<div class="small">先にメンバーを登録してね。</div>';}
+function selectAllTournamentMembers(value){document.querySelectorAll('.tour-member-check').forEach(c=>c.checked=value)}
+function shuffleArray(a){const out=a.slice();for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]]}return out}
+function makeMatches(names,stage){const arr=[];for(let i=0;i+1<names.length;i+=2)arr.push({a:names[i],b:names[i+1],stage,turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});if(names.length%2)arr.push({a:names[names.length-1],b:null,stage,scoreA:'',scoreB:'',winner:names[names.length-1],done:true,bye:true});return arr}
+function makeSeededMatches(names,stage){
+ const size=2**Math.ceil(Math.log2(names.length));
+ let order=[1,2];while(order.length<size){const next=[];for(const seed of order)next.push(seed,size+1-seed);order=next;}
+ // 10人なら16枠。第1・第2シードを反対側に置き、上位6人に初戦不戦勝を与える。
+ const slots=order.map(seed=>seed<=names.length?names[seed-1]:null);
+ const matches=[];for(let i=0;i<size;i+=2){const a=slots[i],b=slots[i+1];if(a&&b)matches.push({a,b,stage,turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});else if(a||b)matches.push({a:a||b,b:null,stage,scoreA:'',scoreB:'',winner:a||b,done:true,bye:true});}
+ return matches;
+}
+function generateTournament(){const selected=[...document.querySelectorAll('.tour-member-check:checked')].map(c=>db.members[Number(c.value)]?.name).filter(Boolean);if(selected.length<2){alert('参加メンバーを2人以上選んでね');return}if(tournamentState&&!tournamentState.completed&&!confirm('進行中の大会を新しい大会に置き換えますか？'))return;const names=tournamentPlacement==='manual'&&['groups','double','single'].includes(tournamentMode)?selected:shuffleArray(selected);tournamentState={mode:tournamentMode,placement:tournamentPlacement,participants:names,createdAt:todayKey(),round:1,matches:[],groups:[],finals:[],losses:{},completed:false,champion:null,losersPool:[],losersMatches:[],winnersRound:1,losersRound:0,grandFinal:null,bracketSize:2**Math.ceil(Math.log2(names.length))};if(tournamentMode==='groups'){const groups=Array.from({length:Math.min(4,names.length)},()=>[]);names.forEach((n,i)=>groups[i%groups.length].push(n));tournamentState.groups=groups.map((members,i)=>({name:'グループ '+String.fromCharCode(Ａ_CHAR+i),members,matches:allRoundRobin(members,'グループ '+String.fromCharCode(Ａ_CHAR+i))}));}else if(tournamentMode==='single'){tournamentState.matches=makeSeededMatches(names,'勝者側 第1ラウンド');}else if(tournamentMode==='double'){names.forEach(n=>tournamentState.losses[n]=0);tournamentState.phase='winners';tournamentState.matches=makeSeededMatches(names,'勝者側 第1ラウンド');}else{tournamentState.matches=makeMatches(names,'第1ラウンド')}saveTournament();renderTournamentBoard();}
+const Ａ_CHAR=65;
+function allRoundRobin(names,stage){const matches=[];for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++)matches.push({a:names[i],b:names[j],stage,turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});return matches}
+function tournamentWinner(match){const a=Number(match.scoreA),b=Number(match.scoreB);if(a===b)return match.turnA==='後手'?match.a:match.b;return a>b?match.a:match.b}
+function recordTournamentMatch(match){
+ if(match.done)return;
+ const a=Number(match.scoreA),b=Number(match.scoreB);
+ if(match.scoreA===''||match.scoreB===''||!Number.isFinite(a)||!Number.isFinite(b)){alert('両方の得点を入力してね');return}
+ const winner=tournamentWinner(match),loser=winner===match.a?match.b:match.a;
+ match.winner=winner;match.done=true;match.scoreA=a;match.scoreB=b;
+ if(loser){
+  const A=db.members.find(m=>m.name===match.a),B=db.members.find(m=>m.name===match.b);const oa=A?(A.carc||1000):1000,ob=B?(B.carc||1000):1000;const aWin=winner===match.a;
+  if(A)A.carc=elo(oa,ob,aWin?1:0);if(B)B.carc=elo(ob,oa,aWin?0:1);
+  const diff=a-b;db.history.push({date:todayKey(),a:match.a,b:match.b,winner,wTurn:(aWin?match.turnA:(match.turnA==='先手'?'後手':'先手')),scoreA:a,scoreB:b,diffText:diff>0?`A +${diff} / B -${diff}`:diff<0?`A ${diff} / B +${-diff}`:'±0',ra1:oa,ra2:A?(A.carc||1000):oa,rb1:ob,rb2:B?(B.carc||1000):ob,tournament:true,tournamentStage:match.stage});
+  if(tournamentState.mode==='double' && !match.stage.startsWith('決勝')) tournamentState.losses[loser]=(tournamentState.losses[loser]||0)+1;
+ }
+ advanceTournament();save();render();renderTournamentBoard();
+}
+function advanceTournament(){
+ if(!tournamentState)return;const t=tournamentState;
+ if(t.mode==='single'){
+  if(t.matches.every(m=>m.done)){const winners=t.matches.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.round++;t.matches=makeSeededMatches(winners,'第'+t.round+'ラウンド')}}
+ }else if(t.mode==='swiss'){
+  if(t.matches.length&&t.matches.every(m=>m.done)){const wins={};t.participants.forEach(n=>wins[n]=0);t.matches.forEach(m=>{if(m.winner)wins[m.winner]++});const maxRounds=Math.max(1,Math.ceil(Math.log2(t.participants.length)));if(t.round>=maxRounds){t.completed=true;t.champion=Object.entries(wins).sort((a,b)=>b[1]-a[1])[0]?.[0]||null;t.standings=wins;}else{const sorted=t.participants.slice().sort((a,b)=>(wins[b]||0)-(wins[a]||0));t.matches=makeMatches(sorted,'第'+(t.round+1)+'ラウンド');t.round++;}}
+ }else if(t.mode==='double'){
+  if(t.grandFinal){
+   if(t.grandFinal.done){if(t.grandFinal.winner===t.grandFinal.a){t.completed=true;t.champion=t.grandFinal.a;}else{t.grandFinal={a:t.grandFinal.a,b:t.grandFinal.b,stage:'決勝リセット',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};}}
+   return;
+  }
+  if(t.phase!=='losers'){
+   if(!t.matches.length||!t.matches.every(m=>m.done))return;
+   const wbWinners=t.matches.map(m=>m.winner).filter(Boolean);
+   const dropped=t.matches.filter(m=>!m.bye&&m.b&&m.winner).map(m=>m.winner===m.a?m.b:m.a).filter(n=>(t.losses[n]||0)<2);
+   t.pendingWinners=wbWinners;
+   const pool=(t.losersPool||[]).concat(dropped).filter(n=>(t.losses[n]||0)<2);
+   if(wbWinners.length===1 && pool.length===0){t.completed=true;t.champion=wbWinners[0];return;}
+   if(pool.length===1 && wbWinners.length===1){t.grandFinal={a:wbWinners[0],b:pool[0],stage:'決勝',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};return;}
+   t.phase='losers';t.losersPool=[];t.losersRound=(t.losersRound||0)+1;
+   t.losersMatches=makeMatches(pool,'敗者側 第'+t.losersRound+'ラウンド');
+   if(!t.losersMatches.length){t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'ラウンド');}
+  }else{
+   if(!t.losersMatches.length||!t.losersMatches.every(m=>m.done))return;
+   const lbWinners=t.losersMatches.map(m=>m.winner).filter(Boolean).filter(n=>(t.losses[n]||0)<2);
+   const wbWinners=t.pendingWinners||t.matches.map(m=>m.winner).filter(Boolean);
+   if(wbWinners.length===1){
+    if(lbWinners.length===0){t.completed=true;t.champion=wbWinners[0];return;}
+    if(lbWinners.length===1){t.grandFinal={a:wbWinners[0],b:lbWinners[0],stage:'決勝',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};return;}
+    t.losersPool=lbWinners;t.losersRound++;t.losersMatches=makeMatches(lbWinners,'敗者側 第'+t.losersRound+'ラウンド');return;
+   }
+   t.losersPool=lbWinners;t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'ラウンド');
+  }
+ }else if(t.mode==='groups'){
+  const all=t.groups.every(g=>g.matches.every(m=>m.done));if(all&&!t.finals.length){const qualifiers=[];t.groups.forEach(g=>{const stats={};g.members.forEach(n=>stats[n]={wins:0,points:0});g.matches.forEach(m=>{if(m.winner)stats[m.winner].wins++;stats[m.a].points+=Number(m.scoreA||0);stats[m.b].points+=Number(m.scoreB||0)});g.standings=Object.entries(stats).sort((a,b)=>b[1].wins-a[1].wins||b[1].points-a[1].points).map((e,i)=>({name:e[0],wins:e[1].wins,points:e[1].points,rank:i+1}));qualifiers.push(...g.standings.slice(0,2).map(x=>x.name));});t.finals=makeMatches(shuffleArray(qualifiers.slice(0,8)),'決勝トーナメント 第1ラウンド');t.round=1;}else if(t.finals.length&&t.finals.every(m=>m.done)){const winners=t.finals.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.finals=makeMatches(winners,'決勝トーナメント 第'+(t.round+1)+'ラウンド');t.round++;}}
+ }
+}
+function matchHTML(m,i,groupIndex=null,final=false){if(m.bye)return `<div class="tournament-match"><div class="tournament-match-head">${escapeHTML(m.stage||'対戦')} · 不戦勝</div><b>${escapeHTML(m.a)}</b> は次へ進出</div>`;return `<div class="tournament-match"><div class="tournament-match-head">${escapeHTML(m.stage||'対戦')} · ${m.done?'✅ 登録済み':'得点入力'}</div><div class="tournament-match-row"><b>${escapeHTML(m.a)} <span class="small">(${m.turnA||'先手'})</span></b><input type="number" inputmode="numeric" placeholder="得点" value="${m.scoreA??''}" ${m.done?'disabled':''} id="tourA_${groupIndex===null?'x':groupIndex}_${final?'f':'m'}_${i}" onchange="setTournamentScore(${groupIndex===null?'null':groupIndex},${final},${i},'a',this.value)"></div><div class="tournament-match-row"><b>${escapeHTML(m.b)} <span class="small">(${m.turnA==='先手'?'後手':'先手'})</span></b><input type="number" inputmode="numeric" placeholder="得点" value="${m.scoreB??''}" ${m.done?'disabled':''} id="tourB_${groupIndex===null?'x':groupIndex}_${final?'f':'m'}_${i}" onchange="setTournamentScore(${groupIndex===null?'null':groupIndex},${final},${i},'b',this.value)"></div>${m.done?`<div class="small">🏆 ${escapeHTML(m.winner)} が勝ち上がり</div>`:`<button class="primary" onclick="saveTournamentMatch(${groupIndex===null?'null':groupIndex},${final},${i})">得点を登録・勝ち上がり</button>`}</div>`}
+function getTournamentMatch(g,final,i){if(g!==null)return tournamentState.groups[g].matches[i];if(final&&tournamentState.mode==='double'&&tournamentState.grandFinal)return tournamentState.grandFinal;if(final&&tournamentState.mode==='double'&&tournamentState.losersMatches?.[i])return tournamentState.losersMatches[i];return (final?tournamentState.finals:tournamentState.matches)[i]}
+function setTournamentScore(g,final,i,side,value){const m=getTournamentMatch(g,final,i);if(m&&!m.done)m[side==='a'?'scoreA':'scoreB']=value;saveTournament()}
+function saveTournamentMatch(g,final,i){const m=getTournamentMatch(g,final,i);if(m)recordTournamentMatch(m)}
+function renderTournamentBoard(){const status=$('tournamentStatus'),box=$('tournamentBoard');if(!status||!box)return;renderTournamentMembers();if(!tournamentState){status.textContent='方式と参加者を選んで大会を開始してね。';box.innerHTML='';return}const t=tournamentState;status.innerHTML=`<b>${({swiss:'スイスドロー',groups:'グループ総当たり＋決勝トーナメント',double:'ダブルノックアウト',single:'シングルイリミネーション'})[t.mode]}</b><br>参加者 ${t.participants.length}人 · ${t.completed?'大会終了':`第${t.round}ラウンド進行中`}${t.champion?`<br>🏆 優勝：${escapeHTML(t.champion)}`:''}`;let html=`<div class="history"><b>参加者・配置</b><div class="small">${t.participants.map((n,i)=>(i+1)+'. '+escapeHTML(n)).join(' · ')}</div><div class="small">配置方式：${t.placement==='manual'?'手動（一覧順）':'自動ランダム'}</div>${['single','double'].includes(t.mode)&&t.participants.length===10?'<div class="small">10人大会：左右の山に分かれるよう、配置順を確認してね。</div>':''}</div>`;if(t.mode==='groups'){t.groups.forEach((g,gi)=>{html+=`<div class="tournament-group"><h3>${escapeHTML(g.name)}</h3><div class="small">${g.members.map(escapeHTML).join(' · ')}</div>${g.matches.map((m,i)=>matchHTML(m,i,gi,false)).join('')}${g.standings?`<h4>順位表（上位2人が決勝へ）</h4>${g.standings.map(r=>`<div class="rank"><span>${r.rank}位　${escapeHTML(r.name)} (${r.wins}勝)</span><b>${r.points}点</b></div>`).join('')}`:''}</div>`});if(t.finals.length)html+=`<h3>🏆 決勝トーナメント</h3>${t.finals.map((m,i)=>matchHTML(m,i,null,true)).join('')}`;}else {html+=`<h3>${t.mode==='double'?'🔵 勝者側':'🏆 トーナメント表'}</h3>`+t.matches.map((m,i)=>matchHTML(m,i,null,false)).join('');if(t.mode==='double'&&t.losersMatches?.length)html+=`<h3>🔴 敗者側</h3>`+t.losersMatches.map((m,i)=>matchHTML(m,i,null,true)).join('');if(t.mode==='double'&&t.grandFinal)html+=`<h3>🏆 決勝</h3>`+matchHTML(t.grandFinal,0,null,true); }if(t.mode==='double')html+=`<div class="history"><b>進行中：${t.phase==='losers'?'敗者側':'勝者側'}</b><br><b>敗北数</b>${Object.entries(t.losses).map(([n,l])=>`<div>${escapeHTML(n)}：${l}敗${l>=2?'（敗退）':''}</div>`).join('')}</div>`;if(t.completed)html+=`<div class="tournament-status"><h3>🏆 大会終了</h3>優勝：<b>${escapeHTML(t.champion||'未確定')}</b></div>`;box.innerHTML=html;}
+function saveTournament(){if(!tournamentState)return;localStorage.setItem('brc-tournament-current',JSON.stringify(tournamentState));}
+function loadTournament(){try{tournamentState=JSON.parse(localStorage.getItem('brc-tournament-current')||'null')}catch(e){tournamentState=null}}
 function escapeHTML(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 $('turnA').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnB').value=$('turnA').value==='先手'?'後手':'先手';syncingTurns=false});
 $('turnB').addEventListener('change',()=>{if(syncingTurns)return;syncingTurns=true;$('turnA').value=$('turnB').value==='先手'?'後手':'先手';syncingTurns=false});
@@ -778,7 +872,8 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build130';
+  backup.build='Build135';
+  backup.tournamentState=tournamentState;
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
@@ -801,6 +896,7 @@ function importData(input){
         throw new Error('BRC Playのバックアップ形式ではありません');
       }
       if(!Array.isArray(imported.practiceHistory))imported.practiceHistory=[];
+      if(imported.tournamentState)localStorage.setItem('brc-tournament-current',JSON.stringify(imported.tournamentState));else localStorage.removeItem('brc-tournament-current');
       imported.members.forEach(m=>{
         if(!Array.isArray(m.rummyRateHistory))m.rummyRateHistory=[];
       });
@@ -826,6 +922,7 @@ function resetData(){
   if(!confirm('本当に初期化しますか？\nこの操作は元に戻せません。'))return;
 
   localStorage.removeItem(KEY);
+  localStorage.removeItem('brc-tournament-current');
   Object.keys(localStorage)
     .filter(k=>k.indexOf('brc-practice-finished-')===0)
     .forEach(k=>localStorage.removeItem(k));
@@ -844,6 +941,7 @@ function resetData(){
   $(id).addEventListener('blur',()=>normalizeRummyScoreInput(i));
 });
 updateRummyInputStates();
+loadTournament();selectTournamentMode('swiss');
 render();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js')}
 </script>

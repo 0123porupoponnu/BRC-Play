@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build140</title>
+<title>BRC Play Build141</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -37,7 +37,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build140</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build141</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -45,7 +45,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build140</div>
+<div class="footer">BRC Play Build141</div>
 </section>
 
 <section id="carc" class="screen">
@@ -441,7 +441,7 @@ function makeSeededMatches(names,stage){
  const matches=[];for(let i=0;i<size;i+=2){const a=slots[i],b=slots[i+1];if(a&&b)matches.push({a,b,stage,turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});else if(a||b)matches.push({a:a||b,b:null,stage,scoreA:'',scoreB:'',winner:a||b,done:true,bye:true});}
  return matches;
 }
-function generateTournament(){const selected=[...document.querySelectorAll('.tour-member-check:checked')].map(c=>db.members[Number(c.value)]?.name).filter(Boolean);if(selected.length<2){alert('参加メンバーを2人以上選んでね');return}if(tournamentState&&!tournamentState.completed&&!confirm('進行中の大会を新しい大会に置き換えますか？'))return;const names=tournamentPlacement==='manual'&&['groups','double','single'].includes(tournamentMode)?selected:shuffleArray(selected);tournamentState={mode:tournamentMode,placement:tournamentPlacement,swissRounds:Math.max(1,Math.min(10,Number($('tourSwissRounds')?.value)||4)),participants:names,createdAt:todayKey(),round:1,matches:[],roundHistory:[],groups:[],finals:[],losses:{},completed:false,champion:null,losersPool:[],losersMatches:[],winnersRound:1,losersRound:0,grandFinal:null,bracketSize:2**Math.ceil(Math.log2(names.length))};if(tournamentMode==='groups'){const groups=Array.from({length:Math.min(4,names.length)},()=>[]);names.forEach((n,i)=>groups[i%groups.length].push(n));tournamentState.groups=groups.map((members,i)=>({name:'グループ '+String.fromCharCode(Ａ_CHAR+i),members,matches:allRoundRobin(members,'グループ '+String.fromCharCode(Ａ_CHAR+i))}));}else if(tournamentMode==='single'){tournamentState.matches=makeSeededMatches(names,'勝者側 第1ラウンド');}else if(tournamentMode==='double'){names.forEach(n=>tournamentState.losses[n]=0);tournamentState.phase='winners';tournamentState.matches=makeSeededMatches(names,'勝者側 第1ラウンド');}else{tournamentState.matches=makeMatches(names,'第1ラウンド')}saveTournament();renderTournamentBoard();}
+function generateTournament(){const selected=[...document.querySelectorAll('.tour-member-check:checked')].map(c=>db.members[Number(c.value)]?.name).filter(Boolean);if(selected.length<2){alert('参加メンバーを2人以上選んでね');return}if(tournamentState&&!tournamentState.completed&&!confirm('進行中の大会を新しい大会に置き換えますか？'))return;const names=tournamentPlacement==='manual'&&['groups','double','single'].includes(tournamentMode)?selected:shuffleArray(selected);tournamentState={mode:tournamentMode,placement:tournamentPlacement,swissRounds:Math.max(1,Math.min(10,Number($('tourSwissRounds')?.value)||4)),participants:names,createdAt:todayKey(),round:1,matches:[],roundHistory:[],groups:[],finals:[],losses:{},completed:false,champion:null,losersPool:[],losersMatches:[],winnersRound:1,losersRound:0,grandFinal:null,bracketSize:2**Math.ceil(Math.log2(names.length))};if(tournamentMode==='groups'){const groups=Array.from({length:Math.min(4,names.length)},()=>[]);names.forEach((n,i)=>groups[i%groups.length].push(n));tournamentState.groups=groups.map((members,i)=>({name:'グループ '+String.fromCharCode(Ａ_CHAR+i),members,matches:allRoundRobin(members,'グループ '+String.fromCharCode(Ａ_CHAR+i))}));}else if(tournamentMode==='single'){tournamentState.matches=makeSeededMatches(names,'勝者側 第1回戦');}else if(tournamentMode==='double'){names.forEach(n=>tournamentState.losses[n]=0);tournamentState.phase='winners';tournamentState.matches=makeSeededMatches(names,'勝者側 第1回戦');}else{tournamentState.matches=makeMatches(names,'第1回戦')}saveTournament();renderTournamentBoard();}
 const Ａ_CHAR=65;
 function allRoundRobin(names,stage){const matches=[];for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++)matches.push({a:names[i],b:names[j],stage,turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});return matches}
 function tournamentWinner(match){const a=Number(match.scoreA),b=Number(match.scoreB);if(a===b)return match.turnA==='後手'?match.a:match.b;return a>b?match.a:match.b}
@@ -462,9 +462,9 @@ function recordTournamentMatch(match){
 function advanceTournament(){
  if(!tournamentState)return;const t=tournamentState;
  if(t.mode==='single'){
-  if(t.matches.every(m=>m.done)){const winners=t.matches.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.round++;t.matches=makeSeededMatches(winners,'第'+t.round+'ラウンド')}}
+  if(t.matches.every(m=>m.done)){const winners=t.matches.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.round++;t.matches=makeSeededMatches(winners,'第'+t.round+'回戦')}}
  }else if(t.mode==='swiss'){
-  if(t.matches.length&&t.matches.every(m=>m.done)){const completedMatches=t.matches.map(m=>({...m}));t.roundHistory=t.roundHistory||[];if(!t.roundHistory.some(r=>r.round===t.round))t.roundHistory.push({round:t.round,matches:completedMatches});const standings=swissStandings(t);const maxRounds=Math.max(1,Math.min(10,Number(t.swissRounds)||4));if(t.round>=maxRounds){t.completed=true;t.champion=standings[0]?.name||null;t.standings=standings;}else{t.matches=makeSwissMatches(t,'第'+(t.round+1)+'ラウンド');t.round++;}}
+  if(t.matches.length&&t.matches.every(m=>m.done)){const completedMatches=t.matches.map(m=>({...m}));t.roundHistory=t.roundHistory||[];if(!t.roundHistory.some(r=>r.round===t.round))t.roundHistory.push({round:t.round,matches:completedMatches});const standings=swissStandings(t);const maxRounds=Math.max(1,Math.min(10,Number(t.swissRounds)||4));if(t.round>=maxRounds){t.completed=true;t.champion=standings[0]?.name||null;t.standings=standings;}else{t.matches=makeSwissMatches(t,'第'+(t.round+1)+'回戦');t.round++;}}
  }else if(t.mode==='double'){
   if(t.grandFinal){
    if(t.grandFinal.done){if(t.grandFinal.winner===t.grandFinal.a){t.completed=true;t.champion=t.grandFinal.a;}else{t.grandFinal={a:t.grandFinal.a,b:t.grandFinal.b,stage:'決勝リセット',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};}}
@@ -479,8 +479,8 @@ function advanceTournament(){
    if(wbWinners.length===1 && pool.length===0){t.completed=true;t.champion=wbWinners[0];return;}
    if(pool.length===1 && wbWinners.length===1){t.grandFinal={a:wbWinners[0],b:pool[0],stage:'決勝',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};return;}
    t.phase='losers';t.losersPool=[];t.losersRound=(t.losersRound||0)+1;
-   t.losersMatches=makeMatches(pool,'敗者側 第'+t.losersRound+'ラウンド');
-   if(!t.losersMatches.length){t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'ラウンド');}
+   t.losersMatches=makeMatches(pool,'敗者側 第'+t.losersRound+'回戦');
+   if(!t.losersMatches.length){t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'回戦');}
   }else{
    if(!t.losersMatches.length||!t.losersMatches.every(m=>m.done))return;
    const lbWinners=t.losersMatches.map(m=>m.winner).filter(Boolean).filter(n=>(t.losses[n]||0)<2);
@@ -488,18 +488,26 @@ function advanceTournament(){
    if(wbWinners.length===1){
     if(lbWinners.length===0){t.completed=true;t.champion=wbWinners[0];return;}
     if(lbWinners.length===1){t.grandFinal={a:wbWinners[0],b:lbWinners[0],stage:'決勝',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false};return;}
-    t.losersPool=lbWinners;t.losersRound++;t.losersMatches=makeMatches(lbWinners,'敗者側 第'+t.losersRound+'ラウンド');return;
+    t.losersPool=lbWinners;t.losersRound++;t.losersMatches=makeMatches(lbWinners,'敗者側 第'+t.losersRound+'回戦');return;
    }
-   t.losersPool=lbWinners;t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'ラウンド');
+   t.losersPool=lbWinners;t.phase='winners';t.winnersRound=(t.winnersRound||1)+1;t.matches=makeMatches(wbWinners,'勝者側 第'+t.winnersRound+'回戦');
   }
  }else if(t.mode==='groups'){
-  const all=t.groups.every(g=>g.matches.every(m=>m.done));if(all&&!t.finals.length){const qualifiers=[];t.groups.forEach(g=>{const stats={};g.members.forEach(n=>stats[n]={wins:0,points:0});g.matches.forEach(m=>{if(m.winner)stats[m.winner].wins++;stats[m.a].points+=Number(m.scoreA||0);stats[m.b].points+=Number(m.scoreB||0)});g.standings=Object.entries(stats).sort((a,b)=>b[1].wins-a[1].wins||b[1].points-a[1].points).map((e,i)=>({name:e[0],wins:e[1].wins,points:e[1].points,rank:i+1}));qualifiers.push(...g.standings.slice(0,2).map(x=>x.name));});t.finals=makeMatches(shuffleArray(qualifiers.slice(0,8)),'決勝トーナメント 第1ラウンド');t.round=1;}else if(t.finals.length&&t.finals.every(m=>m.done)){const winners=t.finals.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.finals=makeMatches(winners,'決勝トーナメント 第'+(t.round+1)+'ラウンド');t.round++;}}
+  const all=t.groups.every(g=>g.matches.every(m=>m.done));if(all&&!t.finals.length){const qualifiers=[];t.groups.forEach(g=>{const stats={};g.members.forEach(n=>stats[n]={wins:0,points:0});g.matches.forEach(m=>{if(m.winner)stats[m.winner].wins++;stats[m.a].points+=Number(m.scoreA||0);stats[m.b].points+=Number(m.scoreB||0)});g.standings=Object.entries(stats).sort((a,b)=>b[1].wins-a[1].wins||b[1].points-a[1].points).map((e,i)=>({name:e[0],wins:e[1].wins,points:e[1].points,rank:i+1}));qualifiers.push(...g.standings.slice(0,2).map(x=>x.name));});t.finals=makeMatches(shuffleArray(qualifiers.slice(0,8)),'決勝トーナメント 第1回戦');t.round=1;}else if(t.finals.length&&t.finals.every(m=>m.done)){const winners=t.finals.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.finals=makeMatches(winners,'決勝トーナメント 第'+(t.round+1)+'ラウンド');t.round++;}}
  }
 }
 function matchHTML(m,i,groupIndex=null,final=false){if(m.bye)return `<div class="tournament-match"><div class="tournament-match-head">${escapeHTML(m.stage||'対戦')} · 不戦勝</div><b>${escapeHTML(m.a)}</b> は次へ進出</div>`;return `<div class="tournament-match"><div class="tournament-match-head">${escapeHTML(m.stage||'対戦')} · ${m.done?'✅ 登録済み':'得点入力'}</div><div class="tournament-match-row"><b>${escapeHTML(m.a)} <span class="small">(${m.turnA||'先手'})</span></b><input type="number" inputmode="numeric" placeholder="得点" value="${m.scoreA??''}" ${m.done?'disabled':''} id="tourA_${groupIndex===null?'x':groupIndex}_${final?'f':'m'}_${i}" onchange="setTournamentScore(${groupIndex===null?'null':groupIndex},${final},${i},'a',this.value)"></div><div class="tournament-match-row"><b>${escapeHTML(m.b)} <span class="small">(${m.turnA==='先手'?'後手':'先手'})</span></b><input type="number" inputmode="numeric" placeholder="得点" value="${m.scoreB??''}" ${m.done?'disabled':''} id="tourB_${groupIndex===null?'x':groupIndex}_${final?'f':'m'}_${i}" onchange="setTournamentScore(${groupIndex===null?'null':groupIndex},${final},${i},'b',this.value)"></div>${m.done?`<div class="small">🏆 ${escapeHTML(m.winner)} が勝ち上がり</div>`:`<button class="primary" onclick="saveTournamentMatch(${groupIndex===null?'null':groupIndex},${final},${i})">得点を登録・勝ち上がり</button>`}</div>`}
 function getTournamentMatch(g,final,i){if(g!==null)return tournamentState.groups[g].matches[i];if(final&&tournamentState.mode==='double'&&tournamentState.grandFinal)return tournamentState.grandFinal;if(final&&tournamentState.mode==='double'&&tournamentState.losersMatches?.[i])return tournamentState.losersMatches[i];return (final?tournamentState.finals:tournamentState.matches)[i]}
 function setTournamentScore(g,final,i,side,value){const m=getTournamentMatch(g,final,i);if(m&&!m.done)m[side==='a'?'scoreA':'scoreB']=value;saveTournament()}
-function saveTournamentMatch(g,final,i){const m=getTournamentMatch(g,final,i);if(m)recordTournamentMatch(m)}
+function saveTournamentMatch(g,final,i){
+ const m=getTournamentMatch(g,final,i);
+ if(!m){alert('対戦データが見つかりません。画面を更新してもう一度試してね。');return}
+ const suffix=`${g===null?'x':g}_${final?'f':'m'}_${i}`;
+ const aInput=$('tourA_'+suffix),bInput=$('tourB_'+suffix);
+ if(aInput)m.scoreA=aInput.value.trim();
+ if(bInput)m.scoreB=bInput.value.trim();
+ recordTournamentMatch(m);
+}
 function renderTournamentBoard(){
  const status=$('tournamentStatus'),box=$('tournamentBoard');if(!status||!box)return;renderTournamentMembers();if(!tournamentState){status.textContent='方式と参加者を選んで大会を開始してね。';box.innerHTML='';return}
  const t=tournamentState;if(t.mode==='swiss'&&!Array.isArray(t.roundHistory))t.roundHistory=[];
@@ -894,7 +902,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build140';
+  backup.build='Build141';
   backup.tournamentState=tournamentState;
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);

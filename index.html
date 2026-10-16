@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build133</title>
+<title>BRC Play Build134</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -37,7 +37,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build133</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build134</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -45,7 +45,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build133</div>
+<div class="footer">BRC Play Build134</div>
 </section>
 
 <section id="carc" class="screen">
@@ -196,7 +196,7 @@ box.append(e,d);row.append(box);$('members').append(row);
 });
 }
 function renderSelects(){const opts=db.members.map((m,i)=>`<option value="${i}">${escapeHTML(m.name)}</option>`).join('');$('playerA').innerHTML=opts;$('playerB').innerHTML=opts;['r1','r2','r3','r4'].forEach(id=>$(id).innerHTML=opts)}
-function historyHTML(){if(!db.history.length)return '<div class="small">まだ対戦記録はありません</div>';return db.history.slice().reverse().map((h,i)=>{const index=db.history.length-1-i;const aWon=h.winner===h.a;const winnerName=aWon?h.a:h.b;const loserName=aWon?h.b:h.a;const winnerTurn=aWon?(h.aTurn||h.wTurn):h.wTurn;const loserTurn=aWon?(h.bTurn||((h.aTurn||'')==='先手'?'後手':(h.aTurn||'')==='後手'?'先手':'')):(h.aTurn||'');const winnerScore=aWon?Number(h.scoreA):Number(h.scoreB);const loserScore=aWon?Number(h.scoreB):Number(h.scoreA);const diff=Math.abs(winnerScore-loserScore);const winnerRate=aWon?`${h.ra1}→${h.ra2}`:`${h.rb1}→${h.rb2}`;const loserRate=aWon?`${h.rb1}→${h.rb2}`:`${h.ra1}→${h.ra2}`;return `<div class="history"><div class="history-head"><div class="history-body"><div><b>🏆 ${escapeHTML(winnerName)}（${escapeHTML(winnerTurn||'') }）－${escapeHTML(loserName)}（${escapeHTML(loserTurn||'') }）</b></div><div>${winnerScore}－${loserScore}　得失点差 ${diff}</div><div class="small">${escapeHTML(winnerName)} ${winnerRate} / ${escapeHTML(loserName)} ${loserRate}</div></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`}).join('')}
+function historyHTML(){if(!db.history.length)return '<div class="small">まだ対戦記録はありません</div>';return db.history.slice().reverse().map((h,i)=>{const index=db.history.length-1-i;const aWon=h.winner===h.a;const winnerName=aWon?h.a:h.b;const loserName=aWon?h.b:h.a;const winnerTurn=(aWon?h.aTurn:h.bTurn)||h.wTurn||(aWon?(h.bTurn==='先手'?'後手':'先手'):(h.aTurn==='先手'?'後手':'先手'));const loserTurn=(aWon?h.bTurn:h.aTurn)||(winnerTurn==='先手'?'後手':'先手');const winnerScore=aWon?Number(h.scoreA):Number(h.scoreB);const loserScore=aWon?Number(h.scoreB):Number(h.scoreA);const diff=Math.abs(winnerScore-loserScore);const winnerRate=aWon?`${h.ra1}→${h.ra2}`:`${h.rb1}→${h.rb2}`;const loserRate=aWon?`${h.rb1}→${h.rb2}`:`${h.ra1}→${h.ra2}`;return `<div class="history"><div class="history-head"><div class="history-body"><div><b>🏆 ${escapeHTML(winnerName)}（${escapeHTML(winnerTurn||'') }）－${escapeHTML(loserName)}（${escapeHTML(loserTurn||'') }）</b></div><div>${winnerScore}－${loserScore}　得失点差 ${diff}</div><div class="small">${escapeHTML(winnerName)} ${winnerRate} / ${escapeHTML(loserName)} ${loserRate}</div></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`}).join('')}
 function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">まだラミィの記録はありません</div>';return db.rummy.slice().reverse().map((game,i)=>{const index=db.rummy.length-1-i;const players=Array.isArray(game)?game:(game.players||[]);const rows=players.map((p,j)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px"><span>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</span></div>`).join('');return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`}).join('')}
 function renderRanking(){const totals={};db.members.forEach(m=>totals[m.name]=0);db.rummy.forEach(game=>{const players=Array.isArray(game)?game:(game.players||[]);players.forEach(p=>totals[p.name]=(totals[p.name]||0)+Number(p.score||0))});const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);if(!sorted.length){$('ranking').innerHTML='<div class="small">まだラミィの記録はありません</div>';return}let lastScore=null,rank=0;$('ranking').innerHTML=sorted.map((e,i)=>{if(lastScore!==e[1]){rank=i+1;lastScore=e[1]}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`}).join('')}
 function renderCarcRanking(){const sorted=db.members.slice().sort((a,b)=>(b.carc||1000)-(a.carc||1000));if(!sorted.length){$('carcRanking').innerHTML='<div class="small">まだメンバーがいません</div>';return}let last=null,rank=0;$('carcRanking').innerHTML=sorted.map((m,i)=>{const r=m.carc||1000;if(last!==r){rank=i+1;last=r}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(m.name)}</b></div><div class="rank-score">${r}</div></div>`}).join('')}
@@ -818,7 +818,7 @@ function exportData(){
   const backup=JSON.parse(JSON.stringify(db));
   backup.exportedAt=new Date().toISOString();
   backup.app='BRC Play';
-  backup.build='Build133';
+  backup.build='Build134';
   backup.tournamentState=tournamentState;
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build138</title>
+<title>BRC Play Build139</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -31,13 +31,13 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .rate-up{font-weight:800}
 .rate-down{font-weight:800}.winner-btn{flex:1;background:rgba(255,255,255,.12);color:#fff}.winner-btn.active{background:#fff;color:#0B5CAD}.winner-btn:disabled{opacity:.45}.rummy-player-row{display:grid;grid-template-columns:minmax(0,1.2fr) 40px minmax(95px,.9fr) 40px;gap:8px;margin-top:10px}.rummy-player-row:first-of-type{margin-top:0}.rummy-player-row input[readonly]{background:rgba(255,255,255,.75);color:#0B5CAD;font-weight:800}.rummy-player-row .winner-btn{padding:10px 0;font-size:18px}.rummy-penalty-btn{width:40px;min-width:40px;padding:10px 0!important;font-size:18px}.rummy-penalty-btn.active{background:#fff;color:#0B5CAD}.rummy-penalty-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}.rummy-penalty-undo{width:40px;min-width:40px;height:24px;padding:0!important;font-size:14px;line-height:24px;display:none}.rummy-penalty-undo.show{display:block}.rummy-mode{display:flex;gap:6px;padding:5px;border-radius:16px;background:rgba(255,255,255,.10);margin:0 0 12px}.rummy-mode button{flex:1;background:transparent;color:#fff;padding:10px 8px}.rummy-mode button.active{background:#fff;color:#0B5CAD}
 
-.tournament-format{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,minmax(76px,auto));gap:8px;margin-top:10px}.tournament-format button{background:rgba(255,255,255,.12);color:#fff;text-align:left;display:flex;align-items:center;justify-content:flex-start;min-height:76px;height:100%;padding:12px 14px;line-height:1.35;overflow-wrap:anywhere}.tournament-format button.active{background:#fff;color:#0B5CAD}.tournament-member-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tournament-member{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.08);border-radius:12px}.tournament-member input{width:20px;height:20px;padding:0;flex:0 0 auto}.tournament-match{background:rgba(255,255,255,.08);padding:12px;border-radius:14px;margin:10px 0}.tournament-match-head{font-weight:800;margin-bottom:8px}.tournament-match-row{display:grid;grid-template-columns:minmax(0,1fr) 78px;gap:8px;align-items:center;margin:6px 0}.tournament-match-row input{padding:10px}.tournament-match button{margin-top:8px}.tournament-group{border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px;margin:12px 0}.tournament-status{padding:10px;border-radius:12px;background:rgba(255,255,255,.08);margin:8px 0}.tournament-actions{display:flex;gap:8px}.tournament-actions button{flex:1;background:rgba(255,255,255,.12);color:#fff}
+.tournament-format{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,minmax(76px,auto));gap:8px;margin-top:10px}.tournament-format button{background:rgba(255,255,255,.12);color:#fff;text-align:center;display:flex;align-items:center;justify-content:center;min-height:76px;height:100%;padding:12px 14px;line-height:1.35;overflow-wrap:anywhere}.tournament-format button.active{background:#fff;color:#0B5CAD}.tournament-member-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tournament-member{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.08);border-radius:12px}.tournament-member input{width:20px;height:20px;padding:0;flex:0 0 auto}.tournament-match{background:rgba(255,255,255,.08);padding:12px;border-radius:14px;margin:10px 0}.tournament-match-head{font-weight:800;margin-bottom:8px}.tournament-match-row{display:grid;grid-template-columns:minmax(0,1fr) 78px;gap:8px;align-items:center;margin:6px 0}.tournament-match-row input{padding:10px}.tournament-match button{margin-top:8px}.tournament-group{border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px;margin:12px 0}.tournament-status{padding:10px;border-radius:12px;background:rgba(255,255,255,.08);margin:8px 0}.tournament-actions{display:flex;gap:8px}.tournament-actions button{flex:1;background:rgba(255,255,255,.12);color:#fff}
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build138</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build139</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -45,7 +45,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build138</div>
+<div class="footer">BRC Play Build139</div>
 </section>
 
 <section id="carc" class="screen">

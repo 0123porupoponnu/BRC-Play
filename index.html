@@ -235,11 +235,15 @@ function renderPracticeDetail(){
     const winner=g.winner||'';
     const p1=g.p1||g.a||'';
     const p2=g.p2||g.b||'';
-    const s1=g.score1!=null?g.score1:g.scoreA;
-    const s2=g.score2!=null?g.score2:g.scoreB;
-    const score1=s1!=null?` ${s1}点`:'';
-    const score2=s2!=null?` ${s2}点`:'';
-    return `<div><b>${escapeHTML(p1)}</b>${score1} vs <b>${escapeHTML(p2)}</b>${score2}${winner?` → ${escapeHTML(winner)} 勝利`:''}</div>`;
+    const s1=g.score1!=null?Number(g.score1):Number(g.scoreA);
+    const s2=g.score2!=null?Number(g.score2):Number(g.scoreB);
+    const p1Wins=winner===p1;
+    const topName=winner?(p1Wins?p1:p2):p1;
+    const bottomName=winner?(p1Wins?p2:p1):p2;
+    const topScore=winner?(p1Wins?s1:s2):s1;
+    const bottomScore=winner?(p1Wins?s2:s1):s2;
+    const diff=Number.isFinite(topScore)&&Number.isFinite(bottomScore)?Math.abs(topScore-bottomScore):null;
+    return `<div class="history"><b>${winner?'🏆 ':''}${escapeHTML(topName)}－${escapeHTML(bottomName)}</b><div>${Number.isFinite(topScore)?topScore:''}－${Number.isFinite(bottomScore)?bottomScore:''}${diff!==null?`　得失点差 ${diff}`:''}</div></div>`;
   }).join('');
 
   const carcRanking=(h.carcRanking||[]).map(r=>
@@ -464,18 +468,17 @@ function renderPracticeCarcResults(){
   }
   box.innerHTML=results.slice().reverse().map(h=>{
     const index=db.history.indexOf(h);
-    return `
-    <div class="history">
-      <div class="history-head">
-        <div class="history-body">
-          👑 <b>${escapeHTML(h.winner)}</b>（${escapeHTML(h.wTurn)}）<br>
-          <b>${h.scoreA}-${h.scoreB}</b>　得失点差 ${escapeHTML(h.diffText)}<br>
-          <span class="small">${escapeHTML(h.a)} ${h.ra1}→${h.ra2} / ${escapeHTML(h.b)} ${h.rb1}→${h.rb2}</span>
-        </div>
-        <button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button>
-      </div>
-    </div>
-  `}).join('');
+    const aWon=h.winner===h.a;
+    const winnerName=aWon?h.a:h.b;
+    const loserName=aWon?h.b:h.a;
+    const winnerTurn=h.wTurn||(aWon?h.aTurn:h.bTurn)||'';
+    const winnerScore=Number(aWon?h.scoreA:h.scoreB);
+    const loserScore=Number(aWon?h.scoreB:h.scoreA);
+    const diff=Math.abs(winnerScore-loserScore);
+    const winnerRate=aWon?`${h.ra1}→${h.ra2}`:`${h.rb1}→${h.rb2}`;
+    const loserRate=aWon?`${h.rb1}→${h.rb2}`:`${h.ra1}→${h.ra2}`;
+    return `<div class="history"><div class="history-head"><div class="history-body"><div><b>🏆 ${escapeHTML(winnerName)}（${escapeHTML(winnerTurn)}）－${escapeHTML(loserName)}</b></div><div><b>${winnerScore}－${loserScore}</b>　得失点差 ${diff}</div><div class="small">${escapeHTML(winnerName)} ${winnerRate} / ${escapeHTML(loserName)} ${loserRate}</div></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`;
+  }).join('');
 }
 
 function formatPracticeDate(key){

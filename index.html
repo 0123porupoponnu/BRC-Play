@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build143</title>
+<title>BRC Play Build144</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -18,7 +18,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .home-title{text-align:center;padding:12px 0 18px}.home-title img{width:100px;border-radius:22px}.home-title h1{margin:12px 0 4px;font-size:30px}.home-title .build{font-size:13px;opacity:.75}
 .menu-card{display:flex;align-items:center;gap:16px;width:100%;padding:20px;margin:14px 0;border:0;border-radius:22px;background:rgba(255,255,255,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;text-align:left;cursor:pointer}.menu-card:active{transform:scale(.98)}.menu-icon{font-size:34px;width:48px;text-align:center}.menu-text{flex:1}.menu-text b{display:block;font-size:19px;margin-bottom:3px}.menu-text span{font-size:13px;opacity:.75}.menu-arrow{font-size:24px;opacity:.7}
 .member{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.12);cursor:pointer}.member:last-child{border-bottom:0}.member-info{min-width:0}.member-info b{font-size:17px}.member-buttons{display:flex;gap:8px;margin-left:10px}.iconbtn{width:38px;height:38px;border-radius:10px;padding:0}.edit{background:rgba(255,255,255,.18);color:#fff}.del{background:#E53935;color:#fff}
-.history{padding:12px;border-radius:14px;background:rgba(255,255,255,.08);margin-bottom:10px}.history:last-child{margin-bottom:0}.history-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.history-body{flex:1}
+.history{padding:12px;border-radius:14px;background:rgba(255,255,255,.08);margin-bottom:10px}.history:last-child{margin-bottom:0}.history-disclosure>summary{cursor:pointer;list-style:none}.history-disclosure>summary::-webkit-details-marker{display:none}.history-disclosure>summary h2,.history-disclosure>summary h3{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px;margin:0 0 12px}.history-disclosure>summary::after{content:"＋";float:right;font-size:1.1em;opacity:.8}.history-disclosure[open]>summary::after{content:"−"}.history-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.history-body{flex:1}
 .rank{display:flex;align-items:center;justify-content:space-between;padding:14px;margin-bottom:8px;border-radius:14px;background:rgba(255,255,255,.08)}.rank:last-child{margin-bottom:0}.rank-left{display:flex;align-items:center;gap:10px}.rank-number{font-size:18px;font-weight:800;min-width:38px}.rank-score{font-weight:700}
 .back-home{margin-top:18px}.back-home button{width:100%;background:rgba(255,255,255,.12);color:#fff}.footer{text-align:center;font-size:13px;opacity:.7;padding:16px 0 10px}
 .switch{margin-bottom:18px;display:flex;gap:8px;margin-top:10px}.switch button{flex:1;background:rgba(255,255,255,.12);color:#fff}.switch button.active{background:#fff;color:#0B5CAD}.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{background:rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center}.stat b{display:block;font-size:22px;margin-top:4px}.detail-name{text-align:center;font-size:24px;margin:6px 0 14px}.timeline{padding:10px 0}.timeline-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1)}.timeline-item:last-child{border-bottom:0}.win{font-weight:800}.loss{opacity:.8}
@@ -45,14 +45,14 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build143</div>
+<div class="footer">BRC Play Build144</div>
 </section>
 
 <section id="carc" class="screen">
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🏰 カルカソンヌ</h1></div>
 <div class="card"><h2>🏰 カルカソンヌ</h2><div class="row"><select id="playerA"></select><select id="playerB"></select></div><div class="row" style="margin-top:10px"><select id="turnA"><option>先手</option><option>後手</option></select><select id="turnB"><option>先手</option><option selected>後手</option></select></div><div class="row" style="margin-top:10px"><input id="scoreA" inputmode="numeric" placeholder="A得点"><input id="scoreB" inputmode="numeric" placeholder="B得点"></div><button class="primary" id="saveMatch">結果を登録</button><div class="small">同点なら後手勝ち・得失点差も記録</div></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="carcRanking"></div></div>
-<div class="card"><h2>📜 カルカソンヌ対戦履歴</h2><div id="history"></div></div>
+<div class="card"><details class="history-disclosure"><summary><h2>📜 カルカソンヌ対戦履歴 <span class="small">（タップして開く）</span></h2></summary><div id="history"></div></details></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
 
@@ -60,7 +60,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <div class="pagehead"><button class="back" onclick="show('home')">← ホーム</button><h1>🎲 ラミィキューブ</h1></div>
 <div class="card"><h2>🎲 ラミィキューブ</h2><div class="rummy-mode"><button type="button" id="rummyMode4" class="active" onclick="setRummyPlayerCount(4)">4人戦</button><button type="button" id="rummyMode3" onclick="setRummyPlayerCount(3)">3人戦</button></div><div class="small" id="rummyInstruction" style="margin-bottom:10px">① まず名前の横の 🏆(勝者) を押してね。<br>② そのあと3人の点数を入力します。</div><div class="rummy-player-row"><select id="r1"></select><button type="button" class="winner-btn" id="winner1" onclick="setRummyWinner(0)" title="勝者">🏆</button><input id="rs1" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty1" onclick="applyRummyInputPenalty(0)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo1" onclick="undoRummyInputPenalty(0)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r2"></select><button type="button" class="winner-btn" id="winner2" onclick="setRummyWinner(1)" title="勝者">🏆</button><input id="rs2" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty2" onclick="applyRummyInputPenalty(1)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo2" onclick="undoRummyInputPenalty(1)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row"><select id="r3"></select><button type="button" class="winner-btn" id="winner3" onclick="setRummyWinner(2)" title="勝者">🏆</button><input id="rs3" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty3" onclick="applyRummyInputPenalty(2)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo3" onclick="undoRummyInputPenalty(2)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="rummy-player-row" id="rummyRow4"><select id="r4"></select><button type="button" class="winner-btn" id="winner4" onclick="setRummyWinner(3)" title="勝者">🏆</button><input id="rs4" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="点数"><div class="rummy-penalty-wrap"><button type="button" class="iconbtn rummy-penalty-btn" id="penalty4" onclick="applyRummyInputPenalty(3)" title="⚠️ ペナルティ">⚠️</button><button type="button" class="iconbtn rummy-penalty-undo" id="penaltyUndo4" onclick="undoRummyInputPenalty(3)" title="直前のペナルティを取り消す">↩️</button></div></div><div class="small" style="margin-top:12px">⚠️ ペナルティを押すと、その人の得点から1回につき50点減点されます。保存前に何回でも追加できます。</div><button class="primary" id="saveRummy">卓結果を保存</button></div>
 <div class="card"><h2>🏆 ランキング</h2><div id="ranking"></div></div>
-<div class="card"><h2>📜 ラミィ対戦履歴</h2><div id="rummyHistory"></div></div>
+<div class="card"><details class="history-disclosure"><summary><h2>📜 ラミィ対戦履歴 <span class="small">（タップして開く）</span></h2></summary><div id="rummyHistory"></div></details></div>
 <div class="back-home"><button onclick="show('home')">← ホームへ戻る</button></div>
 </section>
 
@@ -98,8 +98,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 <div id="practiceCarcPanel">
 <div class="history">
-<h3>今日の結果</h3>
-<div id="practiceCarcResults"></div>
+<details class="history-disclosure"><summary><h3>今日の結果 <span class="small">（タップして開く）</span></h3></summary><div id="practiceCarcResults"></div></details>
 </div>
 <div class="history">
 <h3>🏆 ランキング</h3>
@@ -109,8 +108,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 <div id="practiceRummyPanel" style="display:none">
 <div class="history">
-<h3>今日の結果</h3>
-<div id="practiceRummyResults"></div>
+<details class="history-disclosure"><summary><h3>今日の結果 <span class="small">（タップして開く）</span></h3></summary><div id="practiceRummyResults"></div></details>
 </div>
 <div class="history">
 <h3>🏆 ランキング</h3>
@@ -202,8 +200,8 @@ box.append(e,d);row.append(box);$('members').append(row);
 });
 }
 function renderSelects(){const opts=db.members.map((m,i)=>`<option value="${i}">${escapeHTML(m.name)}</option>`).join('');$('playerA').innerHTML=opts;$('playerB').innerHTML=opts;['r1','r2','r3','r4'].forEach(id=>$(id).innerHTML=opts)}
-function historyHTML(){if(!db.history.length)return '<div class="small">まだ対戦記録はありません</div>';return db.history.slice().reverse().map((h,i)=>{const index=db.history.length-1-i;const aWon=h.winner===h.a;const winnerName=aWon?h.a:h.b;const loserName=aWon?h.b:h.a;const winnerTurn=h.wTurn|| (aWon?h.aTurn:h.bTurn)||'';const winnerScore=aWon?Number(h.scoreA):Number(h.scoreB);const loserScore=aWon?Number(h.scoreB):Number(h.scoreA);const diff=Math.abs(winnerScore-loserScore);const winnerRate=aWon?`${h.ra1}→${h.ra2}`:`${h.rb1}→${h.rb2}`;const loserRate=aWon?`${h.rb1}→${h.rb2}`:`${h.ra1}→${h.ra2}`;return `<div class="history"><div class="history-head"><div class="history-body"><div><b>🏆 ${escapeHTML(winnerName)}（${escapeHTML(winnerTurn)}）－${escapeHTML(loserName)}</b></div><div>${winnerScore}－${loserScore}　得失点差 ${diff}</div><div class="small">${escapeHTML(winnerName)} ${winnerRate} / ${escapeHTML(loserName)} ${loserRate}</div></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`}).join('')}
-function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">まだラミィの記録はありません</div>';return db.rummy.slice().reverse().map((game,i)=>{const index=db.rummy.length-1-i;const players=Array.isArray(game)?game:(game.players||[]);const rows=players.map((p,j)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px"><span>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</span></div>`).join('');return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`}).join('')}
+function historyHTML(){if(!db.history.length)return '<div class="small">まだ対戦記録はありません</div>';return db.history.slice(-100).reverse().map((h,i)=>{const index=db.history.length-1-i;const aWon=h.winner===h.a;const winnerName=aWon?h.a:h.b;const loserName=aWon?h.b:h.a;const winnerTurn=h.wTurn|| (aWon?h.aTurn:h.bTurn)||'';const winnerScore=aWon?Number(h.scoreA):Number(h.scoreB);const loserScore=aWon?Number(h.scoreB):Number(h.scoreA);const diff=Math.abs(winnerScore-loserScore);const winnerRate=aWon?`${h.ra1}→${h.ra2}`:`${h.rb1}→${h.rb2}`;const loserRate=aWon?`${h.rb1}→${h.rb2}`:`${h.ra1}→${h.ra2}`;return `<div class="history"><div class="history-head"><div class="history-body"><div><b>🏆 ${escapeHTML(winnerName)}（${escapeHTML(winnerTurn)}）－${escapeHTML(loserName)}</b></div><div>${winnerScore}－${loserScore}　得失点差 ${diff}</div><div class="small">${escapeHTML(winnerName)} ${winnerRate} / ${escapeHTML(loserName)} ${loserRate}</div></div><button class="iconbtn del" onclick="deleteHistory(${index})">🗑️</button></div></div>`}).join('')}
+function rummyHistoryHTML(){if(!db.rummy.length)return '<div class="small">まだラミィの記録はありません</div>';return db.rummy.slice(-100).reverse().map((game,i)=>{const index=db.rummy.length-1-i;const players=Array.isArray(game)?game:(game.players||[]);const rows=players.map((p,j)=>`<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px"><span>${j+1}位 <b>${escapeHTML(p.name)}</b> ${p.score}点</span></div>`).join('');return `<div class="history"><div class="history-head"><div class="history-body">${rows}</div><button class="iconbtn del" onclick="deleteRummy(${index})">🗑️</button></div></div>`}).join('')}
 function renderRanking(){const totals={};db.members.forEach(m=>totals[m.name]=0);db.rummy.forEach(game=>{const players=Array.isArray(game)?game:(game.players||[]);players.forEach(p=>totals[p.name]=(totals[p.name]||0)+Number(p.score||0))});const sorted=Object.entries(totals).sort((a,b)=>b[1]-a[1]);if(!sorted.length){$('ranking').innerHTML='<div class="small">まだラミィの記録はありません</div>';return}let lastScore=null,rank=0;$('ranking').innerHTML=sorted.map((e,i)=>{if(lastScore!==e[1]){rank=i+1;lastScore=e[1]}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(e[0])}</b></div><div class="rank-score">${e[1]}点</div></div>`}).join('')}
 function renderCarcRanking(){const sorted=db.members.slice().sort((a,b)=>(b.carc||1000)-(a.carc||1000));if(!sorted.length){$('carcRanking').innerHTML='<div class="small">まだメンバーがいません</div>';return}let last=null,rank=0;$('carcRanking').innerHTML=sorted.map((m,i)=>{const r=m.carc||1000;if(last!==r){rank=i+1;last=r}return `<div class="rank"><div class="rank-left"><div class="rank-number">${rank}位</div><b>${escapeHTML(m.name)}</b></div><div class="rank-score">${r}</div></div>`}).join('')}
 function renderPracticeHistory(){

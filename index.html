@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<!-- Build184: inline opaque bracket editor; double knockout winners bracket reuses the exact single bracket structure -->
+<!-- Build185: inline opaque bracket editor; double knockout winners bracket reuses the exact single bracket structure -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build184</title>
+<title>BRC Play Build185</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -149,7 +149,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build184</div>
+<div class="footer">BRC Play Build185</div>
 </section>
 
 <section id="carc" class="screen">
@@ -848,8 +848,21 @@ function saveBracketRoundMatch(mode,roundIndex,index){
 }
 function singleBracketCard(m,ri,i,t){const active=ri===t.round-1;const current=active?t.matches[i]:null;const canOpen=!!(!m.bye&&(m.done||(active&&current&&!current.done)));let label='';if(m.bye)label=`<div class="sb-player"><div class="sb-name">${escapeHTML(m.a)}</div><div class="sb-detail">不戦勝 · 次へ進出</div></div>`;else if(m.done){const aWon=m.winner===m.a;const turnA=m.turnA||'先手';const turnB=turnA==='先手'?'後手':'先手';label=`<div class="sb-player"><div class="sb-name">${escapeHTML(m.a)}${aWon?'<span class="trophy">🏆</span>':''}</div><div class="sb-detail">${Number(m.scoreA)||0}・${turnA}</div></div><div class="sb-vs">vs</div><div class="sb-player"><div class="sb-name">${escapeHTML(m.b)}${!aWon?'<span class="trophy">🏆</span>':''}</div><div class="sb-detail">${Number(m.scoreB)||0}・${turnB}</div></div>`}else label=`<div class="names">${escapeHTML(m.a||'未定')}<br>vs<br>${escapeHTML(m.b||'未定')}</div><div class="score">${canOpen?'得点未登録':'対戦待ち'}</div>`;const openCall=t.mode==='double'?`openTournamentEntry('double',${i},null,false,${ri})`:`openSingleTournamentMatch(${i},${ri})`;const isSelected=t.mode==='single'?selectedSingleMatchIndex===i&&selectedSingleRoundIndex===ri:selectedTournamentEntry&&selectedTournamentEntry.kind==='double'&&selectedTournamentEntry.index===i&&selectedTournamentEntry.roundIndex===ri;const editor=isSelected?bracketEditHTML(m,t.mode==='double'?'double':'single',ri,i):'';return `<div class="single-bracket-match-wrap"><div class="single-bracket-match ${m.bye?'is-bye':''} ${m.done?'is-done':''} ${canOpen?'is-pending':''}" ${canOpen?`role="button" tabindex="0" onclick="${openCall}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${openCall}}"`:''}><div class="single-bracket-card">${label}</div></div>${editor}</div>`}
 
+function adjustBracketEditorLayout(bracket){
+  if(!bracket)return;
+  const rounds=Array.from(bracket.querySelectorAll(':scope > .single-bracket-round'));
+  rounds.forEach(round=>{round.style.marginTop='';});
+  const editor=bracket.querySelector('.single-entry-panel');
+  if(!editor)return;
+  const owner=editor.closest('.single-bracket-round');
+  if(!owner)return;
+  const ownerIndex=rounds.indexOf(owner);
+  const extra=Math.ceil(editor.getBoundingClientRect().height)+14;
+  rounds.forEach((round,i)=>{if(i>ownerIndex)round.style.marginTop=extra+'px';});
+}
 function drawBracketConnectors(){
   document.querySelectorAll('.single-bracket').forEach(bracket=>{
+    adjustBracketEditorLayout(bracket);
     const old=bracket.querySelector('.bracket-connectors');
     if(old)old.remove();
     const rounds=Array.from(bracket.querySelectorAll(':scope > .single-bracket-round'));

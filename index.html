@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<!-- Build200: match group-final cards to Swiss draw card design -->
+<!-- Build201: match group-final cards to Swiss draw card design -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build200</title>
+<title>BRC Play Build201</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -688,6 +688,23 @@ function compactTournamentCard(m,kind,index,groupIndex=null,final=false,active=t
     </button>`;
     let panel='';
     if(selected&&!m.bye)panel=`<div class="tour-entry-panel">${matchHTML(m,index,null,true,roundIndex)}<button type="button" onclick="selectedTournamentEntry=null;renderTournamentBoard()">閉じる</button></div>`;
+    return `<div class="tour-match-with-entry">${card}${panel}</div>`;
+  }
+  if(kind==='group'){
+    if(m.bye)return `<div class="tour-match-with-entry"><div class="tour-compact-card"><div class="tc-stage">対戦 ${index+1} · 不戦勝</div><div class="tc-players">${escapeHTML(m.a||'未定')} は次へ進出</div></div></div>`;
+    const turnA=m.turnA||'先手',turnB=turnA==='先手'?'後手':'先手',done=!!m.done,aWon=m.winner===m.a;
+    const scoreA=done?Number(m.scoreA)||0:'—',scoreB=done?Number(m.scoreB)||0:'—';
+    const card=`<button type="button" class="tour-swiss-card" onclick="openTournamentEntry('group',${index},${groupIndex},false)" aria-label="対戦${index+1} ${escapeHTML(m.a||'未定')} 対 ${escapeHTML(m.b||'未定')} ${done?'結果を修正':'得点を入力'}">
+      <div class="tsc-top"><b>対戦 ${index+1}</b><span>${done?'✅ 登録済み':'得点未登録'} <span class="tsc-edit">· タップして${done?'修正':'入力'}</span></span></div>
+      <div class="tsc-players">
+        <div class="tsc-player ${done&&aWon?'winner':''}"><div class="tsc-name">${done&&aWon?'🏆 ':''}${escapeHTML(m.a||'未定')}</div><div class="tsc-score">${scoreA}</div><div class="tsc-turn">${turnA}</div></div>
+        <div class="tsc-vs">VS</div>
+        <div class="tsc-player ${done&&!aWon?'winner':''}"><div class="tsc-name">${done&&!aWon?'🏆 ':''}${escapeHTML(m.b||'未定')}</div><div class="tsc-score">${scoreB}</div><div class="tsc-turn">${turnB}</div></div>
+      </div>
+      <div class="tsc-status">${done?'勝者：'+escapeHTML(m.winner||'未確定'):'得点を入力して結果を登録'}</div>
+    </button>`;
+    let panel='';
+    if(selected&&!m.bye)panel=`<div class="tour-swiss-entry"><div class="tournament-match">${matchHTML(m,index,groupIndex,false)}<button type="button" class="data-action" onclick="selectedTournamentEntry=null;renderTournamentBoard()">キャンセル</button></div></div>`;
     return `<div class="tour-match-with-entry">${card}${panel}</div>`;
   }
   let card;

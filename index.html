@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<!-- Build189: separate bracket and score-entry panel; manual round confirmation for single/double -->
+<!-- Build190: unify active tab styling for all tournament formats -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build189</title>
+<title>BRC Play Build190</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -37,7 +37,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .tc-result-player{display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.25;margin:3px 0}.tc-result-player b{font-weight:800;overflow-wrap:anywhere}.tc-result-player span{font-size:11px;opacity:.9}.tc-result-player .trophy{margin-left:3px}
 .tour-compact-card{width:max-content;max-width:100%;min-width:0;text-align:left}
 .single-bracket-match .sb-player{display:flex;flex-direction:column;gap:2px;margin:2px 0 5px;min-width:0}.single-bracket-match .sb-name{font-weight:800;line-height:1.2;overflow-wrap:anywhere}.single-bracket-match .sb-name .trophy{margin-left:3px}.single-bracket-match .sb-detail{font-size:11px;opacity:.9;line-height:1.25}.single-bracket-match .sb-vs{font-size:10px;opacity:.65;margin:1px 0}
-.single-bracket-match .tournament-match{margin:0;padding:8px;background:transparent}.single-bracket-match .tournament-match-head{font-size:12px}.single-bracket-note{font-size:12px;opacity:.8;margin:6px 0 10px}.tournament-round-results{border-top:1px solid rgba(255,255,255,.2);margin-top:14px;padding-top:10px}.tournament-round-results .small{line-height:1.55}.tournament-round-nav{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:8px 0}.tournament-round-nav button{flex:1;background:rgba(255,255,255,.13);color:white;padding:10px;border-radius:12px}.tournament-round-nav span{font-weight:700;white-space:nowrap}.tournament-actions{display:flex;gap:8px}.tournament-actions button{flex:1;background:rgba(255,255,255,.12);color:#fff}
+.single-bracket-match .tournament-match{margin:0;padding:8px;background:transparent}.single-bracket-match .tournament-match-head{font-size:12px}.single-bracket-note{font-size:12px;opacity:.8;margin:6px 0 10px}.tournament-round-results{border-top:1px solid rgba(255,255,255,.2);margin-top:14px;padding-top:10px}.tournament-round-results .small{line-height:1.55}.tournament-round-nav{display:flex;gap:8px;align-items:center;justify-content:space-between;margin:8px 0}.tournament-round-nav button{flex:1;background:rgba(255,255,255,.13);color:white;padding:10px;border-radius:12px}.tournament-round-nav span{font-weight:700;white-space:nowrap}.tournament-actions{display:flex;gap:8px}.tournament-actions button{flex:1;background:rgba(255,255,255,.12);color:#fff}.tournament-actions button.active{background:#fff;color:#0B5CAD}
 
 /* Build155: bracket overview separated from match-entry form */
 .single-bracket{gap:10px;align-items:stretch}
@@ -921,7 +921,7 @@ if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'win
   else html+=`<div class="tournament-status">上のトーナメント全体図から、対戦カードをタップして得点を入力・修正してね。</div>`;
   html+=`<div class="small" style="margin-top:12px">得点を登録・修正すると、結果と勝ち上がりに自動反映されます。</div></section>`;
 }
-html+=`</div><div id="tourStandingsSection" style="display:none"><div class="tournament-group"><h3>🏅 大会順位</h3><div class="small">勝利数 ＞ 得失点差 ＞ 後手番回数の順で順位を決定</div>${tournamentStandings().map(r=>`<div class="rank"><span>${r.rank}位　${escapeHTML(r.name)}</span><b>${r.wins}勝 · ${r.diff>0?'+':''}${r.diff} · 後手${r.secondTurns}回</b></div>`).join('')}</div></div>`;if(t.completed)html+=`<div class="tournament-status"><h3>🏆 大会終了</h3>優勝：<b>${escapeHTML(t.champion||'未確定')}</b></div>`;box.innerHTML=html;if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='winners')){requestAnimationFrame(()=>drawBracketConnectors());}if(t.mode==='swiss'){const pages=$('tourRoundPages');if(pages){const current=pages.querySelector(`[data-round-index="${Math.max(0,(t.rounds||[]).length-1)}"]`);if(current)current.scrollIntoView({block:'nearest',inline:'start'});pages.addEventListener('scroll',updateTournamentRoundIndicator,{passive:true});updateTournamentRoundIndicator();}}}
+html+=`</div><div id="tourStandingsSection" style="display:none"><div class="tournament-group"><h3>🏅 大会順位</h3><div class="small">勝利数 ＞ 得失点差 ＞ 後手番回数の順で順位を決定</div>${tournamentStandings().map(r=>`<div class="rank"><span>${r.rank}位　${escapeHTML(r.name)}</span><b>${r.wins}勝 · ${r.diff>0?'+':''}${r.diff} · 後手${r.secondTurns}回</b></div>`).join('')}</div></div>`;if(t.completed)html+=`<div class="tournament-status"><h3>🏆 大会終了</h3>優勝：<b>${escapeHTML(t.champion||'未確定')}</b></div>`;box.innerHTML=html;showTournamentPanel('matches');if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='winners')){requestAnimationFrame(()=>drawBracketConnectors());}if(t.mode==='swiss'){const pages=$('tourRoundPages');if(pages){const current=pages.querySelector(`[data-round-index="${Math.max(0,(t.rounds||[]).length-1)}"]`);if(current)current.scrollIntoView({block:'nearest',inline:'start'});pages.addEventListener('scroll',updateTournamentRoundIndicator,{passive:true});updateTournamentRoundIndicator();}}}
 function confirmBracketRound(){
   const t=tournamentState;if(!t||(t.mode!=='single'&&t.mode!=='double'))return;
   if(!Array.isArray(t.matches)||!t.matches.length||!t.matches.every(m=>m.done||m.bye)){alert('現在の回戦の全試合を入力してから確定してね');return;}

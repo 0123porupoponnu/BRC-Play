@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build182</title>
+<title>BRC Play Build183</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -107,25 +107,41 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-bracket .single-bracket-round:not(:last-child) .single-bracket-match:before{display:none}
 
 
-/* Build182 update: score forms stay opaque and above bracket artwork */
+/* Build183修正: 選択したカードの直下に入力欄を表示し、背景を不透明にする */
+.tour-compact-list { display:block !important; }
+.tour-compact-list > .tour-match-with-entry {
+  display:block !important;
+  width:100%;
+  min-width:0;
+  margin:10px 0;
+  position:relative;
+  overflow:visible;
+}
+.tour-match-with-entry > .tour-swiss-card,
+.tour-match-with-entry > .tour-compact-card { width:100%; box-sizing:border-box; }
+.tour-swiss-entry,
 .tour-entry-panel,
 .single-entry-panel {
-  position: relative !important;
-  z-index: 1000 !important;
-  isolation: isolate;
-  background: #4b9be3 !important;
-  border: 2px solid rgba(255,255,255,.62) !important;
-  box-shadow: 0 8px 24px rgba(0,35,90,.24);
-  opacity: 1 !important;
+  position:relative !important;
+  z-index:1000 !important;
+  isolation:isolate;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+  background:#4b9be3 !important;
+  border:2px solid rgba(255,255,255,.72) !important;
+  box-shadow:0 8px 24px rgba(0,35,90,.24);
+  opacity:1 !important;
 }
-.tour-entry-panel *, .single-entry-panel * { opacity: 1; }
-.tour-entry-panel { scroll-margin-top: 24px; }
+.tour-swiss-entry { margin:8px 0 14px; padding:14px; border-radius:16px; }
+.tour-entry-panel *, .single-entry-panel *, .tour-swiss-entry * { opacity:1 !important; }
+.tour-entry-panel, .single-entry-panel, .tour-swiss-entry { scroll-margin-top:24px; }
 </style>
 </head>
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build182</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build183</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -133,7 +149,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build182</div>
+<div class="footer">BRC Play Build183</div>
 </section>
 
 <section id="carc" class="screen">

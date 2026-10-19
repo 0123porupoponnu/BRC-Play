@@ -106,6 +106,20 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-bracket .single-bracket-round:last-child .single-bracket-match:after{display:none}
 .double-bracket .single-bracket-round:not(:last-child) .single-bracket-match:before{display:none}
 
+
+/* Build182 update: score forms stay opaque and above bracket artwork */
+.tour-entry-panel,
+.single-entry-panel {
+  position: relative !important;
+  z-index: 1000 !important;
+  isolation: isolate;
+  background: #4b9be3 !important;
+  border: 2px solid rgba(255,255,255,.62) !important;
+  box-shadow: 0 8px 24px rgba(0,35,90,.24);
+  opacity: 1 !important;
+}
+.tour-entry-panel *, .single-entry-panel * { opacity: 1; }
+.tour-entry-panel { scroll-margin-top: 24px; }
 </style>
 </head>
 <body>
@@ -1321,8 +1335,3 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worke
 </body>
 </html>
 
-<script>window.addEventListener('resize',()=>requestAnimationFrame(()=>drawBracketConnectors()));</script>
-
-/* Build182: bracket edit form is rendered below the full bracket, never over connectors */
-.single-entry-panel{width:100%;max-width:100%;position:static;z-index:auto;box-sizing:border-box;margin:14px 0;padding:14px;border:2px solid rgba(255,255,255,.42);border-radius:16px;background:rgba(255,255,255,.12);scroll-margin-top:18px}
-.double-bracket .single-entry-panel{width:100%;max-width:100%;position:static;overflow:visible}

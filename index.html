@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build177</title>
+<title>BRC Play Build178</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -92,7 +92,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <body>
 <div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build177</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build178</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -100,7 +100,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build177</div>
+<div class="footer">BRC Play Build178</div>
 </section>
 
 <section id="carc" class="screen">
@@ -520,7 +520,19 @@ function recordTournamentMatch(match){if(match.done)return;const a=Number(match.
 if(tournamentState){if(!Array.isArray(tournamentState.matchHistory))tournamentState.matchHistory=[];if(!tournamentState.matchHistory.some(x=>x===match|| (x.a===match.a&&x.b===match.b&&x.stage===match.stage)))tournamentState.matchHistory.push({...match});}
 // 大会の対戦結果を通常のカルカソンヌ履歴にも反映する
 if(loser){const A=db.members.find(m=>m.name===match.a),B=db.members.find(m=>m.name===match.b);const oa=A?(A.carc||1000):1000,ob=B?(B.carc||1000):1000;const aWin=winner===match.a;if(A)A.carc=elo(oa,ob,aWin?1:0);if(B)B.carc=elo(ob,oa,aWin?0:1);const diff=a-b;db.history.push({date:todayKey(),a:match.a,b:match.b,winner,wTurn:(aWin?match.turnA:(match.turnA==='先手'?'後手':'先手')),scoreA:a,scoreB:b,diffText:diff>0?`A +${diff} / B -${diff}`:diff<0?`A ${diff} / B +${-diff}`:'±0',ra1:oa,ra2:A?(A.carc||1000):oa,rb1:ob,rb2:B?(B.carc||1000):ob,tournament:true,tournamentStage:match.stage,aTurn:match.turnA,bTurn:(match.turnA==='先手'?'後手':'先手')});}
-if(tournamentState.mode==='double'&&loser){tournamentState.losses[loser]=(tournamentState.losses[loser]||0)+1;if(!Array.isArray(tournamentState.losersRounds))tournamentState.losersRounds=[];tournamentState.losersRounds.push({a:loser,b:null,stage:'敗者側へ移動',done:true,bye:true,winner:loser,losses:tournamentState.losses[loser]});}if(tournamentState.mode==='single')selectedSingleMatchIndex=null;selectedTournamentEntry=null;advanceTournament();saveTournament();save();render();renderTournamentBoard();}
+if(tournamentState.mode==='double'&&loser){tournamentState.losses[loser]=(tournamentState.losses[loser]||0)+1;if(!Array.isArray(tournamentState.losersRounds))tournamentState.losersRounds=[];tournamentState.losersRounds.push({a:loser,b:null,stage:'敗者側へ移動',done:true,bye:true,winner:loser,losses:tournamentState.losses[loser]});}if(tournamentState.mode==='single'){
+  selectedSingleMatchIndex=null;
+  // 結果を登録した時点で、表示に使う現在回戦のスナップショットも更新する
+  if(!Array.isArray(tournamentState.rounds))tournamentState.rounds=[];
+  tournamentState.rounds[tournamentState.round-1]=tournamentState.matches.map(m=>({...m}));
+}
+if(tournamentState.mode==='double'){
+  // ダブルK.O.も、勝者側の表示用スナップショットを毎試合更新する
+  if(!Array.isArray(tournamentState.winnersRounds))tournamentState.winnersRounds=[];
+  tournamentState.winnersRounds[tournamentState.round-1]=tournamentState.matches.map(m=>({...m}));
+  tournamentState.rounds=tournamentState.winnersRounds.map(r=>r.map(m=>({...m})));
+}
+selectedTournamentEntry=null;advanceTournament();saveTournament();save();render();renderTournamentBoard();}
 function advanceTournament(){if(!tournamentState)return;const t=tournamentState;if(t.mode==='single'){if(t.matches.every(m=>m.done)){if(!Array.isArray(t.rounds))t.rounds=[];t.rounds[t.round-1]=t.matches.map(m=>({...m}));if(t.custom10){const bySlot={};t.matches.forEach(m=>{bySlot[m.custom10Slot]=m.winner});if(t.round===1){t.round++;t.matches=[{a:bySlot[1],b:bySlot[2],stage:'第2回戦',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false,custom10Slot:1},{a:bySlot[3],b:null,stage:'第2回戦',turnA:'先手',scoreA:'',scoreB:'',winner:bySlot[3],done:true,bye:true,custom10Slot:2},{a:bySlot[4],b:null,stage:'第2回戦',turnA:'先手',scoreA:'',scoreB:'',winner:bySlot[4],done:true,bye:true,custom10Slot:3},{a:bySlot[5],b:bySlot[10],stage:'第2回戦',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false,custom10Slot:4}];t.rounds.push(t.matches.map(m=>({...m})));}else if(t.round===2){t.round++;t.matches=[{a:bySlot[1],b:bySlot[2],stage:'第3回戦',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false,custom10Slot:1},{a:bySlot[3],b:bySlot[4],stage:'第3回戦',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false,custom10Slot:2}];t.rounds.push(t.matches.map(m=>({...m})));}else if(t.round===3){const finalists=t.matches.map(m=>m.winner).filter(Boolean);t.round++;t.matches=[{a:finalists[0],b:finalists[1],stage:'決勝',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false,custom10Slot:1}];t.rounds.push(t.matches.map(m=>({...m})));}else{t.completed=true;t.champion=t.matches[0]?.winner||null;}}else{const winners=t.matches.map(m=>m.winner).filter(Boolean);if(winners.length===1){t.completed=true;t.champion=winners[0]}else{t.round++;t.matches=makeMatches(winners,'第'+t.round+'回戦');t.rounds.push(t.matches.map(m=>({...m})));}}}}
 else if(t.mode==='swiss'){if(t.matches.length&&t.matches.every(m=>m.done)){const allRounds=Array.isArray(t.rounds)&&t.rounds.length?t.rounds:[t.matches];const wins={};const diff={};t.participants.forEach(n=>{wins[n]=0;diff[n]=0});allRounds.forEach(r=>r.forEach(m=>{if(m.winner)wins[m.winner]++;diff[m.a]+=(Number(m.scoreA)||0)-(Number(m.scoreB)||0);diff[m.b]+=(Number(m.scoreB)||0)-(Number(m.scoreA)||0)}));if(t.round>=Number(t.roundCount||3)){t.completed=true;t.champion=tournamentStandings()[0]?.name||null;t.standings=wins;t.pointDiff=diff;}else{const played=new Set();allRounds.forEach(r=>r.forEach(m=>{played.add([m.a,m.b].sort().join('|'))}));const sorted=t.participants.slice().sort((a,b)=>(wins[b]||0)-(wins[a]||0)||(diff[b]||0)-(diff[a]||0));const next=[];const pool=sorted.slice();while(pool.length>1){const a=pool.shift();let idx=pool.findIndex(b=>!played.has([a,b].sort().join('|')));if(idx<0)idx=0;const b=pool.splice(idx,1)[0];next.push({a,b,stage:'第'+(t.round+1)+'回戦',turnA:Math.random()<.5?'先手':'後手',scoreA:'',scoreB:'',winner:null,done:false});}if(pool.length)next.push({a:pool[0],b:null,stage:'第'+(t.round+1)+'回戦',bye:true,done:true,winner:pool[0]});t.round++;t.matches=next;if(!Array.isArray(t.rounds))t.rounds=[];t.rounds.push(next);}}}
 else if(t.mode==='double'){

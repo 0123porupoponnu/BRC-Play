@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build209</title>
+<title>BRC Play Build201</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -151,18 +151,21 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .group-tab-switch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:12px 0}
 .group-tab-switch button{min-width:0;padding:10px 4px;border-radius:12px;font-size:14px;overflow-wrap:anywhere}
 .group-tab-switch button.active{background:#fff!important;color:#1765ad!important;border-color:#fff!important}
-/* Build209: 敗者側ブラケットを勝者側と同じ横型レイアウトで描画 */
-.single-bracket.double-loser-tree{display:flex!important;flex-flow:row nowrap!important;align-items:stretch!important;gap:18px!important;width:max-content!important;min-width:max-content!important;position:relative!important;padding:4px 6px 18px!important;isolation:isolate}
-.single-bracket.double-loser-tree>.single-bracket-round{display:flex!important;flex:0 0 170px!important;width:170px!important;min-width:170px!important;max-width:170px!important;flex-direction:column!important;justify-content:space-around!important;align-items:stretch!important;gap:12px!important;position:relative!important;padding-top:38px!important;box-sizing:border-box!important}
-.single-bracket.double-loser-tree>.single-bracket-round>.single-bracket-item{display:block!important;flex:0 0 auto!important;width:170px!important;min-width:170px!important;max-width:170px!important;position:relative!important;box-sizing:border-box!important}
-.single-bracket.double-loser-tree .single-bracket-match-wrap{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
-.single-bracket.double-loser-tree .single-bracket-match{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;white-space:normal!important;overflow-wrap:anywhere!important;font-size:14px!important;line-height:1.45!important;padding:8px!important}
-.single-bracket.double-loser-tree .sb-player{display:block!important;min-width:0!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important}
-.single-bracket.double-loser-tree .single-bracket-round>h4{position:absolute!important;top:4px!important;left:0!important;right:0!important;z-index:2!important;text-align:center!important;white-space:nowrap!important;font-size:14px!important;overflow-wrap:normal!important}
-.single-bracket.double-loser-tree>.bracket-connectors{position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important}
-.single-bracket.double-loser-tree>.single-bracket-round,.single-bracket.double-loser-tree>.single-bracket-round>.single-bracket-item{overflow:visible!important}
+/* Build208: 敗者側トーナメントのCSSをstyle内に配置 */
+.double-loser-tree{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:18px!important;width:max-content!important;min-width:max-content!important;padding:8px 4px 16px;position:relative}
+.double-loser-tree>.single-bracket-round{display:flex!important;flex:0 0 170px!important;width:170px!important;min-width:170px!important;flex-direction:column!important;justify-content:space-around!important;gap:12px!important;position:relative}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{display:block!important;flex:0 0 auto!important;width:170px!important;min-width:170px!important;box-sizing:border-box}
+.double-loser-tree .single-bracket-match-wrap{width:100%;min-width:0;box-sizing:border-box}
+.double-loser-tree .single-bracket-match{width:100%;min-width:0;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere}
+.double-loser-tree .single-bracket-round>h4{position:sticky;top:0;z-index:2}
 
 
+/* Build210: loser bracket uses the same card-and-connector tree structure as winners. */
+.double-loser-tree{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:22px!important;width:max-content!important;min-width:max-content!important;position:relative!important;padding:8px 8px 20px!important}
+.double-loser-tree>.single-bracket-round{display:flex!important;flex:0 0 170px!important;width:170px!important;min-width:170px!important;flex-direction:column!important;justify-content:space-around!important;gap:16px!important;position:relative!important}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{display:block!important;flex:0 0 auto!important;width:170px!important;min-width:170px!important;box-sizing:border-box!important}
+.double-loser-tree .bracket-connectors{position:absolute!important;inset:0 auto auto 0!important;pointer-events:none!important;overflow:visible!important;z-index:1!important}
+.double-loser-tree .bracket-connectors path{fill:none!important;stroke:rgba(255,255,255,.85)!important;stroke-width:2.5!important}
 </style>
 </head>
 <body>
@@ -176,7 +179,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build209</div>
+<div class="footer">BRC Play Build199</div>
 </section>
 
 <section id="carc" class="screen">
@@ -953,7 +956,7 @@ function saveDoubleLoserMatch(key){
 }
 function doubleLoserCard(m){
  const editing=selectedTournamentEntry==='doubleLoser:'+m.key;
- const players=`<div class="sb-player"><div class="sb-name">${escapeHTML(m.a||'対戦者待ち')}</div></div><div class="sb-vs">vs</div><div class="sb-player"><div class="sb-name">${escapeHTML(m.b||'対戦者待ち')}</div></div>`;
+ const players=`<div class="sb-player">${escapeHTML(m.a||'対戦者待ち')}</div><div class="sb-player">${escapeHTML(m.b||'対戦者待ち')}</div>`;
  const score=m.done?`<div class="small">${escapeHTML(String(m.scoreA))} - ${escapeHTML(String(m.scoreB))}　勝者：${escapeHTML(m.winner||'')}</div>`:'';
  const form=editing?`<div class="single-entry-panel" onclick="event.stopPropagation()"><div class="small">${escapeHTML(m.a)} vs ${escapeHTML(m.b)}</div><div class="tournament-match-row"><input id="dl_${m.key}_a" type="number" value="${m.scoreA}" placeholder="得点"><input id="dl_${m.key}_b" type="number" value="${m.scoreB}" placeholder="得点"><select id="dl_${m.key}_turn"><option value="先手" ${m.turnA==='先手'?'selected':''}>A先手</option><option value="後手" ${m.turnA==='後手'?'selected':''}>B先手</option></select></div><button type="button" onclick="saveDoubleLoserMatch('${m.key}')">保存</button><button type="button" onclick="openDoubleLoserMatch('${m.key}')">閉じる</button></div>`:'';
  return `<div class="single-bracket-match" ${m.a&&m.b?`onclick="openDoubleLoserMatch('${m.key}')" style="cursor:pointer"`:''}><div class="small">${escapeHTML(m.stage)}</div>${players}${score}</div>${form}`;
@@ -1011,7 +1014,7 @@ function drawBracketConnectors(){
       const sources=Array.from(round.querySelectorAll(':scope > .single-bracket-item'));
       const targets=Array.from(rounds[ri+1].querySelectorAll(':scope > .single-bracket-item'));
       sources.forEach((source,i)=>{
-        const loserMap=bracket.classList.contains('double-loser-tree')?[[0,0],[0,1],[0,1],[0,0]][ri]:null;
+        const loserMap=bracket.classList.contains('double-loser-tree')?[[0,0,1,1],[0,1],[0,1],[0,0]][ri]:null;
         const target=targets[loserMap?loserMap[i]:Math.floor(i/2)];
         if(!target)return;
         const sr=source.getBoundingClientRect();

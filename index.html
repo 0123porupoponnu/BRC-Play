@@ -911,11 +911,17 @@ function saveBracketRoundMatch(mode,roundIndex,index){
 const DOUBLE_LOSER_TREE=[[[1,2],[3,4]],[[5,'W0'],[6,'W1']],[[7,'W2'],[8,'W3']],[['W4','W5']],[['W6',9]]];
 function doubleLoserBracket(t){
  const slots=Object.fromEntries((t.losersRounds||[]).filter(m=>m.slot).map(m=>[Number(m.slot),m.a]));
+ // Rebuild slot occupants from winner-side results as well, so a reload or a newly started event never leaves the bracket blank.
+ const winnerRounds=Array.isArray(t.winnersRounds)&&t.winnersRounds.length?t.winnersRounds:(t.rounds||[]);
+ winnerRounds.forEach((round,ri)=>round.forEach((m,mi)=>{
+  if(!m||m.bye||!m.done||!m.a||!m.b)return;
+  const slot=doubleLoserSlotForMatch(ri,mi,m);if(slot)slots[slot]=m.winner===m.a?m.b:m.a;
+ }));
  const stored=t.doubleLoserResults||{};const results=[];let n=0;
  return DOUBLE_LOSER_TREE.map((round,ri)=>round.map((pair)=>{
   const resolve=x=>typeof x==='number'?(slots[x]||null):(results[Number(x.slice(1))]?.winner||null);
   const a=resolve(pair[0]),b=resolve(pair[1]),key='L'+n++;
-  const old=stored[key];const valid=!!(a&&b&&old&&old.a===a&&old.b===b&&old.done);
+  const old=stored[key];const valid=!!(a&&b&&old&&old.a===a&&old.b===b&&old.done&&old.winner);
   const m={key,a,b,stage:'敗者側 第'+(ri+1)+'回戦',scoreA:valid?old.scoreA:'',scoreB:valid?old.scoreB:'',turnA:valid?old.turnA:'先手',done:valid,winner:valid?old.winner:null};
   results.push(m);return m;
  }));
@@ -993,7 +999,7 @@ function drawBracketConnectors(){
       const sources=Array.from(round.querySelectorAll(':scope > .single-bracket-item'));
       const targets=Array.from(rounds[ri+1].querySelectorAll(':scope > .single-bracket-item'));
       sources.forEach((source,i)=>{
-        const loserMap=bracket.classList.contains('double-loser-tree')?[[0,0,1,1],[0,1],[0,0],[0]][ri]:null;
+        const loserMap=bracket.classList.contains('double-loser-tree')?[[0,0,1,1],[0,1],[0,1],[0,0]][ri]:null;
         const target=targets[loserMap?loserMap[i]:Math.floor(i/2)];
         if(!target)return;
         const sr=source.getBoundingClientRect();
@@ -1519,3 +1525,11 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worke
 </body>
 </html>
 
+
+/* Build207:敗者側の9枠トーナメントを勝者側と同じ横型ブラケットで表示 */
+.double-loser-tree{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:18px!important;width:max-content!important;min-width:max-content!important;padding:8px 4px 16px;position:relative}
+.double-loser-tree>.single-bracket-round{display:flex!important;flex:0 0 170px!important;width:170px!important;min-width:170px!important;flex-direction:column!important;justify-content:space-around!important;gap:12px!important;position:relative}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{display:block!important;flex:0 0 auto!important;width:170px!important;min-width:170px!important;box-sizing:border-box}
+.double-loser-tree .single-bracket-match-wrap{width:100%;min-width:0;box-sizing:border-box}
+.double-loser-tree .single-bracket-match{width:100%;min-width:0;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere}
+.double-loser-tree .single-bracket-round>h4{position:sticky;top:0;z-index:2}

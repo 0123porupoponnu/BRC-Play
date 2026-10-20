@@ -101,6 +101,15 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .single-bracket-round{position:relative;padding-top:38px;box-sizing:border-box}
 .single-bracket-round>h4{position:absolute;top:4px;left:0;right:0;margin:0;min-height:24px;box-sizing:border-box;text-align:center;z-index:2}
 
+/* Build204: 敗者側も勝者側と同じブラケットカード幅・横スクロールに統一 */
+.double-loser-tree{width:max-content;min-width:max-content;gap:10px;align-items:stretch}
+.double-loser-tree .single-bracket-round{flex:0 0 148px;min-width:148px;width:148px;box-sizing:border-box}
+.double-loser-tree .single-bracket-item{flex:0 0 auto;width:148px;min-width:148px;box-sizing:border-box}
+.double-loser-tree .single-bracket-match{width:100%;min-width:0;box-sizing:border-box;padding:6px 8px;font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+.double-loser-tree .single-bracket-match .sb-player{font-size:14px;line-height:1.45;overflow-wrap:anywhere;word-break:normal}
+.double-loser-tree .single-bracket-round>h4{font-size:14px;white-space:nowrap;overflow-wrap:normal}
+.double-loser-tree .single-bracket-match:before,.double-loser-tree .single-bracket-match:after{display:none}
+
 /* Build174: ダブルK.O.勝者側の接続線をシングルEと同じルールに統一 */
 .double-bracket .single-bracket-match:after{display:none}
 .double-bracket .single-bracket-round:last-child .single-bracket-match:after{display:none}
@@ -898,7 +907,7 @@ function saveBracketRoundMatch(mode,roundIndex,index){
   saveTournament();save();render();renderTournamentBoard();
   if(wasDone&&oldWinner!==m.winner&&roundIndex<rounds.length-1)alert('勝者が変わったため、次の回戦の対戦相手を更新しました。変更の影響を受ける後続回戦の結果はリセットしました。');
 }
-// Build203: loser bracket is driven by winner-side numbered loser slots.
+// Build204: loser bracket cards now match winner-side bracket styling; driven by winner-side numbered loser slots.
 const DOUBLE_LOSER_TREE=[[[1,2],[3,4]],[[5,'W0'],[6,'W1']],[[7,'W2'],[8,'W3']],[['W4','W5']],[['W6',9]]];
 function doubleLoserBracket(t){
  const slots=Object.fromEntries((t.losersRounds||[]).filter(m=>m.slot).map(m=>[Number(m.slot),m.a]));

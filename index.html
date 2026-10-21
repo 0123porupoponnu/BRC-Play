@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build201</title>
+<title>BRC Play Build217</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -223,6 +223,43 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .loser-entry-actions button{min-width:0;width:100%;margin:0!important;padding:9px 5px!important;font-size:13px!important;}
 .loser-entry-actions .loser-close-button{background:rgba(255,255,255,.14)!important;color:#fff!important;}
 
+
+/* Build217: keep loser-side CSS inside style; align slots and make connector routing cleaner. */
+.loser-bracket-layout{position:relative;display:flex;align-items:flex-start;gap:10px;width:max-content;min-width:0;padding:8px 4px 18px;overflow:visible;}
+.loser-slot-column{flex:0 0 92px;width:92px;display:flex;flex-direction:column;gap:0;position:relative;z-index:2;}
+.loser-slot-column>h4{height:24px;min-height:24px;margin:4px 0 8px;font-size:12px;line-height:24px;white-space:nowrap;}
+.loser-slot-item{height:42px;flex:0 0 42px;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.13);display:flex;flex-direction:column;justify-content:center;padding:4px 6px;gap:1px;position:relative;margin:0 0 12px;}
+.loser-slot-item span{font-size:10px;line-height:1.1;opacity:.9}.loser-slot-item b{font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* The first two slots align with match 1; later slots are spaced to line up with their receiving round. */
+.loser-slot-item[data-loser-slot="5"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="7"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="3"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="4"]{margin-top:0}
+.loser-slot-item[data-loser-slot="6"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="8"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="9"]{margin-top:18px}
+.double-loser-tree{display:flex;flex-direction:row;align-items:flex-start;gap:12px;width:max-content;min-width:0;position:relative;padding:8px 2px 16px;z-index:2}
+.double-loser-tree>.single-bracket-round{display:flex;flex:0 0 138px;width:138px;min-width:138px;flex-direction:column;justify-content:flex-start;gap:0;padding-top:26px;position:relative}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:138px;min-width:138px;flex:0 0 auto;box-sizing:border-box;position:relative;z-index:2}
+.double-loser-tree>.single-bracket-round:nth-child(1)>.single-bracket-item:nth-child(2),
+.double-loser-tree>.single-bracket-round:nth-child(2)>.single-bracket-item:nth-child(2),
+.double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-child(2){margin-top:150px}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-child,
+.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-child{margin-top:75px}
+.double-loser-tree .single-bracket-match{display:block;padding:8px;min-height:0;box-sizing:border-box;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.42);border-radius:12px;}
+.double-loser-tree .single-bracket-card{width:100%;min-width:0;font-size:14px;line-height:1.35}
+.double-loser-tree .single-bracket-card .small{font-size:11px;line-height:1.2;margin-bottom:6px;opacity:.82}
+.double-loser-tree .single-bracket-match .sb-player{display:flex;flex-direction:column;gap:2px;margin:4px 0 6px;min-width:0}
+.double-loser-tree .single-bracket-match .sb-name{font-size:14px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+.loser-bracket-layout>.loser-slot-connectors{display:block;position:absolute;left:0;top:0;pointer-events:none;z-index:1;overflow:visible}
+.loser-entry-panel{position:relative;width:100%;max-width:100%;box-sizing:border-box;margin-top:12px}
+.loser-entry-panel .tournament-match-row{display:flex;gap:8px;flex-wrap:nowrap;min-width:0}
+.loser-entry-panel .tournament-match-row input{flex:1 1 0;width:0;min-width:0;max-width:none;box-sizing:border-box}
+.loser-entry-panel .tournament-match-row select{flex:0 0 88px;width:88px;min-width:88px;max-width:88px;box-sizing:border-box}
+.loser-entry-actions{display:flex;gap:8px;margin-top:12px}
+.loser-entry-actions button{flex:1;min-width:0}
+@media(max-width:380px){.loser-entry-panel .tournament-match-row select{flex-basis:78px;width:78px;min-width:78px;max-width:78px}}
+
 </style>
 </head>
 <body>
@@ -236,7 +273,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build199</div>
+<div class="footer">BRC Play Build217</div>
 </section>
 
 <section id="carc" class="screen">
@@ -1113,7 +1150,7 @@ function drawLoserSlotConnectors(){
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='1';svg.style.pointerEvents='none';
  const pairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
- pairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=source.getBoundingClientRect(),b=target.getBoundingClientRect();const x1=a.right-rect.left,y1=a.top+a.height/2-rect.top,x2=b.left-rect.left,y2=b.top+b.height/2-rect.top,xm=x1+Math.max(8,(x2-x1)*.45);const path=document.createElementNS(ns,'path');path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.85)');path.setAttribute('stroke-width','2.5');svg.appendChild(path);});
+ pairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=source.getBoundingClientRect(),b=target.getBoundingClientRect();const x1=a.right-rect.left,y1=a.top+a.height/2-rect.top,x2=b.left-rect.left,y2=b.top+b.height/2-rect.top;const xm=x1+Math.max(8,Math.min(24,(x2-x1)*.25));const path=document.createElementNS(ns,'path');path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.85)');path.setAttribute('stroke-width','2.5');svg.appendChild(path);});
  layout.insertBefore(svg,layout.firstChild);
 }
 function setActiveGroupTab(name){activeGroupTab=name;activeGroupSubTab='matches';selectedTournamentEntry=null;renderTournamentBoard();}
@@ -1622,15 +1659,3 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worke
 </script>
 </body>
 </html>
-
-/* Build216: loser cards match winner-side cards; entry form is below the bracket. */
-.double-loser-tree .single-bracket-match{display:block!important;align-items:initial!important;padding:8px!important;min-height:0!important;box-sizing:border-box!important;}
-.double-loser-tree .single-bracket-card{font-size:14px;line-height:1.35;}
-.double-loser-tree .single-bracket-card .small{font-size:11px;margin-bottom:6px;}
-.loser-entry-panel{position:relative!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;margin-top:12px!important;}
-.loser-entry-panel .tournament-match-row{display:flex;gap:8px;flex-wrap:nowrap;min-width:0;}
-.loser-entry-panel .tournament-match-row input{flex:1 1 0;width:0;min-width:0;max-width:none;box-sizing:border-box;}
-.loser-entry-panel .tournament-match-row select{flex:0 0 88px;width:88px;min-width:88px;max-width:88px;box-sizing:border-box;}
-.loser-entry-actions{display:flex;gap:8px;margin-top:12px;}
-.loser-entry-actions button{flex:1;min-width:0;}
-@media(max-width:380px){.loser-entry-panel .tournament-match-row select{flex-basis:78px;width:78px;min-width:78px;max-width:78px;}}

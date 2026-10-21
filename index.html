@@ -458,6 +458,18 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .loser-bracket-layout>.double-loser-tree{position:relative!important;z-index:2!important;}
 .loser-bracket-layout .loser-slot-item{position:relative!important;z-index:2!important;background:#4b9be3!important;}
 .loser-bracket-layout .double-loser-tree .single-bracket-match{position:relative!important;z-index:3!important;background:#4b9be3!important;}
+/* Build239: connector bends stay in the inter-card gutter; cards fully mask the SVG beneath them. */
+.loser-bracket-layout .double-loser-tree .single-bracket-item,
+.loser-bracket-layout .double-loser-tree .single-bracket-match,
+.loser-bracket-layout .loser-slot-item{
+  position:relative!important;
+  z-index:4!important;
+  background-color:#4b9be3!important;
+  background-image:none!important;
+}
+.loser-bracket-layout>.loser-slot-connectors{z-index:0!important;}
+.loser-bracket-layout>.loser-slot-column,
+.loser-bracket-layout>.double-loser-tree{z-index:2!important;}
 </style>
 </head>
 <body><div class="w">
@@ -1355,11 +1367,11 @@ function drawLoserSlotConnectors(){
  const height=Math.ceil(Math.max(layout.scrollHeight,layout.clientHeight,...bounds.map(r=>r.bottom-rect.top+12)));
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
- const addPath=(x1,y1,x2,y2)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;/* bend only at the midpoint of the actual gap between cards */const xm=gap>0?x1+gap/2:x1+4;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const addPath=(x1,y1,x2,y2)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;/* 曲がり位置はカード間の隙間の中央。隙間が狭い場合もカード内へ曲げず、隙間の外側に逃がす */const xm=gap>=12?x1+gap/2:(gap>=0?x1+gap/2:x1+4);path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
  // SVGは横スクロール領域の中にあるため、画面上の座標にscrollLeft/scrollTopを足して
  // スクロール領域内の座標へ戻す。これをしないと、横スクロール後に線がカード上へずれる。
  const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
- // 横スクロール量を座標に加算し、スクロール中も線がカードに重ならないようにする。
+ // getBoundingClientRect()同士の差分を使うため、横スクロール量は加算しない。
  // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
  slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y);});

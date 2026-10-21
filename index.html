@@ -1321,9 +1321,9 @@ function drawLoserSlotConnectors(){
  const layout=document.querySelector('.loser-bracket-layout');if(!layout)return;
  const old=layout.querySelector('.loser-slot-connectors');if(old)old.remove();
  const bracket=layout.querySelector('.double-loser-tree');if(!bracket)return;
- // 下段の第1〜3回戦カードの上端を、枠3カードの上端に合わせる。
+ // 下段の第1〜3回戦カードの上端を枠3に合わせる。marginではなくtransformで動かし、列内のflex配置を崩さない。
  const slot3=layout.querySelector('[data-loser-slot="3"]');
- if(slot3){const sr=slot3.getBoundingClientRect();[0,1,2].forEach(ri=>{const item=bracket.querySelector(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item:nth-of-type(2)`);const first=bracket.querySelector(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item:first-of-type`);if(item&&first){const fr=first.getBoundingClientRect();item.style.marginTop=Math.max(0,Math.round(sr.top-fr.top))+'px';}});}
+ if(slot3){const sr=slot3.getBoundingClientRect();[0,1,2].forEach(ri=>{const item=bracket.querySelector(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item:nth-of-type(2)`);if(item){item.style.marginTop='0px';item.style.transform='';const ir=item.getBoundingClientRect();const delta=Math.round(sr.top-ir.top);item.style.transform=`translateY(${delta}px)`;}});}
  const rect=layout.getBoundingClientRect(),width=Math.max(layout.scrollWidth,layout.clientWidth),height=Math.max(layout.scrollHeight,layout.clientHeight);
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';

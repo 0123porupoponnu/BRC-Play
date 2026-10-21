@@ -203,6 +203,12 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-of-type,
 .double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-of-type{margin-top:55px!important}
 .loser-bracket-layout>.loser-slot-connectors{display:block!important}
+/* Build234: keep loser-bracket connector strokes behind cards and bend only in column gaps. */
+.loser-bracket-layout{position:relative!important;isolation:isolate!important}
+.loser-bracket-layout>.loser-slot-connectors{z-index:0!important}
+.loser-bracket-layout>.loser-slot-column,.loser-bracket-layout>.double-loser-tree{position:relative!important;z-index:1!important}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{position:relative!important;z-index:2!important}
+
 
 /* Build215: loser-side match cards follow winner-side card styling; compact, non-overflowing score editor. */
 .double-loser-tree .single-bracket-match{display:block!important;align-items:initial!important;padding:8px!important;min-height:0!important;background:rgba(255,255,255,.10)!important;border:1.5px solid rgba(255,255,255,.42)!important;border-radius:12px!important;box-sizing:border-box!important;}
@@ -1327,7 +1333,7 @@ function drawLoserSlotConnectors(){
  const rect=layout.getBoundingClientRect(),width=Math.max(layout.scrollWidth,layout.clientWidth),height=Math.max(layout.scrollHeight,layout.clientHeight);
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
- const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const xm=mergeX===undefined?x1+Math.max(8,(x2-x1)*.5):mergeX;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;const xm=mergeX===undefined?(gap>0?x1+gap/2:x1+4):Math.min(x2-3,Math.max(x1+3,mergeX));path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
  const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
  // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];

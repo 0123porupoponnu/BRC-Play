@@ -282,6 +282,33 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 #tourLoserEntryPanel .loser-entry-actions button{flex:1;min-width:0;width:auto;max-width:100%;box-sizing:border-box;margin:0!important;padding:10px 8px;font-size:14px;white-space:normal;}
 @media(max-width:380px){#tourLoserEntryPanel .tournament-match-row select{flex-basis:78px;width:78px;min-width:78px;max-width:78px;}}
 
+
+/* Build221: align loser-side card and score-entry styling with winner-side UI. */
+.double-loser-tree .single-bracket-match {
+  display:flex!important; align-items:center!important; padding:5px 6px!important;
+  min-height:48px!important; box-sizing:border-box!important;
+  border:1px solid rgba(255,255,255,.5)!important; border-radius:10px!important;
+  background:rgba(255,255,255,.17)!important;
+}
+.double-loser-tree .single-bracket-match.is-done { background:rgba(255,255,255,.08)!important; }
+.double-loser-tree .single-bracket-card { width:100%; font-size:14px; line-height:1.45; overflow-wrap:anywhere; }
+.double-loser-tree .single-bracket-card>.small { font-size:12px; line-height:1.3; margin:0 0 6px; opacity:.88; }
+.double-loser-tree .single-bracket-match .sb-player { display:block; margin:2px 0 5px!important; min-width:0; }
+.double-loser-tree .single-bracket-match .sb-name { font-size:14px!important; font-weight:800; line-height:1.25!important; }
+.double-loser-tree .single-bracket-match .sb-detail { font-size:12px!important; line-height:1.25!important; }
+.double-loser-tree .single-bracket-match .sb-vs { font-size:11px!important; margin:2px 0!important; }
+#tourLoserEntryPanel .loser-entry-panel {
+  display:block!important; width:100%!important; max-width:100%!important; min-width:0!important;
+  box-sizing:border-box!important; margin:12px 0 0!important; padding:14px!important;
+  border:2px solid rgba(255,255,255,.72)!important; border-radius:16px!important;
+  background:#4b9be3!important; box-shadow:0 8px 24px rgba(0,35,90,.18)!important;
+  overflow:hidden!important;
+}
+#tourLoserEntryPanel .loser-entry-actions { display:flex!important; flex-direction:row!important; gap:8px!important; margin-top:12px!important; }
+#tourLoserEntryPanel .loser-entry-actions button { flex:1 1 0!important; min-width:0!important; width:auto!important; margin:0!important; border-radius:14px!important; padding:12px 8px!important; }
+#tourLoserEntryPanel .tournament-match-player { margin:8px 0 12px!important; }
+#tourLoserEntryPanel .tournament-match-name { margin-bottom:5px!important; }
+
 </style>
 </head>
 <body><div class="w">

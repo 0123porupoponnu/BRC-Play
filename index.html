@@ -1330,11 +1330,16 @@ function drawLoserSlotConnectors(){
  // 下段の第1〜3回戦カードの上端を枠3に合わせる。marginではなくtransformで動かし、列内のflex配置を崩さない。
  const slot3=layout.querySelector('[data-loser-slot="3"]');
  if(slot3){const sr=slot3.getBoundingClientRect();[0,1,2].forEach(ri=>{const item=bracket.querySelector(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item:nth-of-type(2)`);if(item){item.style.marginTop='0px';item.style.transform='';const ir=item.getBoundingClientRect();const delta=Math.round(sr.top-ir.top);item.style.transform=`translateY(${delta}px)`;}});}
- const rect=layout.getBoundingClientRect(),width=Math.max(layout.scrollWidth,layout.clientWidth),height=Math.max(layout.scrollHeight,layout.clientHeight);
+ const rect=layout.getBoundingClientRect();
+ // transformで移動したカードはscrollHeightに反映されないため、実際の表示位置からSVGの大きさを決める。
+ const routedEls=[...layout.querySelectorAll('.loser-slot-item,.double-loser-tree .single-bracket-item')];
+ const bounds=routedEls.map(el=>el.getBoundingClientRect());
+ const width=Math.ceil(Math.max(layout.scrollWidth,layout.clientWidth,...bounds.map(r=>r.right-rect.left+8)));
+ const height=Math.ceil(Math.max(layout.scrollHeight,layout.clientHeight,...bounds.map(r=>r.bottom-rect.top+12)));
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
  const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;const xm=mergeX===undefined?(gap>0?x1+gap/2:x1+4):Math.min(x2-3,Math.max(x1+3,mergeX));path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
- const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left+layout.scrollLeft,y:r.top+r.height/2-rect.top+layout.scrollTop};};
+ const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
  // 横スクロール量を座標に加算し、スクロール中も線がカードに重ならないようにする。
  // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];

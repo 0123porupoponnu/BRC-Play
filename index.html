@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build223</title>
+<title>BRC Play Build224</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -327,11 +327,29 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 #tourLoserEntryPanel{background:rgba(255,255,255,.08)!important;}
 #tourLoserEntryPanel .loser-entry-panel{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.28)!important;box-shadow:none!important;}
 @media(max-width:380px){.loser-slot-column{flex-basis:78px!important;width:78px!important}.double-loser-tree>.single-bracket-round{flex-basis:112px!important;width:112px!important;min-width:112px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:112px!important;min-width:112px!important}}
+
+/* Build224: final layout overrides for loser bracket. */
+.loser-bracket-layout{gap:6px!important;padding-top:0!important;}
+.loser-slot-column{flex:0 0 76px!important;width:76px!important;min-width:76px!important;gap:0!important;}
+.loser-slot-column .loser-slot-item{margin-bottom:18px!important;min-height:52px!important;padding:6px!important;box-sizing:border-box!important;}
+.double-loser-tree{gap:6px!important;padding:0 0 12px!important;align-items:flex-start!important;}
+.double-loser-tree>.single-bracket-round{flex:0 0 108px!important;width:108px!important;min-width:108px!important;gap:0!important;position:relative!important;padding-top:34px!important;box-sizing:border-box!important;}
+.double-loser-tree>.single-bracket-round>h4{position:absolute!important;top:0!important;left:0!important;width:108px!important;min-width:0!important;box-sizing:border-box!important;white-space:nowrap!important;text-align:center!important;}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:108px!important;min-width:108px!important;max-width:108px!important;box-sizing:border-box!important;margin-bottom:0!important;}
+.double-loser-tree .single-bracket-match{width:100%!important;max-width:108px!important;min-width:0!important;margin:0!important;position:relative!important;z-index:3!important;padding:5px!important;}
+.double-loser-tree .single-bracket-match .sb-player{margin:2px 0 5px!important;}
+.double-loser-tree .single-bracket-match .sb-name{font-size:12px!important;line-height:1.2!important;}
+.double-loser-tree .single-bracket-match .sb-detail{font-size:10px!important;line-height:1.2!important;}
+.double-loser-tree .single-bracket-match .sb-vs{font-size:10px!important;margin:1px 0!important;}
+/* Match the winner-side score editor's light-blue surface, overriding earlier patches. */
+#tourLoserEntryPanel .loser-entry-panel{background:#4b9be3!important;border:2px solid rgba(255,255,255,.72)!important;box-shadow:0 8px 24px rgba(0,35,90,.18)!important;padding:14px!important;border-radius:16px!important;}
+#tourLoserEntryPanel{background:rgba(255,255,255,.08)!important;}
+@media(max-width:380px){.loser-slot-column{flex-basis:76px!important;width:76px!important;min-width:76px!important}.double-loser-tree>.single-bracket-round{flex-basis:104px!important;width:104px!important;min-width:104px!important}.double-loser-tree>.single-bracket-round>h4{width:104px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:104px!important;min-width:104px!important;max-width:104px!important}}
 </style>
 </head>
 <body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build223</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build224</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -339,7 +357,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build223</div>
+<div class="footer">BRC Play Build224</div>
 </section>
 
 <section id="carc" class="screen">
@@ -1239,7 +1257,7 @@ else{html+=`<div class="tournament-status"><b>全回戦終了</b><div class="sma
 }else if(t.mode==='single'){const rounds=Array.isArray(t.rounds)&&t.rounds.length?t.rounds:[t.matches];html+=`<h3>🏆 トーナメント全体図</h3><div class="single-bracket-note">全体図では組み合わせと勝ち上がりを確認できます。未登録の試合カードをタップして得点を入力できます。登録済みのカードをタップすると得点を修正できます。</div><div class="single-bracket-wrap"><div class="single-bracket">${rounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>${ri===rounds.length-1&&t.completed?'🏆 優勝':(ri===rounds.length-1&&t.matches.some(m=>!m.done)?(t.matches[0]?.stage||`第${ri+1}回戦`):`第${ri+1}回戦`)}</h4>${matches.map((m,i)=>{return `<div class="single-bracket-item">${singleBracketCard(m,ri,i,t)}</div>`}).join('')}</section>`).join('')}</div></div>`;}else if(t.mode==='double'){const view=doubleBracketView||t.doubleView||'winners';const rounds=Array.isArray(t.winnersRounds)&&t.winnersRounds.length?t.winnersRounds:t.rounds;html+=`<h3>🏆 ダブルノックアウト</h3><div class="single-bracket-note">勝者・敗者・決勝をページで切り替えます。</div><div class="single-placement double-view-switch"><button type="button" class="${view==='winners'?'active':''}" onclick="setDoubleBracketView('winners')">勝者</button><button type="button" class="${view==='losers'?'active':''}" onclick="setDoubleBracketView('losers')">敗者</button><button type="button" class="${view==='final'?'active':''}" onclick="setDoubleBracketView('final')">決勝</button></div>`;if(view==='winners'){html+=`<h4>勝者側トーナメント</h4><div class="single-bracket-wrap"><div class="single-bracket">${rounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,i)=>`<div class="single-bracket-item">${singleBracketCard(m,ri,i,t)}</div>`).join('')}</section>`).join('')}</div></div>`; }else if(view==='losers'){
  const loserRounds=doubleLoserBracket(t);
  const loserSlots=Object.fromEntries((t.losersRounds||[]).filter(m=>m.slot).map(m=>[Number(m.slot),m.a]));
- html+=`<h4>敗者側トーナメント</h4><div class="single-bracket-note">左の枠1〜9から対戦へ進み、勝者が右の次の対戦へ進みます。カードをタップして得点を登録・修正できます。</div><div class="single-bracket-wrap"><div class="loser-bracket-layout"><section class="loser-slot-column"><h4>敗者側の枠</h4>${[1,2,5,7,3,4,6,8,9].map(slot=>`<div class="loser-slot-item" data-loser-slot="${slot}"><span>枠${slot}</span><b>${escapeHTML(loserSlots[slot]||'結果待ち')}</b></div>`).join('')}</section><div class="single-bracket double-loser-tree">${loserRounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,mi)=>{const offset=ri<3?(mi===0?0:132):66;return `<div class="single-bracket-item" data-loser-round="${ri}" data-loser-match="${mi}" style="margin-top:${offset}px">${doubleLoserCard(m)}</div>`}).join('')}</section>`).join('')}</div></div></div>`;
+ html+=`<h4>敗者側トーナメント</h4><div class="single-bracket-note">左の枠1〜9から対戦へ進み、勝者が右の次の対戦へ進みます。カードをタップして得点を登録・修正できます。</div><div class="single-bracket-wrap"><div class="loser-bracket-layout"><section class="loser-slot-column"><h4>敗者側の枠</h4>${[1,2,5,7,3,4,6,8,9].map(slot=>`<div class="loser-slot-item" data-loser-slot="${slot}"><span>枠${slot}</span><b>${escapeHTML(loserSlots[slot]||'結果待ち')}</b></div>`).join('')}</section><div class="single-bracket double-loser-tree">${loserRounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,mi)=>{const offset=ri<3?(mi===0?0:104):52;return `<div class="single-bracket-item" data-loser-round="${ri}" data-loser-match="${mi}" style="margin-top:${offset}px">${doubleLoserCard(m)}</div>`}).join('')}</section>`).join('')}</div></div></div>`;
  html+=doubleLoserEntryPanel(t);
  }else{html+=`<h4>🏆 決勝</h4><div class="tournament-group"><div class="tour-compact-card"><div class="tc-stage">最終決勝戦</div><div class="tc-players">勝者側の優勝者<br>vs<br>敗者側の優勝者</div><div class="small">両側の優勝者が決まると対戦できます。</div></div><div class="small" style="margin-top:12px">敗者側の選手が勝った場合は、もう1試合を行います。2敗した選手が敗退し、最後の試合の勝者が優勝です。</div><div class="tournament-status">決勝の得点入力と自動進行は未実装です。</div></div>`;}}else html+=`<div class="tour-compact-list">${t.matches.map((m,i)=>compactTournamentCard(m,'swiss',i,null,false,true)).join('')}</div>`;
 if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='winners')){

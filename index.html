@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build225</title>
+<title>BRC Play Build226</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -346,7 +346,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 #tourLoserEntryPanel{background:rgba(255,255,255,.08)!important;}
 @media(max-width:380px){.loser-slot-column{flex-basis:76px!important;width:76px!important;min-width:76px!important}.double-loser-tree>.single-bracket-round{flex-basis:104px!important;width:104px!important;min-width:104px!important}.double-loser-tree>.single-bracket-round>h4{width:104px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:104px!important;min-width:104px!important;max-width:104px!important}}
 
-/* Build225: tighter loser-slot rhythm, align the lower match row to slot 3, and keep paths outside cards. */
+/* Build226: tighter loser-slot rhythm, align the lower match row to slot 3, and keep paths outside cards. */
 .loser-bracket-layout{gap:6px!important;overflow:visible!important;padding:0 0 12px!important;}
 .loser-slot-column{flex:0 0 76px!important;width:76px!important;min-width:76px!important;gap:0!important;}
 .loser-slot-column .loser-slot-item{height:44px!important;min-height:44px!important;margin:0 0 10px!important;padding:4px 5px!important;}
@@ -362,11 +362,29 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-of-type(2){margin-top:0!important;}
 @media(max-width:380px){.loser-slot-column{flex-basis:72px!important;width:72px!important;min-width:72px!important}.double-loser-tree>.single-bracket-round{flex-basis:100px!important;width:100px!important;min-width:100px!important}.double-loser-tree>.single-bracket-round>h4{width:100px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:100px!important;min-width:100px!important;max-width:100px!important}}
 
+
+/* Build226: final loser-bracket visual corrections */
+.loser-bracket-layout{display:flex!important;align-items:flex-start!important;gap:6px!important;position:relative!important;overflow:visible!important;isolation:isolate!important;}
+.loser-slot-column{flex:0 0 76px!important;width:76px!important;min-width:76px!important;position:relative!important;z-index:2!important;gap:0!important;}
+.loser-slot-column .loser-slot-item{height:42px!important;min-height:42px!important;margin:0 0 8px!important;box-sizing:border-box!important;}
+.double-loser-tree{gap:6px!important;align-items:flex-start!important;position:relative!important;z-index:1!important;padding:0 2px 14px!important;}
+.double-loser-tree>.single-bracket-round{flex:0 0 104px!important;width:104px!important;min-width:104px!important;position:relative!important;justify-content:flex-start!important;gap:0!important;padding-top:34px!important;box-sizing:border-box!important;}
+.double-loser-tree>.single-bracket-round>h4{width:104px!important;min-width:104px!important;box-sizing:border-box!important;white-space:nowrap!important;font-size:12px!important;}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:104px!important;min-width:104px!important;max-width:104px!important;flex:0 0 auto!important;position:relative!important;z-index:2!important;box-sizing:border-box!important;}
+.double-loser-tree .single-bracket-match{position:relative!important;z-index:2!important;background:#4b9be3!important;border:1.5px solid rgba(255,255,255,.72)!important;border-radius:12px!important;box-sizing:border-box!important;padding:7px!important;min-height:0!important;overflow:hidden!important;}
+.double-loser-tree .single-bracket-match .sb-name{font-size:12px!important;line-height:1.2!important;overflow-wrap:anywhere!important;}
+.double-loser-tree .single-bracket-match .sb-detail{font-size:10px!important;line-height:1.2!important;}
+.double-loser-tree .single-bracket-match .sb-player{margin:2px 0 5px!important;}
+.double-loser-tree .single-bracket-item:nth-of-type(2){margin-top:86px!important;}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-of-type,
+.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-of-type{margin-top:43px!important;}
+.loser-bracket-layout>.loser-slot-connectors{z-index:0!important;pointer-events:none!important;}
+@media(max-width:380px){.loser-slot-column{flex-basis:70px!important;width:70px!important;min-width:70px!important}.double-loser-tree>.single-bracket-round{flex-basis:98px!important;width:98px!important;min-width:98px!important}.double-loser-tree>.single-bracket-round>h4{width:98px!important;min-width:98px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:98px!important;min-width:98px!important;max-width:98px!important}}
 </style>
 </head>
 <body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build225</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build226</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -374,7 +392,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build225</div>
+<div class="footer">BRC Play Build226</div>
 </section>
 
 <section id="carc" class="screen">

@@ -417,11 +417,23 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .loser-bracket-layout .double-loser-tree{z-index:1!important;}
 .double-loser-tree>.single-bracket-round>.single-bracket-item{position:relative!important;z-index:2!important;}
 .double-loser-tree .single-bracket-round>h4{font-size:12px!important;}
+
+/* Build229: 敗者側の対戦カードサイズだけをコンパクト化（既存の上書きを最終的に固定） */
+.loser-bracket-layout>.double-loser-tree{gap:8px!important;padding-right:0!important;}
+.loser-bracket-layout>.double-loser-tree>.single-bracket-round{flex:0 0 108px!important;width:108px!important;min-width:108px!important;max-width:108px!important;box-sizing:border-box!important;}
+.loser-bracket-layout>.double-loser-tree>.single-bracket-round>h4{width:108px!important;min-width:108px!important;max-width:108px!important;box-sizing:border-box!important;white-space:nowrap!important;font-size:12px!important;}
+.loser-bracket-layout>.double-loser-tree>.single-bracket-round>.single-bracket-item{width:108px!important;min-width:108px!important;max-width:108px!important;flex:0 0 auto!important;box-sizing:border-box!important;}
+.loser-bracket-layout>.double-loser-tree .single-bracket-match{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;padding:5px!important;margin:0!important;box-sizing:border-box!important;font-size:12px!important;line-height:1.25!important;}
+.loser-bracket-layout>.double-loser-tree .single-bracket-match .sb-player{display:block!important;min-width:0!important;margin:3px 0 5px!important;font-size:12px!important;line-height:1.25!important;}
+.loser-bracket-layout>.double-loser-tree .single-bracket-match .sb-name{font-size:12px!important;line-height:1.25!important;overflow-wrap:anywhere!important;}
+.loser-bracket-layout>.double-loser-tree .single-bracket-match .sb-detail{font-size:10px!important;line-height:1.2!important;}
+.loser-bracket-layout>.double-loser-tree .single-bracket-match .sb-vs{font-size:10px!important;margin:2px 0!important;}
+@media(max-width:380px){.loser-bracket-layout>.double-loser-tree>.single-bracket-round,.loser-bracket-layout>.double-loser-tree>.single-bracket-round>h4,.loser-bracket-layout>.double-loser-tree>.single-bracket-round>.single-bracket-item{flex-basis:100px!important;width:100px!important;min-width:100px!important;max-width:100px!important;}}
 </style>
 </head>
 <body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build226</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build229</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>

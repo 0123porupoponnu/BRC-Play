@@ -431,7 +431,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-loser-tree>.single-bracket-round>.single-bracket-item{position:relative!important;z-index:2!important;}
 .double-loser-tree .single-bracket-round>h4{font-size:12px!important;}
 
-/* Build229: 敗者側の対戦カードサイズだけをコンパクト化（既存の上書きを最終的に固定） */
+/* Build238: 敗者側の対戦カードサイズだけをコンパクト化（既存の上書きを最終的に固定） */
 .loser-bracket-layout>.double-loser-tree{gap:8px!important;padding-right:0!important;}
 .loser-bracket-layout>.double-loser-tree>.single-bracket-round{flex:0 0 108px!important;width:108px!important;min-width:108px!important;max-width:108px!important;box-sizing:border-box!important;}
 .loser-bracket-layout>.double-loser-tree>.single-bracket-round>h4{width:108px!important;min-width:108px!important;max-width:108px!important;box-sizing:border-box!important;white-space:nowrap!important;font-size:12px!important;}
@@ -450,11 +450,19 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-loser-tree .single-bracket-match{padding:5px 5px!important;font-size:12px!important;line-height:1.3!important}
 .double-loser-tree .single-bracket-match .sb-player{font-size:12px!important;line-height:1.3!important}
 .double-loser-tree .single-bracket-match .sb-detail{font-size:10px!important}
+
+/* Build238: connector lines stay behind opaque cards; route bends are centered in column gaps. */
+.loser-bracket-layout{isolation:isolate!important;position:relative!important;}
+.loser-bracket-layout>.loser-slot-connectors{z-index:0!important;pointer-events:none!important;}
+.loser-bracket-layout>.loser-slot-column{position:relative!important;z-index:2!important;}
+.loser-bracket-layout>.double-loser-tree{position:relative!important;z-index:2!important;}
+.loser-bracket-layout .loser-slot-item{position:relative!important;z-index:2!important;background:#4b9be3!important;}
+.loser-bracket-layout .double-loser-tree .single-bracket-match{position:relative!important;z-index:3!important;background:#4b9be3!important;}
 </style>
 </head>
 <body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build229</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build238</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -1347,17 +1355,17 @@ function drawLoserSlotConnectors(){
  const height=Math.ceil(Math.max(layout.scrollHeight,layout.clientHeight,...bounds.map(r=>r.bottom-rect.top+12)));
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
- const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;const xm=mergeX===undefined?(gap>0?x1+gap/2:x1+4):Math.min(x2-3,Math.max(x1+3,mergeX));path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const addPath=(x1,y1,x2,y2)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;/* bend only at the midpoint of the actual gap between cards */const xm=gap>0?x1+gap/2:x1+4;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
  // SVGは横スクロール領域の中にあるため、画面上の座標にscrollLeft/scrollTopを足して
  // スクロール領域内の座標へ戻す。これをしないと、横スクロール後に線がカード上へずれる。
- const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left+layout.scrollLeft,y:r.top+r.height/2-rect.top+layout.scrollTop};};
+ const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
  // 横スクロール量を座標に加算し、スクロール中も線がカードに重ならないようにする。
  // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
- slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,Math.max(a.x+8,b.x-10));});
+ slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y);});
  // 敗者側の勝ち上がり線：同じ段同士で接続し、第4回戦で合流。
  const maps=[[[0,0],[1,1]],[[0,0],[1,1]],[[0,0],[1,0]],[[0,0]]];
- maps.forEach((map,ri)=>{const sources=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item`));const targets=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+2}) > .single-bracket-item`));map.forEach(([si,ti])=>{const source=sources[si],target=targets[ti];if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,Math.max(a.x+8,b.x-10));});});
+ maps.forEach((map,ri)=>{const sources=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item`));const targets=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+2}) > .single-bracket-item`));map.forEach(([si,ti])=>{const source=sources[si],target=targets[ti];if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y);});});
  layout.insertBefore(svg,layout.firstChild);
 }
 function setActiveGroupTab(name){activeGroupTab=name;activeGroupSubTab='matches';selectedTournamentEntry=null;renderTournamentBoard();}

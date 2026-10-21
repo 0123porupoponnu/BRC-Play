@@ -185,7 +185,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 
 /* Build213: compact loser slots and keep connector lines inside the bracket columns. */
-/* Build214: display loser slots in bracket order without changing their underlying slot IDs. */
+/* Build218: display loser slots in bracket order without changing their underlying slot IDs. */
 .loser-bracket-layout{gap:10px!important;width:max-content!important;min-width:0!important;align-items:flex-start!important;overflow:visible!important}
 .loser-slot-column{flex:0 0 92px!important;width:92px!important;gap:8px!important}
 .loser-slot-column>h4{font-size:12px!important;white-space:normal!important;line-height:1.2!important}
@@ -224,29 +224,19 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .loser-entry-actions .loser-close-button{background:rgba(255,255,255,.14)!important;color:#fff!important;}
 
 
-/* Build217: keep loser-side CSS inside style; align slots and make connector routing cleaner. */
+/* Build218: slot cards are spaced for clean routing; all loser-side paths are drawn in one dedicated SVG. */
 .loser-bracket-layout{position:relative;display:flex;align-items:flex-start;gap:10px;width:max-content;min-width:0;padding:8px 4px 18px;overflow:visible;}
 .loser-slot-column{flex:0 0 92px;width:92px;display:flex;flex-direction:column;gap:0;position:relative;z-index:2;}
 .loser-slot-column>h4{height:24px;min-height:24px;margin:4px 0 8px;font-size:12px;line-height:24px;white-space:nowrap;}
-.loser-slot-item{height:42px;flex:0 0 42px;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.13);display:flex;flex-direction:column;justify-content:center;padding:4px 6px;gap:1px;position:relative;margin:0 0 12px;}
+.loser-slot-item{height:42px;flex:0 0 42px;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.13);display:flex;flex-direction:column;justify-content:center;padding:4px 6px;gap:1px;position:relative;margin:0 0 18px;}
 .loser-slot-item span{font-size:10px;line-height:1.1;opacity:.9}.loser-slot-item b{font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-/* The first two slots align with match 1; later slots are spaced to line up with their receiving round. */
-.loser-slot-item[data-loser-slot="5"]{margin-top:18px}
-.loser-slot-item[data-loser-slot="7"]{margin-top:18px}
-.loser-slot-item[data-loser-slot="3"]{margin-top:18px}
-.loser-slot-item[data-loser-slot="4"]{margin-top:0}
-.loser-slot-item[data-loser-slot="6"]{margin-top:18px}
-.loser-slot-item[data-loser-slot="8"]{margin-top:18px}
-.loser-slot-item[data-loser-slot="9"]{margin-top:18px}
+.loser-slot-item[data-loser-slot="5"],.loser-slot-item[data-loser-slot="7"],.loser-slot-item[data-loser-slot="3"],.loser-slot-item[data-loser-slot="6"],.loser-slot-item[data-loser-slot="8"],.loser-slot-item[data-loser-slot="9"]{margin-top:8px;}
 .double-loser-tree{display:flex;flex-direction:row;align-items:flex-start;gap:12px;width:max-content;min-width:0;position:relative;padding:8px 2px 16px;z-index:2}
 .double-loser-tree>.single-bracket-round{display:flex;flex:0 0 138px;width:138px;min-width:138px;flex-direction:column;justify-content:flex-start;gap:0;padding-top:26px;position:relative}
 .double-loser-tree>.single-bracket-round>.single-bracket-item{width:138px;min-width:138px;flex:0 0 auto;box-sizing:border-box;position:relative;z-index:2}
-.double-loser-tree>.single-bracket-round:nth-child(1)>.single-bracket-item:nth-child(2),
-.double-loser-tree>.single-bracket-round:nth-child(2)>.single-bracket-item:nth-child(2),
-.double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-child(2){margin-top:150px}
-.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-child,
-.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-child{margin-top:75px}
-.double-loser-tree .single-bracket-match{display:block;padding:8px;min-height:0;box-sizing:border-box;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.42);border-radius:12px;}
+.double-loser-tree>.single-bracket-round:nth-child(1)>.single-bracket-item:nth-child(2),.double-loser-tree>.single-bracket-round:nth-child(2)>.single-bracket-item:nth-child(2),.double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-child(2){margin-top:150px}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-child,.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-child{margin-top:75px}
+.double-loser-tree .single-bracket-match{display:block;padding:8px;min-height:0;box-sizing:border-box;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.42);border-radius:12px}
 .double-loser-tree .single-bracket-card{width:100%;min-width:0;font-size:14px;line-height:1.35}
 .double-loser-tree .single-bracket-card .small{font-size:11px;line-height:1.2;margin-bottom:6px;opacity:.82}
 .double-loser-tree .single-bracket-match .sb-player{display:flex;flex-direction:column;gap:2px;margin:4px 0 6px;min-width:0}
@@ -262,10 +252,9 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 
 </style>
 </head>
-<body>
-<div class="w">
+<body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build214</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build218</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -1097,6 +1086,7 @@ function adjustBracketEditorLayout(bracket){
 }
 function drawBracketConnectors(){
   document.querySelectorAll('.single-bracket').forEach(bracket=>{
+    if(bracket.classList.contains('double-loser-tree')) return; // 敗者側は専用の接続図で描画
     adjustBracketEditorLayout(bracket);
     const old=bracket.querySelector('.bracket-connectors');
     if(old)old.remove();
@@ -1148,9 +1138,15 @@ function drawLoserSlotConnectors(){
  const bracket=layout.querySelector('.double-loser-tree');if(!bracket)return;
  const rect=layout.getBoundingClientRect(),width=Math.max(layout.scrollWidth,layout.clientWidth),height=Math.max(layout.scrollHeight,layout.clientHeight);
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
- svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='1';svg.style.pointerEvents='none';
- const pairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
- pairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=source.getBoundingClientRect(),b=target.getBoundingClientRect();const x1=a.right-rect.left,y1=a.top+a.height/2-rect.top,x2=b.left-rect.left,y2=b.top+b.height/2-rect.top;const xm=x1+Math.max(8,Math.min(24,(x2-x1)*.25));const path=document.createElementNS(ns,'path');path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.85)');path.setAttribute('stroke-width','2.5');svg.appendChild(path);});
+ svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='1';svg.style.pointerEvents='none';svg.style.overflow='visible';
+ const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const xm=mergeX===undefined?x1+Math.max(8,(x2-x1)*.5):mergeX;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
+ // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
+ const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
+ slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,a.x+Math.max(8,(b.x-a.x)*.48));});
+ // 敗者側の勝ち上がり線：同じ段同士で接続し、第4回戦で合流。
+ const maps=[[[0,0],[1,1]],[[0,0],[1,1]],[[0,0],[1,0]],[[0,0]]];
+ maps.forEach((map,ri)=>{const sources=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item`));const targets=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+2}) > .single-bracket-item`));map.forEach(([si,ti])=>{const source=sources[si],target=targets[ti];if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,a.x+Math.max(8,(b.x-a.x)*.5));});});
  layout.insertBefore(svg,layout.firstChild);
 }
 function setActiveGroupTab(name){activeGroupTab=name;activeGroupSubTab='matches';selectedTournamentEntry=null;renderTournamentBoard();}

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0B5CAD">
-<title>BRC Play Build201</title>
+<title>BRC Play Build223</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{box-sizing:border-box}
@@ -160,37 +160,178 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 .double-loser-tree .single-bracket-round>h4{position:sticky;top:0;z-index:2}
 
 
+/* Build211: align loser-side rounds and draw their connectors. */
+.double-loser-tree>.single-bracket-round{justify-content:flex-start!important;gap:0!important}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{flex:0 0 auto!important}
 /* Build210: loser bracket uses the same card-and-connector tree structure as winners. */
 .double-loser-tree{display:flex!important;flex-direction:row!important;align-items:stretch!important;gap:22px!important;width:max-content!important;min-width:max-content!important;position:relative!important;padding:8px 8px 20px!important}
 .double-loser-tree>.single-bracket-round{display:flex!important;flex:0 0 170px!important;width:170px!important;min-width:170px!important;flex-direction:column!important;justify-content:space-around!important;gap:16px!important;position:relative!important}
 .double-loser-tree>.single-bracket-round>.single-bracket-item{display:block!important;flex:0 0 auto!important;width:170px!important;min-width:170px!important;box-sizing:border-box!important}
 .double-loser-tree .bracket-connectors{position:absolute!important;inset:0 auto auto 0!important;pointer-events:none!important;overflow:visible!important;z-index:1!important}
 .double-loser-tree .bracket-connectors path{fill:none!important;stroke:rgba(255,255,255,.85)!important;stroke-width:2.5!important}
-/* Build211: 敗者側を勝者側のコンパクトなカード・入力欄に統一 */
-.double-loser-tree{gap:12px!important;padding:8px 4px 16px!important;align-items:flex-start!important}
-.double-loser-tree>.single-bracket-round{flex:0 0 132px!important;width:132px!important;min-width:132px!important;justify-content:flex-start!important;gap:0!important;padding-top:34px!important;box-sizing:border-box!important}
-.double-loser-tree>.single-bracket-round>h4{position:absolute!important;top:0;left:0;right:0;margin:0 0 8px!important;min-height:26px!important;font-size:13px!important;white-space:nowrap;text-align:center!important}
-.double-loser-tree>.single-bracket-round>.single-bracket-item{width:132px!important;min-width:132px!important;box-sizing:border-box!important;position:relative!important;z-index:2!important}
-.double-loser-tree>.single-bracket-round:nth-child(-n+3)>.single-bracket-item:nth-of-type(2){margin-top:54px!important}
-.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-of-type{margin-top:27px!important}
-.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-of-type{margin-top:27px!important}
-.double-loser-tree .single-bracket-match{font-size:12px!important;line-height:1.3!important;padding:6px!important;min-height:72px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.22)!important;border-radius:10px!important;display:block!important;z-index:2!important}
-.double-loser-tree .single-bracket-match .sb-player{font-size:12px!important;line-height:1.3!important;margin:2px 0 5px!important}
-.double-loser-tree .single-bracket-match .small{font-size:10px!important}
-.double-loser-tree .bracket-connectors{z-index:1!important;pointer-events:none!important}
-.double-loser-tree .single-entry-panel{width:100%!important;max-width:100%!important;position:relative!important;margin-top:8px!important;padding:8px!important;border-radius:12px!important;background:#347fbd!important;border:2px solid rgba(255,255,255,.72)!important;box-shadow:none!important;box-sizing:border-box!important;z-index:3!important}
-.double-loser-tree .single-entry-panel .tournament-match{padding:0!important;margin:0!important;background:transparent!important}
-.double-loser-tree .single-entry-panel .tournament-match-head{font-size:12px!important;line-height:1.35!important}
-.double-loser-tree .single-entry-panel .tournament-match-row input{flex:1 1 0!important;width:0!important;min-width:0!important;max-width:none!important;background:#fff!important;color:#222!important}
-.double-loser-tree .single-entry-panel .tournament-match-row select{flex:0 0 76px!important;width:76px!important;min-width:76px!important;max-width:76px!important;background:#fff!important;color:#222!important}
-.double-loser-tree .single-entry-panel button{font-size:12px!important;padding:8px 6px!important}
-@media(max-width:380px){.double-loser-tree>.single-bracket-round{flex-basis:124px!important;width:124px!important;min-width:124px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:124px!important;min-width:124px!important}.double-loser-tree{gap:10px!important}}
+
+/* Build212: separate loser-side entry slots from match cards, following the reference diagram. */
+.loser-bracket-layout{display:flex;align-items:flex-start;gap:20px;position:relative;width:max-content;min-width:100%;padding:8px 4px 18px;}
+.loser-slot-column{flex:0 0 150px;width:150px;display:flex;flex-direction:column;gap:12px;position:relative;}
+.loser-slot-column>h4{font-size:14px;position:sticky;left:0;top:0;margin:0 0 4px;white-space:nowrap;}
+.loser-slot-item{height:54px;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.8);border-radius:12px;background:rgba(255,255,255,.13);display:flex;flex-direction:column;justify-content:center;padding:5px 9px;gap:2px;position:relative;}
+.loser-slot-item span{font-size:12px;opacity:.9}.loser-slot-item b{font-size:14px;overflow-wrap:anywhere;line-height:1.2}
+.double-loser-tree{flex:0 0 auto;}
+.double-loser-tree>.single-bracket-round{justify-content:flex-start!important;gap:0!important;padding-top:26px!important;}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{flex:0 0 auto!important;}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-of-type,
+.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-of-type{margin-top:75px!important;}
+.loser-bracket-layout .bracket-connectors{pointer-events:none;z-index:1;overflow:visible}
+
+
+/* Build213: compact loser slots and keep connector lines inside the bracket columns. */
+/* Build223: display loser slots in bracket order without changing their underlying slot IDs. */
+.loser-bracket-layout{gap:10px!important;width:max-content!important;min-width:0!important;align-items:flex-start!important;overflow:visible!important}
+.loser-slot-column{flex:0 0 92px!important;width:92px!important;gap:8px!important}
+.loser-slot-column>h4{font-size:12px!important;white-space:normal!important;line-height:1.2!important}
+.loser-slot-item{height:42px!important;padding:4px 6px!important;border-radius:9px!important;gap:1px!important}
+.loser-slot-item span{font-size:10px!important;line-height:1.1!important}
+.loser-slot-item b{font-size:12px!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.double-loser-tree{gap:12px!important;width:max-content!important;min-width:0!important;padding:8px 2px 16px!important}
+.double-loser-tree>.single-bracket-round{flex:0 0 138px!important;width:138px!important;min-width:138px!important;padding-top:26px!important;justify-content:flex-start!important;gap:0!important}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:138px!important;min-width:138px!important;flex:0 0 auto!important}
+.double-loser-tree .single-bracket-match{padding:6px!important;font-size:12px!important;line-height:1.3!important;overflow-wrap:normal!important;word-break:normal!important}
+.double-loser-tree .single-bracket-match .sb-player{font-size:12px!important;line-height:1.3!important;overflow-wrap:anywhere!important;word-break:normal!important}
+.double-loser-tree>.single-bracket-round:nth-child(1)>.single-bracket-item:nth-of-type(2),
+.double-loser-tree>.single-bracket-round:nth-child(2)>.single-bracket-item:nth-of-type(2),
+.double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-of-type(2){margin-top:110px!important}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-of-type,
+.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-of-type{margin-top:55px!important}
+.loser-bracket-layout>.loser-slot-connectors{display:block!important}
+
+/* Build215: loser-side match cards follow winner-side card styling; compact, non-overflowing score editor. */
+.double-loser-tree .single-bracket-match{display:block!important;align-items:initial!important;padding:8px!important;min-height:0!important;background:rgba(255,255,255,.10)!important;border:1.5px solid rgba(255,255,255,.42)!important;border-radius:12px!important;box-sizing:border-box!important;}
+.double-loser-tree .single-bracket-card{width:100%;min-width:0;font-size:14px;line-height:1.35;}
+.double-loser-tree .single-bracket-card .small{font-size:11px;line-height:1.2;margin-bottom:6px;opacity:.82;}
+.double-loser-tree .single-bracket-match .sb-player{display:flex;flex-direction:column;gap:2px;margin:4px 0 6px;min-width:0;}
+.double-loser-tree .single-bracket-match .sb-name{font-size:14px;font-weight:800;line-height:1.25;overflow-wrap:anywhere;}
+.double-loser-tree .single-bracket-match .sb-detail{font-size:11px;line-height:1.2;opacity:.9;}
+.double-loser-tree .single-bracket-match .sb-vs{font-size:10px;opacity:.7;margin:1px 0 3px;}
+.double-loser-tree .loser-entry-panel{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;padding:9px!important;margin:6px 0 12px!important;border-radius:12px!important;overflow:hidden!important;}
+.loser-entry-title{font-size:12px;font-weight:700;line-height:1.35;overflow-wrap:anywhere;margin-bottom:8px;}
+.loser-score-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:end;}
+.loser-score-fields label{display:flex;flex-direction:column;gap:4px;min-width:0;font-size:11px;}
+.loser-score-fields input{width:100%!important;min-width:0!important;max-width:100%!important;flex:auto!important;box-sizing:border-box!important;padding:8px 6px!important;font-size:16px!important;}
+.loser-score-fields .loser-turn-field{grid-column:1/-1;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:8px;}
+.loser-score-fields select{width:100%!important;min-width:0!important;max-width:100%!important;flex:auto!important;box-sizing:border-box!important;padding:8px!important;font-size:14px!important;}
+.loser-entry-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px;}
+.loser-entry-actions button{min-width:0;width:100%;margin:0!important;padding:9px 5px!important;font-size:13px!important;}
+.loser-entry-actions .loser-close-button{background:rgba(255,255,255,.14)!important;color:#fff!important;}
+
+
+/* Build223: slot cards are spaced for clean routing; all loser-side paths are drawn in one dedicated SVG. */
+.loser-bracket-layout{position:relative;display:flex;align-items:flex-start;gap:10px;width:max-content;min-width:0;padding:8px 4px 18px;overflow:visible;}
+.loser-slot-column{flex:0 0 92px;width:92px;display:flex;flex-direction:column;gap:0;position:relative;z-index:2;}
+.loser-slot-column>h4{height:24px;min-height:24px;margin:4px 0 8px;font-size:12px;line-height:24px;white-space:nowrap;}
+.loser-slot-item{height:42px;flex:0 0 42px;box-sizing:border-box;border:1.5px solid rgba(255,255,255,.8);border-radius:9px;background:rgba(255,255,255,.13);display:flex;flex-direction:column;justify-content:center;padding:4px 6px;gap:1px;position:relative;margin:0 0 18px;}
+.loser-slot-item span{font-size:10px;line-height:1.1;opacity:.9}.loser-slot-item b{font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.loser-slot-item[data-loser-slot="5"],.loser-slot-item[data-loser-slot="7"],.loser-slot-item[data-loser-slot="3"],.loser-slot-item[data-loser-slot="6"],.loser-slot-item[data-loser-slot="8"],.loser-slot-item[data-loser-slot="9"]{margin-top:8px;}
+.double-loser-tree{display:flex;flex-direction:row;align-items:flex-start;gap:12px;width:max-content;min-width:0;position:relative;padding:8px 2px 16px;z-index:2}
+.double-loser-tree>.single-bracket-round{display:flex;flex:0 0 138px;width:138px;min-width:138px;flex-direction:column;justify-content:flex-start;gap:0;padding-top:26px;position:relative}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:138px;min-width:138px;flex:0 0 auto;box-sizing:border-box;position:relative;z-index:2}
+.double-loser-tree>.single-bracket-round:nth-child(1)>.single-bracket-item:nth-child(2),.double-loser-tree>.single-bracket-round:nth-child(2)>.single-bracket-item:nth-child(2),.double-loser-tree>.single-bracket-round:nth-child(3)>.single-bracket-item:nth-child(2){margin-top:150px}
+.double-loser-tree>.single-bracket-round:nth-child(4)>.single-bracket-item:first-child,.double-loser-tree>.single-bracket-round:nth-child(5)>.single-bracket-item:first-child{margin-top:75px}
+.double-loser-tree .single-bracket-match{display:block;padding:8px;min-height:0;box-sizing:border-box;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.42);border-radius:12px}
+/* Build219: route lines bend immediately before the target round; opaque cards mask any underlay. */
+.double-loser-tree .single-bracket-match{background:rgba(64,151,225,.98)!important;position:relative;z-index:3!important}
+.loser-slot-item{position:relative;z-index:3!important}
+.loser-bracket-layout>.loser-slot-connectors{z-index:1!important}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{z-index:3!important}
+.double-loser-tree .single-bracket-card{width:100%;min-width:0;font-size:14px;line-height:1.35}
+.double-loser-tree .single-bracket-card .small{font-size:11px;line-height:1.2;margin-bottom:6px;opacity:.82}
+.double-loser-tree .single-bracket-match .sb-player{display:flex;flex-direction:column;gap:2px;margin:4px 0 6px;min-width:0}
+.double-loser-tree .single-bracket-match .sb-name{font-size:14px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+.loser-bracket-layout>.loser-slot-connectors{display:block;position:absolute;left:0;top:0;pointer-events:none;z-index:1;overflow:visible}
+.loser-entry-panel{position:relative;width:100%;max-width:100%;box-sizing:border-box;margin-top:12px}
+.loser-entry-panel .tournament-match-row{display:flex;gap:8px;flex-wrap:nowrap;min-width:0}
+.loser-entry-panel .tournament-match-row input{flex:1 1 0;width:0;min-width:0;max-width:none;box-sizing:border-box}
+.loser-entry-panel .tournament-match-row select{flex:0 0 88px;width:88px;min-width:88px;max-width:88px;box-sizing:border-box}
+.loser-entry-actions{display:flex;gap:8px;margin-top:12px}
+.loser-entry-actions button{flex:1;min-width:0}
+@media(max-width:380px){.loser-entry-panel .tournament-match-row select{flex-basis:78px;width:78px;min-width:78px;max-width:78px}}
+
+
+/* Build223: unify loser-side match cards and score editor with winner-side design. */
+.double-loser-tree .single-bracket-match{
+  display:flex!important;align-items:center!important;padding:5px 6px!important;min-height:48px!important;
+  margin-right:2px!important;background:rgba(255,255,255,.17)!important;
+  border:1px solid rgba(255,255,255,.5)!important;border-radius:10px!important;
+  box-sizing:border-box!important;position:relative;z-index:3!important;
+}
+.double-loser-tree .single-bracket-match.is-done{background:rgba(255,255,255,.08)!important;}
+.double-loser-tree .single-bracket-card{width:100%;font-size:14px;line-height:1.45;overflow-wrap:anywhere;}
+.double-loser-tree .single-bracket-card .small{font-size:12px;line-height:1.3;opacity:.88;margin:0 0 6px;}
+.double-loser-tree .single-bracket-match .sb-player{display:block;min-width:0;margin:8px 0 12px;}
+.double-loser-tree .single-bracket-match .sb-name{font-size:14px;font-weight:800;line-height:1.35;overflow-wrap:anywhere;}
+.double-loser-tree .single-bracket-match .sb-detail{font-size:12px;line-height:1.3;opacity:.9;}
+.double-loser-tree .single-bracket-match .sb-vs{font-size:12px;opacity:.75;margin:4px 0;}
+#tourLoserEntryPanel{margin:8px 0 14px;padding:14px;border:1px solid rgba(255,255,255,.28);border-radius:16px;background:rgba(255,255,255,.08);box-sizing:border-box;max-width:100%;}
+#tourLoserEntryPanel .loser-entry-panel{margin:10px 0 0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible;}
+#tourLoserEntryPanel .tournament-match-head{font-weight:800;margin-bottom:8px;}
+#tourLoserEntryPanel .tournament-match-player{margin:8px 0 12px;min-width:0;}
+#tourLoserEntryPanel .tournament-match-name{display:block;font-weight:800;overflow-wrap:anywhere;word-break:normal;margin-bottom:5px;}
+#tourLoserEntryPanel .tournament-match-row{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:nowrap;min-width:0;max-width:100%;box-sizing:border-box;}
+#tourLoserEntryPanel .tournament-match-row input{flex:1 1 0;width:0;min-width:0;max-width:none;box-sizing:border-box;padding:10px;font-size:16px;}
+#tourLoserEntryPanel .tournament-match-row select{flex:0 0 88px;width:88px;min-width:88px;max-width:88px;box-sizing:border-box;padding:10px 5px;font-size:14px;}
+#tourLoserEntryPanel .loser-entry-actions{display:flex;gap:8px;margin-top:12px;}
+#tourLoserEntryPanel .loser-entry-actions button{flex:1;min-width:0;width:auto;max-width:100%;box-sizing:border-box;margin:0!important;padding:10px 8px;font-size:14px;white-space:normal;}
+@media(max-width:380px){#tourLoserEntryPanel .tournament-match-row select{flex-basis:78px;width:78px;min-width:78px;max-width:78px;}}
+
+
+/* Build221: align loser-side card and score-entry styling with winner-side UI. */
+.double-loser-tree .single-bracket-match {
+  display:flex!important; align-items:center!important; padding:5px 6px!important;
+  min-height:48px!important; box-sizing:border-box!important;
+  border:1px solid rgba(255,255,255,.5)!important; border-radius:10px!important;
+  background:rgba(255,255,255,.17)!important;
+}
+.double-loser-tree .single-bracket-match.is-done { background:rgba(255,255,255,.08)!important; }
+.double-loser-tree .single-bracket-card { width:100%; font-size:14px; line-height:1.45; overflow-wrap:anywhere; }
+.double-loser-tree .single-bracket-card>.small { font-size:12px; line-height:1.3; margin:0 0 6px; opacity:.88; }
+.double-loser-tree .single-bracket-match .sb-player { display:block; margin:2px 0 5px!important; min-width:0; }
+.double-loser-tree .single-bracket-match .sb-name { font-size:14px!important; font-weight:800; line-height:1.25!important; }
+.double-loser-tree .single-bracket-match .sb-detail { font-size:12px!important; line-height:1.25!important; }
+.double-loser-tree .single-bracket-match .sb-vs { font-size:11px!important; margin:2px 0!important; }
+#tourLoserEntryPanel .loser-entry-panel {
+  display:block!important; width:100%!important; max-width:100%!important; min-width:0!important;
+  box-sizing:border-box!important; margin:12px 0 0!important; padding:14px!important;
+  border:2px solid rgba(255,255,255,.72)!important; border-radius:16px!important;
+  background:#4b9be3!important; box-shadow:0 8px 24px rgba(0,35,90,.18)!important;
+  overflow:hidden!important;
+}
+#tourLoserEntryPanel .loser-entry-actions { display:flex!important; flex-direction:row!important; gap:8px!important; margin-top:12px!important; }
+#tourLoserEntryPanel .loser-entry-actions button { flex:1 1 0!important; min-width:0!important; width:auto!important; margin:0!important; border-radius:14px!important; padding:12px 8px!important; }
+#tourLoserEntryPanel .tournament-match-player { margin:8px 0 12px!important; }
+#tourLoserEntryPanel .tournament-match-name { margin-bottom:5px!important; }
+
+
+/* Build223: compact loser cards, remove unused right-side width, unify score-entry color. */
+.loser-bracket-layout{position:relative!important;isolation:isolate;gap:8px!important;width:max-content!important;min-width:0!important;max-width:none!important;padding:8px 0 16px!important;}
+.loser-bracket-layout>.loser-slot-column,.loser-bracket-layout>.double-loser-tree{position:relative;z-index:2;}
+.loser-bracket-layout>.loser-slot-connectors{z-index:0!important;}
+.loser-slot-column{flex:0 0 82px!important;width:82px!important;}
+.double-loser-tree{gap:8px!important;width:max-content!important;min-width:0!important;padding:8px 0 16px!important;}
+.double-loser-tree>.single-bracket-round{flex:0 0 118px!important;width:118px!important;min-width:118px!important;gap:6px!important;}
+.double-loser-tree>.single-bracket-round>.single-bracket-item{width:118px!important;min-width:118px!important;box-sizing:border-box!important;}
+.double-loser-tree .single-bracket-match{padding:6px!important;min-height:0!important;background:rgba(255,255,255,.17)!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:10px!important;}
+.double-loser-tree .single-bracket-card{font-size:12px!important;line-height:1.3!important;}
+.double-loser-tree .single-bracket-match .sb-name{font-size:12px!important;line-height:1.25!important;}
+.double-loser-tree .single-bracket-match .sb-detail{font-size:10px!important;line-height:1.2!important;}
+.double-loser-tree .single-bracket-match .sb-player{margin:3px 0 5px!important;}
+.double-loser-tree .single-bracket-match .sb-vs{font-size:10px!important;margin:2px 0!important;}
+#tourLoserEntryPanel{background:rgba(255,255,255,.08)!important;}
+#tourLoserEntryPanel .loser-entry-panel{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.28)!important;box-shadow:none!important;}
+@media(max-width:380px){.loser-slot-column{flex-basis:78px!important;width:78px!important}.double-loser-tree>.single-bracket-round{flex-basis:112px!important;width:112px!important;min-width:112px!important}.double-loser-tree>.single-bracket-round>.single-bracket-item{width:112px!important;min-width:112px!important}}
 </style>
 </head>
-<body>
-<div class="w">
+<body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build211</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build223</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -198,7 +339,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 <button class="menu-card" onclick="show('tournament')"><div class="menu-icon">🏆</div><div class="menu-text"><b>大会</b><span>大会方式・組み合わせ・得点入力</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('historyPage')"><div class="menu-icon">📜</div><div class="menu-text"><b>練習会履歴</b><span>過去の練習会を確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('dataManage')"><div class="menu-icon">⚙️</div><div class="menu-text"><b>データ管理</b><span>バックアップ・読み込み・初期化</span></div><div class="menu-arrow">›</div></button>
-<div class="footer">BRC Play Build211</div>
+<div class="footer">BRC Play Build223</div>
 </section>
 
 <section id="carc" class="screen">
@@ -960,7 +1101,7 @@ function doubleLoserBracket(t){
   results.push(m);return m;
  }));
 }
-function openDoubleLoserMatch(key){selectedTournamentEntry=selectedTournamentEntry==='doubleLoser:'+key?null:'doubleLoser:'+key;renderTournamentBoard();}
+function openDoubleLoserMatch(key){selectedTournamentEntry=selectedTournamentEntry==='doubleLoser:'+key?null:'doubleLoser:'+key;renderTournamentBoard();if(selectedTournamentEntry)setTimeout(()=>document.querySelector('#tourLoserEntryPanel')?.scrollIntoView({behavior:'smooth',block:'start'}),30);}
 function saveDoubleLoserMatch(key){
  const t=tournamentState;if(!t||t.mode!=='double')return;
  const m=doubleLoserBracket(t).flat().find(x=>x.key===key);if(!m||!m.a||!m.b)return;
@@ -974,11 +1115,20 @@ function saveDoubleLoserMatch(key){
  selectedTournamentEntry=null;saveTournament();renderTournamentBoard();
 }
 function doubleLoserCard(m){
- const editing=selectedTournamentEntry==='doubleLoser:'+m.key;
- const players=`<div class="sb-player">${escapeHTML(m.a||'対戦者待ち')}</div><div class="sb-player">${escapeHTML(m.b||'対戦者待ち')}</div>`;
- const score=m.done?`<div class="small">${escapeHTML(String(m.scoreA))} - ${escapeHTML(String(m.scoreB))}　勝者：${escapeHTML(m.winner||'')}</div>`:'';
- const form=editing?`<div class="single-entry-panel loser-entry-panel" onclick="event.stopPropagation()"><div class="tournament-match"><div class="tournament-match-head">敗者側 ${m.stage.replace('敗者側 ','')}・得点を修正</div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.a)}</b><div class="tournament-match-row"><input id="dl_${m.key}_a" type="number" value="${m.scoreA}" placeholder="得点"><select id="dl_${m.key}_turn"><option value="先手" ${m.turnA==='先手'?'selected':''}>先手</option><option value="後手" ${m.turnA==='後手'?'selected':''}>後手</option></select></div></div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.b)}</b><div class="tournament-match-row"><input id="dl_${m.key}_b" type="number" value="${m.scoreB}" placeholder="得点"><select disabled><option>${m.turnA==='先手'?'後手':'先手'}</option></select></div></div><div class="small">保存すると勝者と次の対戦に反映されます。</div><div class="tournament-actions"><button class="primary" type="button" onclick="saveDoubleLoserMatch('${m.key}')">修正を保存</button><button type="button" onclick="openDoubleLoserMatch('${m.key}')">キャンセル</button></div></div></div>`:'';
- return `<div class="single-bracket-match" ${m.a&&m.b?`onclick="openDoubleLoserMatch('${m.key}')" style="cursor:pointer"`:''}>${players}${score}</div>${form}`;
+ const aWon=m.done&&m.winner===m.a;
+ const turnA=m.turnA||'先手',turnB=turnA==='先手'?'後手':'先手';
+ let label='';
+ if(m.done){label=`<div class="sb-player"><div class="sb-name">${escapeHTML(m.a)}${aWon?'<span class="trophy">🏆</span>':''}</div><div class="sb-detail">${Number(m.scoreA)||0}・${turnA}</div></div><div class="sb-vs">vs</div><div class="sb-player"><div class="sb-name">${escapeHTML(m.b)}${!aWon?'<span class="trophy">🏆</span>':''}</div><div class="sb-detail">${Number(m.scoreB)||0}・${turnB}</div></div>`;}
+ else {label=`<div class="sb-player"><div class="sb-name">${escapeHTML(m.a||'対戦者待ち')}</div></div><div class="sb-vs">vs</div><div class="sb-player"><div class="sb-name">${escapeHTML(m.b||'対戦者待ち')}</div></div>`;}
+ const canOpen=!!(m.a&&m.b);
+ return `<div class="single-bracket-match ${m.done?'is-done':''} ${canOpen?'is-pending':''}" ${canOpen?`role="button" tabindex="0" onclick="openDoubleLoserMatch('${m.key}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDoubleLoserMatch('${m.key}')}" style="cursor:pointer"`:''}><div class="single-bracket-card">${label}</div></div>`;
+}
+function doubleLoserEntryPanel(t){
+ const key=typeof selectedTournamentEntry==='string'&&selectedTournamentEntry.startsWith('doubleLoser:')?selectedTournamentEntry.slice(12):null;
+ const m=key?doubleLoserBracket(t).flat().find(x=>x.key===key):null;
+ if(!m)return `<section id="tourLoserEntryPanel" class="tour-bracket-entry-section"><h3>✍️ 対戦・得点入力</h3><div class="small">トーナメント全体図とは別の欄で入力・修正できます。</div><div class="tournament-status">上の敗者側トーナメントから対戦カードをタップして得点を入力・修正してね。</div></section>`;
+ const turnA=m.turnA||'先手',turnB=turnA==='先手'?'後手':'先手';
+ return `<section id="tourLoserEntryPanel" class="tour-bracket-entry-section"><h3>✍️ 対戦・得点入力</h3><div class="small">トーナメント全体図とは別の欄で入力・修正できます。</div><div class="single-entry-panel loser-entry-panel"><div class="tournament-match-head">${escapeHTML(m.stage)} · ${m.done?'得点を修正':'得点入力'}</div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.a)}</b><div class="tournament-match-row"><input id="dl_${m.key}_a" type="number" inputmode="numeric" value="${m.scoreA??''}" placeholder="得点"><select id="dl_${m.key}_turn"><option value="先手" ${turnA==='先手'?'selected':''}>先手</option><option value="後手" ${turnA==='後手'?'selected':''}>後手</option></select></div></div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.b)}</b><div class="tournament-match-row"><input id="dl_${m.key}_b" type="number" inputmode="numeric" value="${m.scoreB??''}" placeholder="得点"><select disabled><option>${turnB}</option></select></div></div><div class="small">保存すると勝者と次の対戦に反映されます。</div><div class="loser-entry-actions"><button type="button" class="primary" onclick="saveDoubleLoserMatch('${m.key}')">${m.done?'修正を保存':'得点を登録'}</button><button type="button" class="loser-close-button" onclick="selectedTournamentEntry=null;renderTournamentBoard()">キャンセル</button></div></div><div class="small" style="margin-top:12px">得点を登録・修正すると、結果と勝ち上がりに自動反映されます。</div></section>`;
 }
 function doubleWinnerMatchNumber(ri,i,m){
   if(!m||m.bye)return null;
@@ -1013,6 +1163,7 @@ function adjustBracketEditorLayout(bracket){
 }
 function drawBracketConnectors(){
   document.querySelectorAll('.single-bracket').forEach(bracket=>{
+    if(bracket.classList.contains('double-loser-tree')) return; // 敗者側は専用の接続図で描画
     adjustBracketEditorLayout(bracket);
     const old=bracket.querySelector('.bracket-connectors');
     if(old)old.remove();
@@ -1033,8 +1184,13 @@ function drawBracketConnectors(){
       const sources=Array.from(round.querySelectorAll(':scope > .single-bracket-item'));
       const targets=Array.from(rounds[ri+1].querySelectorAll(':scope > .single-bracket-item'));
       sources.forEach((source,i)=>{
-        const loserMap=bracket.classList.contains('double-loser-tree')?[[0,1],[0,1],[0,0],[0]][ri]:null;
-        const target=targets[loserMap?loserMap[i]:Math.floor(i/2)];
+        let targetIndex;
+        if(bracket.classList.contains('double-loser-tree')){
+          // 敗者側は第1〜3回戦が同じ段同士、第3回戦の2試合が第4回戦へ合流。
+          const loserMap=[[0,1],[0,1],[0,0],[0]][ri]||[];
+          targetIndex=loserMap[i];
+        }else{targetIndex=Math.floor(i/2);}
+        const target=targets[targetIndex];
         if(!target)return;
         const sr=source.getBoundingClientRect();
         const tr=target.getBoundingClientRect();
@@ -1053,6 +1209,23 @@ function drawBracketConnectors(){
   });
 }
 
+function drawLoserSlotConnectors(){
+ const layout=document.querySelector('.loser-bracket-layout');if(!layout)return;
+ const old=layout.querySelector('.loser-slot-connectors');if(old)old.remove();
+ const bracket=layout.querySelector('.double-loser-tree');if(!bracket)return;
+ const rect=layout.getBoundingClientRect(),width=Math.max(layout.scrollWidth,layout.clientWidth),height=Math.max(layout.scrollHeight,layout.clientHeight);
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+ svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
+ const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const xm=mergeX===undefined?x1+Math.max(8,(x2-x1)*.5):mergeX;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
+ // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
+ const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
+ slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,Math.max(a.x+8,b.x-10));});
+ // 敗者側の勝ち上がり線：同じ段同士で接続し、第4回戦で合流。
+ const maps=[[[0,0],[1,1]],[[0,0],[1,1]],[[0,0],[1,0]],[[0,0]]];
+ maps.forEach((map,ri)=>{const sources=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+1}) > .single-bracket-item`));const targets=Array.from(bracket.querySelectorAll(`:scope > .single-bracket-round:nth-child(${ri+2}) > .single-bracket-item`));map.forEach(([si,ti])=>{const source=sources[si],target=targets[ti];if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,Math.max(a.x+8,b.x-10));});});
+ layout.insertBefore(svg,layout.firstChild);
+}
 function setActiveGroupTab(name){activeGroupTab=name;activeGroupSubTab='matches';selectedTournamentEntry=null;renderTournamentBoard();}
 function setActiveGroupSubTab(tab){activeGroupSubTab=tab;selectedTournamentEntry=null;renderTournamentBoard();}
 function renderTournamentBoard(){const status=$('tournamentStatus'),box=$('tournamentBoard');if(!status||!box)return;renderTournamentMembers();if(!tournamentState){status.textContent='方式と参加者を選んで大会を開始してね。';box.innerHTML='';return}const t=tournamentState;status.innerHTML=`<b>${({swiss:'スイスドロー',groups:'グループ総当たり＋決勝トーナメント',double:'ダブルノックアウト',single:'シングルイリミネーション'})[t.mode]}</b><br>参加者 ${t.participants.length}人 · ${t.mode==='swiss'?`全${t.roundCount||3}回戦・`:''}${t.completed?'大会終了':`第${t.round}回戦進行中`}${t.champion?`<br>🏆 優勝：${escapeHTML(t.champion)}`:''}`;let html=`<div class="history"><b>参加者</b><div class="small">${t.participants.map(escapeHTML).join(' · ')}</div></div>${t.mode==='swiss'?`<div class="tournament-actions" style="margin:12px 0"><button type="button" id="tourShowMatches" class="active" onclick="showTournamentPanel('matches')">対戦・得点入力</button><button type="button" id="tourShowStandings" onclick="showTournamentPanel('standings')">🏅 大会順位</button></div>`:''}<div id="tourMatchSection">`;if(t.mode==='groups'){const allDone=t.groups.every(g=>g.matches.every(m=>m.done||m.bye));if(!t.groups.some(g=>g.name===activeGroupTab))activeGroupTab=t.groups[0]?.name||'グループ A';html+=`<div class="group-tab-switch" role="tablist" aria-label="グループ選択">${t.groups.map(g=>`<button type="button" role="tab" aria-selected="${activeGroupTab===g.name}" class="${activeGroupTab===g.name?'active':''}" onclick="setActiveGroupTab('${g.name}')">${escapeHTML(g.name.replace('グループ ','').replace('グループ',''))}グループ</button>`).join('')}</div>`;html+=`<div class="tournament-actions group-subnav" style="margin:12px 0"><button type="button" class="${activeGroupSubTab==='matches'?'active':''}" onclick="setActiveGroupSubTab('matches')">対戦カード</button><button type="button" class="${activeGroupSubTab==='standings'?'active':''}" onclick="setActiveGroupSubTab('standings')">グループ順位</button></div>`;const g=t.groups.find(x=>x.name===activeGroupTab)||t.groups[0];if(g){const gi=t.groups.indexOf(g);const standings=buildGroupStandings(g);if(activeGroupSubTab==='matches'){html+=`<div class="tournament-group"><h3>${escapeHTML(g.name)}｜対戦カード</h3><div class="small">${g.members.map(escapeHTML).join(' ・ ')}</div><div class="tour-compact-list">${g.matches.map((m,i)=>compactTournamentCard(m,'group',i,gi,false,true)).join('')}</div></div>`;}else{html+=`<div class="tournament-group"><h3>🏅 ${escapeHTML(g.name)}｜グループ順位</h3><div class="small">勝ち数 ＞ 得失点差 ＞ 後手回数</div>${standings.map(r=>`<div class="rank"><span>${r.rank}位　${escapeHTML(r.name)} (${r.wins}勝)</span><b>${r.diff>0?'+':''}${r.diff} · 後手${r.secondTurns}回</b></div>`).join('')}</div>`;}}if(allDone&&!t.qualifiersConfirmed)html+=`<div class="tournament-status"><b>決勝進出者</b><div class="small">各グループ上位2人、合計8人。順位を確認してから確定してね。</div>${t.groups.map(g=>`<div class="small"><b>${escapeHTML(g.name)}：</b>${buildGroupStandings(g).slice(0,2).map(r=>escapeHTML(r.name)).join('・')}</div>`).join('')}<button type="button" class="primary" style="margin-top:10px" onclick="confirmGroupQualifiers()">決勝進出者を確定</button></div>`;if(t.qualifiersConfirmed){html+=`<div class="tournament-status"><h3>✅ 決勝進出者（確定）</h3>${(t.qualifiers||[]).map(q=>`<div class="rank"><span>${escapeHTML(q.group)} ${q.rank}位　${escapeHTML(q.name)}</span><b>進出</b></div>`).join('')}<button type="button" class="primary" onclick="showGroupFinals()">決勝トーナメントへ</button></div>`;}}else if(t.mode==='swiss'){
@@ -1065,8 +1238,9 @@ if(hasNext){html+=`<div class="card" style="margin-top:14px"><b>第${rounds.leng
 else{html+=`<div class="tournament-status"><b>全回戦終了</b><div class="small">最終回戦の結果を確認してください。</div></div>`;}
 }else if(t.mode==='single'){const rounds=Array.isArray(t.rounds)&&t.rounds.length?t.rounds:[t.matches];html+=`<h3>🏆 トーナメント全体図</h3><div class="single-bracket-note">全体図では組み合わせと勝ち上がりを確認できます。未登録の試合カードをタップして得点を入力できます。登録済みのカードをタップすると得点を修正できます。</div><div class="single-bracket-wrap"><div class="single-bracket">${rounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>${ri===rounds.length-1&&t.completed?'🏆 優勝':(ri===rounds.length-1&&t.matches.some(m=>!m.done)?(t.matches[0]?.stage||`第${ri+1}回戦`):`第${ri+1}回戦`)}</h4>${matches.map((m,i)=>{return `<div class="single-bracket-item">${singleBracketCard(m,ri,i,t)}</div>`}).join('')}</section>`).join('')}</div></div>`;}else if(t.mode==='double'){const view=doubleBracketView||t.doubleView||'winners';const rounds=Array.isArray(t.winnersRounds)&&t.winnersRounds.length?t.winnersRounds:t.rounds;html+=`<h3>🏆 ダブルノックアウト</h3><div class="single-bracket-note">勝者・敗者・決勝をページで切り替えます。</div><div class="single-placement double-view-switch"><button type="button" class="${view==='winners'?'active':''}" onclick="setDoubleBracketView('winners')">勝者</button><button type="button" class="${view==='losers'?'active':''}" onclick="setDoubleBracketView('losers')">敗者</button><button type="button" class="${view==='final'?'active':''}" onclick="setDoubleBracketView('final')">決勝</button></div>`;if(view==='winners'){html+=`<h4>勝者側トーナメント</h4><div class="single-bracket-wrap"><div class="single-bracket">${rounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,i)=>`<div class="single-bracket-item">${singleBracketCard(m,ri,i,t)}</div>`).join('')}</section>`).join('')}</div></div>`; }else if(view==='losers'){
  const loserRounds=doubleLoserBracket(t);
- html+=`<h4>敗者側トーナメント</h4><div class="single-bracket-note">勝者側と同じトーナメント表形式です。枠1〜9には勝者側の各対戦の敗者が自動で入ります。カードをタップして得点を登録・修正できます。</div><div class="single-bracket-wrap"><div class="single-bracket double-loser-tree">${loserRounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map(m=>`<div class="single-bracket-item">${doubleLoserCard(m)}</div>`).join('')}</section>`).join('')}</div></div>`;
- html+=`<h4>敗者側の枠番号</h4><div class="tour-compact-list">${Array.from({length:9},(_,slot)=>{const m=(t.losersRounds||[]).find(x=>Number(x.slot)===slot+1);return `<div class="tour-compact-card"><div class="tc-stage">敗者側 枠 ${slot+1}</div><div class="tc-players">${escapeHTML(m?.a||'勝者側の結果待ち')}</div></div>`}).join('')}</div>`;
+ const loserSlots=Object.fromEntries((t.losersRounds||[]).filter(m=>m.slot).map(m=>[Number(m.slot),m.a]));
+ html+=`<h4>敗者側トーナメント</h4><div class="single-bracket-note">左の枠1〜9から対戦へ進み、勝者が右の次の対戦へ進みます。カードをタップして得点を登録・修正できます。</div><div class="single-bracket-wrap"><div class="loser-bracket-layout"><section class="loser-slot-column"><h4>敗者側の枠</h4>${[1,2,5,7,3,4,6,8,9].map(slot=>`<div class="loser-slot-item" data-loser-slot="${slot}"><span>枠${slot}</span><b>${escapeHTML(loserSlots[slot]||'結果待ち')}</b></div>`).join('')}</section><div class="single-bracket double-loser-tree">${loserRounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,mi)=>{const offset=ri<3?(mi===0?0:132):66;return `<div class="single-bracket-item" data-loser-round="${ri}" data-loser-match="${mi}" style="margin-top:${offset}px">${doubleLoserCard(m)}</div>`}).join('')}</section>`).join('')}</div></div></div>`;
+ html+=doubleLoserEntryPanel(t);
  }else{html+=`<h4>🏆 決勝</h4><div class="tournament-group"><div class="tour-compact-card"><div class="tc-stage">最終決勝戦</div><div class="tc-players">勝者側の優勝者<br>vs<br>敗者側の優勝者</div><div class="small">両側の優勝者が決まると対戦できます。</div></div><div class="small" style="margin-top:12px">敗者側の選手が勝った場合は、もう1試合を行います。2敗した選手が敗退し、最後の試合の勝者が優勝です。</div><div class="tournament-status">決勝の得点入力と自動進行は未実装です。</div></div>`;}}else html+=`<div class="tour-compact-list">${t.matches.map((m,i)=>compactTournamentCard(m,'swiss',i,null,false,true)).join('')}</div>`;
 if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='winners')){
   const mode=t.mode;
@@ -1086,7 +1260,7 @@ if(t.mode==='groups'){
   box.appendChild(finalsPage);
   setGroupsPage(activeGroupsPage);
 }else { const ms=$('tourMatchSection'); if(ms)ms.style.display='block'; }
-if(t.mode==='single'||(t.mode==='double'&&['winners','losers'].includes(doubleBracketView||t.doubleView||'winners'))){requestAnimationFrame(()=>drawBracketConnectors());}if(t.mode==='swiss'){const pages=$('tourRoundPages');if(pages){const current=pages.querySelector(`[data-round-index="${Math.max(0,(t.rounds||[]).length-1)}"]`);if(current)current.scrollIntoView({block:'nearest',inline:'start'});pages.addEventListener('scroll',updateTournamentRoundIndicator,{passive:true});updateTournamentRoundIndicator();}}}
+if(t.mode==='single'||(t.mode==='double'&&['winners','losers'].includes(doubleBracketView||t.doubleView||'winners'))){requestAnimationFrame(()=>{drawBracketConnectors();if(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='losers')drawLoserSlotConnectors();});}if(t.mode==='swiss'){const pages=$('tourRoundPages');if(pages){const current=pages.querySelector(`[data-round-index="${Math.max(0,(t.rounds||[]).length-1)}"]`);if(current)current.scrollIntoView({block:'nearest',inline:'start'});pages.addEventListener('scroll',updateTournamentRoundIndicator,{passive:true});updateTournamentRoundIndicator();}}}
 function confirmBracketRound(){
   const t=tournamentState;if(!t||(t.mode!=='single'&&t.mode!=='double'))return;
   if(!Array.isArray(t.matches)||!t.matches.length||!t.matches.every(m=>m.done||m.bye)){alert('現在の回戦の全試合を入力してから確定してね');return;}

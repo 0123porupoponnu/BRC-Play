@@ -1334,7 +1334,8 @@ function drawLoserSlotConnectors(){
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
  const addPath=(x1,y1,x2,y2,mergeX)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;const xm=mergeX===undefined?(gap>0?x1+gap/2:x1+4):Math.min(x2-3,Math.max(x1+3,mergeX));path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
- const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
+ const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left+layout.scrollLeft,y:r.top+r.height/2-rect.top+layout.scrollTop};};
+ // 横スクロール量を座標に加算し、スクロール中も線がカードに重ならないようにする。
  // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
  slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y,Math.max(a.x+8,b.x-10));});

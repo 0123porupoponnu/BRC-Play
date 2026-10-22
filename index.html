@@ -474,7 +474,7 @@ button{padding:12px 16px;border:0;border-radius:14px;font-weight:700;font-size:1
 </head>
 <body><div class="w">
 <section id="home" class="screen active">
-<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build238</div></div>
+<div class="home-title"><img src="assets/icon.png"><h1>BRC Play</h1><div class="build">Build240</div></div>
 <button class="menu-card" onclick="show('member')"><div class="menu-icon">👥</div><div class="menu-text"><b>メンバー</b><span>登録・編集・レート確認</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('carc')"><div class="menu-icon">🏰</div><div class="menu-text"><b>カルカソンヌ</b><span>対戦結果・履歴</span></div><div class="menu-arrow">›</div></button>
 <button class="menu-card" onclick="show('rummy')"><div class="menu-icon">🎲</div><div class="menu-text"><b>ラミィキューブ</b><span>卓結果・累計ランキング</span></div><div class="menu-arrow">›</div></button>
@@ -1367,12 +1367,12 @@ function drawLoserSlotConnectors(){
  const height=Math.ceil(Math.max(layout.scrollHeight,layout.clientHeight,...bounds.map(r=>r.bottom-rect.top+12)));
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('class','bracket-connectors loser-slot-connectors');svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.style.position='absolute';svg.style.left='0';svg.style.top='0';svg.style.zIndex='0';svg.style.pointerEvents='none';svg.style.overflow='visible';
- const addPath=(x1,y1,x2,y2)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;/* 曲がり位置はカード間の隙間の中央。隙間が狭い場合もカード内へ曲げず、隙間の外側に逃がす */const xm=gap>=12?x1+gap/2:(gap>=0?x1+gap/2:x1+4);path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
+ const addPath=(x1,y1,x2,y2)=>{const path=document.createElementNS(ns,'path');const gap=x2-x1;/* 折れ曲がりはカードの外側、列間の隙間の中央に固定。隙間が負ならカード位置を動かさず線を描かない。 */if(gap<0)return;const xm=x1+gap/2;path.setAttribute('d',`M ${x1} ${y1} H ${xm} V ${y2} H ${x2}`);path.setAttribute('fill','none');path.setAttribute('stroke','rgba(255,255,255,.88)');path.setAttribute('stroke-width','2.5');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round');svg.appendChild(path);};
  // SVGは横スクロール領域の中にあるため、画面上の座標にscrollLeft/scrollTopを足して
  // スクロール領域内の座標へ戻す。これをしないと、横スクロール後に線がカード上へずれる。
- const center=(el,side)=>{const r=el.getBoundingClientRect();return {x:(side==='right'?r.right:r.left)-rect.left,y:r.top+r.height/2-rect.top};};
- // getBoundingClientRect()同士の差分を使うため、横スクロール量は加算しない。
- // 枠からの線：各線は列と列の間で曲げ、カードの上を通らない。
+ const center=(el,side)=>{const r=el.getBoundingClientRect(),o=svgOrigin();return {x:(side==='right'?r.right:r.left)-o.left,y:r.top+r.height/2-o.top};};
+ // SVG自身の表示位置を座標原点にする。レイアウト要素のrectを原点にすると、paddingやスクロール時の差で折れ位置がカード内へずれる。
+ const svgOrigin=()=>svg.getBoundingClientRect();
  const slotPairs=[[1,0,0],[2,0,0],[3,0,1],[4,0,1],[5,1,0],[6,1,1],[7,2,0],[8,2,1],[9,4,0]];
  slotPairs.forEach(([slot,ri,mi])=>{const source=layout.querySelector(`[data-loser-slot="${slot}"]`),target=bracket.querySelector(`[data-loser-round="${ri}"][data-loser-match="${mi}"]`);if(!source||!target)return;const a=center(source,'right'),b=center(target,'left');addPath(a.x,a.y,b.x,b.y);});
  // 敗者側の勝ち上がり線：同じ段同士で接続し、第4回戦で合流。

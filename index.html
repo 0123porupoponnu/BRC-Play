@@ -1257,6 +1257,54 @@ function doubleWinnerMatchNumber(ri,i,m){
   }
   return n||null;
 }
+
+// Build242: double-knockout grand final, including the bracket-reset final when needed.
+function doubleBracketChampions(t){
+ const wr=Array.isArray(t.winnersRounds)&&t.winnersRounds.length?t.winnersRounds:(t.rounds||[]);
+ const lastW=wr.length?wr[wr.length-1]:[];
+ const winnerReady=lastW.length===1&&!!lastW[0]?.done&&!!lastW[0]?.winner;
+ const loserMatches=doubleLoserBracket(t).flat();
+ const lastL=loserMatches.length?loserMatches[loserMatches.length-1]:null;
+ return {winner:winnerReady?lastW[0].winner:null,loser:lastL?.done?lastL.winner:null};
+}
+function openDoubleFinal(index){selectedTournamentEntry='doubleFinal:'+index;renderTournamentBoard();document.querySelector('#tourDoubleFinalEntry')?.scrollIntoView({behavior:'smooth',block:'start'});}
+function doubleFinalMatches(t){
+ const {winner,loser}=doubleBracketChampions(t);
+ if(!winner||!loser||winner===loser)return [];
+ if(!Array.isArray(t.doubleFinals))t.doubleFinals=[];
+ if(!t.doubleFinals[0]||t.doubleFinals[0].a!==winner||t.doubleFinals[0].b!==loser){
+   t.doubleFinals=[{a:winner,b:loser,stage:'第1決勝',turnA:'先手',scoreA:'',scoreB:'',winner:null,done:false}];
+   t.completed=false;t.champion=null;
+ }
+ return t.doubleFinals;
+}
+function saveDoubleFinal(index){
+ const t=tournamentState;if(!t||t.mode!=='double')return;
+ const finals=doubleFinalMatches(t),m=finals[index];if(!m)return;
+ const aEl=$('df_'+index+'_a'),bEl=$('df_'+index+'_b'),turnEl=$('df_'+index+'_turn');
+ if(!aEl||!bEl||aEl.value.trim()===''||bEl.value.trim()===''){alert('両方の得点を入力してね');return;}
+ const a=Number(aEl.value),b=Number(bEl.value);if(!Number.isFinite(a)||!Number.isFinite(b)){alert('得点を確認してね');return;}
+ const oldWinner=m.winner;m.scoreA=a;m.scoreB=b;m.turnA=turnEl?.value||m.turnA||'先手';m.winner=tournamentWinner(m);m.done=true;
+ if(index===0){
+   if(m.winner===m.b){t.doubleFinals=[m,{a:m.a,b:m.b,stage:'第2決勝（最終決戦）',turnA:'先手',scoreA:'',scoreB:'',winner:null,done:false}];t.completed=false;t.champion=null;}
+   else {t.doubleFinals=[m];t.completed=true;t.champion=m.winner;}
+ }else{t.doubleFinals=t.doubleFinals.slice(0,2);t.doubleFinals[1]=m;t.completed=true;t.champion=m.winner;}
+ if(index===0&&oldWinner!==m.winner&&m.winner===m.a){t.doubleFinals=[m];t.completed=true;t.champion=m.winner;}
+ selectedTournamentEntry=null;saveTournament();renderTournamentBoard();
+}
+function doubleFinalCard(m,index){
+ const ready=!!(m.a&&m.b);const winnerA=m.done&&m.winner===m.a,winnerB=m.done&&m.winner===m.b;
+ const player=(name,score,turn,isWinner)=>`<div class="sb-player"><div class="sb-name">${escapeHTML(name||'結果待ち')}${isWinner?'<span class="trophy">🏆</span>':''}</div>${m.done?`<div class="sb-detail">${Number(score)||0}・${turn}</div>`:''}</div>`;
+ return `<div class="single-bracket-match ${m.done?'is-done':''} ${ready?'is-pending':''}" ${ready?`role="button" tabindex="0" onclick="openDoubleFinal(${index})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDoubleFinal(${index})}" style="cursor:pointer"`:''}><div class="single-bracket-card">${player(m.a,m.scoreA,m.turnA||'先手',winnerA)}<div class="sb-vs">vs</div>${player(m.b,m.scoreB,(m.turnA||'先手')==='先手'?'後手':'先手',winnerB)}</div></div>`;
+}
+function doubleFinalEntryPanel(t){
+ const index=typeof selectedTournamentEntry==='string'&&selectedTournamentEntry.startsWith('doubleFinal:')?Number(selectedTournamentEntry.slice(12)):null;
+ const finals=doubleFinalMatches(t);const m=Number.isInteger(index)?finals[index]:null;
+ if(!m)return `<section id="tourDoubleFinalEntry" class="tour-bracket-entry-section"><h3>✍️ 決勝・得点入力</h3><div class="small">決勝カードをタップして得点を入力・修正してね。</div></section>`;
+ const turnA=m.turnA||'先手',turnB=turnA==='先手'?'後手':'先手';
+ return `<section id="tourDoubleFinalEntry" class="tour-bracket-entry-section"><h3>✍️ 決勝・得点入力</h3><div class="single-entry-panel"><div class="tournament-match-head">${escapeHTML(m.stage)}｜${m.done?'得点を修正':'得点入力'}</div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.a)}</b><div class="tournament-match-row"><input id="df_${index}_a" type="number" inputmode="numeric" value="${m.scoreA??''}" placeholder="得点"><select id="df_${index}_turn"><option value="先手" ${turnA==='先手'?'selected':''}>先手</option><option value="後手" ${turnA==='後手'?'selected':''}>後手</option></select></div></div><div class="tournament-match-player"><b class="tournament-match-name">${escapeHTML(m.b)}</b><div class="tournament-match-row"><input id="df_${index}_b" type="number" inputmode="numeric" value="${m.scoreB??''}" placeholder="得点"><select disabled><option>${turnB}</option></select></div></div><div class="loser-entry-actions"><button type="button" class="primary" onclick="saveDoubleFinal(${index})">${m.done?'修正を保存':'得点を登録'}</button><button type="button" class="loser-close-button" onclick="selectedTournamentEntry=null;renderTournamentBoard()">キャンセル</button></div></div></section>`;
+}
+
 function doubleLoserSlotForMatch(ri,i,m){
   const n=doubleWinnerMatchNumber(ri,i,m);
   return n&&n<=9?n:null;
@@ -1358,7 +1406,7 @@ else{html+=`<div class="tournament-status"><b>全回戦終了</b><div class="sma
  const loserSlots=Object.fromEntries((t.losersRounds||[]).filter(m=>m.slot).map(m=>[Number(m.slot),m.a]));
  html+=`<h4>敗者側トーナメント</h4><div class="single-bracket-note">左の枠1〜9から対戦へ進み、勝者が右の次の対戦へ進みます。カードをタップして得点を登録・修正できます。</div><div class="single-bracket-wrap"><div class="loser-bracket-layout"><section class="loser-slot-column"><h4>敗者側の枠</h4>${[1,2,5,7,3,4,6,8,9].map(slot=>`<div class="loser-slot-item" data-loser-slot="${slot}"><span>枠${slot}</span><b>${escapeHTML(loserSlots[slot]||'結果待ち')}</b></div>`).join('')}</section><div class="single-bracket double-loser-tree">${loserRounds.map((matches,ri)=>`<section class="single-bracket-round"><h4>第${ri+1}回戦</h4>${matches.map((m,mi)=>{const offset=0;return `<div class="single-bracket-item" data-loser-round="${ri}" data-loser-match="${mi}" style="margin-top:${offset}px">${doubleLoserCard(m)}</div>`}).join('')}</section>`).join('')}</div></div></div>`;
  html+=doubleLoserEntryPanel(t);
- }else{html+=`<h4>🏆 決勝</h4><div class="tournament-group"><div class="tour-compact-card"><div class="tc-stage">最終決勝戦</div><div class="tc-players">勝者側の優勝者<br>vs<br>敗者側の優勝者</div><div class="small">両側の優勝者が決まると対戦できます。</div></div><div class="small" style="margin-top:12px">敗者側の選手が勝った場合は、もう1試合を行います。2敗した選手が敗退し、最後の試合の勝者が優勝です。</div><div class="tournament-status">決勝の得点入力と自動進行は未実装です。</div></div>`;}}else html+=`<div class="tour-compact-list">${t.matches.map((m,i)=>compactTournamentCard(m,'swiss',i,null,false,true)).join('')}</div>`;
+ }else{const finals=doubleFinalMatches(t);const champs=doubleBracketChampions(t);html+=`<h4>🏆 決勝</h4><div class="single-bracket-note">勝者側の優勝者と敗者側の優勝者が対戦します。敗者側が第1決勝に勝った場合は、第2決勝（最終決戦）を行います。</div><div class="single-bracket-wrap"><div class="single-bracket double-final-tree"><section class="single-bracket-round"><h4>第1決勝</h4>${finals[0]?doubleFinalCard(finals[0],0):`<div class="single-bracket-match"><div class="single-bracket-card"><div class="sb-player"><div class="sb-name">${escapeHTML(champs.winner||'勝者側の優勝者待ち')}</div></div><div class="sb-vs">vs</div><div class="sb-player"><div class="sb-name">${escapeHTML(champs.loser||'敗者側の優勝者待ち')}</div></div></div></div>`}</section>${finals[1]?`<section class="single-bracket-round"><h4>第2決勝（最終決戦）</h4>${doubleFinalCard(finals[1],1)}</section>`:''}</div></div><div class="tournament-status">${t.completed?`🏆 大会優勝：<b>${escapeHTML(t.champion||'未確定')}</b>`:finals[0]?.done&&finals[0].winner===finals[0].b?'第1決勝は敗者側が勝利。第2決勝で優勝を決めます。':'両側の優勝者が決まり、決勝の得点を登録すると自動進行します。'}</div>`;html+=doubleFinalEntryPanel(t);}}else html+=`<div class="tour-compact-list">${t.matches.map((m,i)=>compactTournamentCard(m,'swiss',i,null,false,true)).join('')}</div>`;
 if(t.mode==='single'||(t.mode==='double'&&(doubleBracketView||t.doubleView||'winners')==='winners')){
   const mode=t.mode;
   const sel=mode==='single'?(selectedSingleMatchIndex!==null&&selectedSingleRoundIndex!==null?{index:selectedSingleMatchIndex,roundIndex:selectedSingleRoundIndex}:null):(selectedTournamentEntry&&selectedTournamentEntry.kind==='double'?{index:selectedTournamentEntry.index,roundIndex:selectedTournamentEntry.roundIndex}:null);
